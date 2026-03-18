@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Historical Evolution — Sixth Schedule Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .era-nav {
+    display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2.5rem;
+  }
+  .era-btn {
+    padding: 6px 14px; border: 1px solid var(--border); border-radius: 3px;
+    background: none; cursor: pointer; font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem; letter-spacing: 0.05em; color: var(--text2);
+    transition: all var(--transition);
+  }
+  .era-btn:hover, .era-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+  .big-timeline { position: relative; }
+  .big-timeline::before {
+    content: ''; position: absolute; left: 50%; transform: translateX(-50%);
+    top: 0; bottom: 0; width: 2px; background: var(--border);
+  }
+  .bt-item {
+    display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0; margin-bottom: 2rem;
+    opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s;
+  }
+  .bt-item.visible { opacity: 1; transform: translateY(0); }
+  .bt-item:nth-child(odd) .bt-left { order: 1; }
+  .bt-item:nth-child(odd) .bt-center { order: 2; }
+  .bt-item:nth-child(odd) .bt-right { order: 3; }
+  .bt-item:nth-child(even) .bt-left { order: 3; }
+  .bt-item:nth-child(even) .bt-center { order: 2; }
+  .bt-item:nth-child(even) .bt-right { order: 1; }
+  .bt-center {
+    display: flex; align-items: flex-start; justify-content: center;
+    padding-top: 1rem;
+  }
+  .bt-node {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--surface); border: 3px solid var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+    font-weight: 400; color: var(--accent); position: relative; z-index: 1;
+    transition: background var(--transition), border-color var(--transition);
+    cursor: pointer; flex-shrink: 0;
+  }
+  .bt-node:hover { background: var(--accent); color: white; }
+  .bt-node.milestone { background: var(--accent); color: white; }
+  .bt-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1.5rem; margin: 0 1rem;
+    transition: box-shadow var(--transition), transform var(--transition);
+  }
+  .bt-item:nth-child(even) .bt-card { text-align: right; }
+  .bt-card:hover { box-shadow: 0 4px 20px var(--shadow-lg); transform: translateY(-2px); }
+  .bt-year {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+    color: var(--accent); margin-bottom: 4px; letter-spacing: 0.04em;
+  }
+  .bt-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; }
+  .bt-desc { font-size: 0.85rem; color: var(--text2); line-height: 1.7; }
+  .bt-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 0.75rem; }
+  .bt-item:nth-child(even) .bt-tags { justify-content: flex-end; }
+  .spacer { flex: 1; }
+
+  .evolution-phases {
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin: 2.5rem 0;
+  }
+  .phase-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1.5rem;
+    border-top: 3px solid;
+  }
+  .phase-card:nth-child(1){border-top-color:var(--accent3);}
+  .phase-card:nth-child(2){border-top-color:var(--accent);}
+  .phase-card:nth-child(3){border-top-color:var(--gold);}
+  .phase-card:nth-child(4){border-top-color:var(--green);}
+  .phase-period {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.06em; color: var(--text3); margin-bottom: 0.5rem;
+  }
+  .phase-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
+  .phase-desc { font-size: 0.82rem; color: var(--text2); line-height: 1.65; }
+
+  @media(max-width:768px){
+    .big-timeline::before{left:20px;transform:none;}
+    .bt-item{grid-template-columns:40px 1fr;grid-template-rows:auto;}
+    .bt-center{grid-column:1;grid-row:1;justify-content:flex-start;}
+    .bt-left,.bt-right{grid-column:2;grid-row:1;}
+    .bt-item:nth-child(even) .bt-card{text-align:left;}
+    .bt-item:nth-child(even) .bt-tags{justify-content:flex-start;}
+    .bt-item:nth-child(even) .bt-center{order:1!important;}
+    .bt-item:nth-child(even) .bt-right{order:2!important;}
+    .bt-item:nth-child(even) .bt-left{display:none;}
+    .bt-item:nth-child(odd) .bt-right{display:none;}
+    .evolution-phases{grid-template-columns:1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="page-overlay" id="overlay"></div>
+
+<nav>
+  <a href="index.html" class="nav-brand" data-navigate>
+    <div class="nav-brand-icon">VI</div>
+    <div>
+      <div class="nav-brand-text">Sixth Schedule Archive</div>
+      <div class="nav-brand-sub">Living Constitutional Record</div>
+    </div>
+  </a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="index.html" class="nav-link" data-navigate>Home</a>
+      <a href="cases.html" class="nav-link" data-navigate>Cases</a>
+      <a href="debates.html" class="nav-link" data-navigate>Debates</a>
+      <a href="evolution.html" class="nav-link active">Evolution</a>
+      <a href="articles.html" class="nav-link" data-navigate>Articles</a>
+      <a href="news.html" class="nav-link" data-navigate>News</a>
+      <a href="about.html" class="nav-link" data-navigate>About</a>
+    </div>
+    <button class="theme-toggle" id="themeToggle"><div class="toggle-dot"></div><span id="toggleLabel">Light</span></button>
+  </div>
+</nav>
+
+<div class="breadcrumb"><a href="index.html">Home</a> › Historical Evolution</div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-tag">🏛️ Historical</div>
+    <h1 class="page-h1">Historical Evolution</h1>
+    <p class="page-desc">Seven decades of constitutional development — from the 1949 draft to contemporary amendments and judicial expansions of the Sixth Schedule.</p>
+  </div>
+</div>
+
+<div class="page-full">
+
+  <div class="evolution-phases">
+    <div class="phase-card">
+      <div class="phase-period">1935–1950</div>
+      <div class="phase-name">Colonial Foundations & Constitutional Drafting</div>
+      <div class="phase-desc">The Sixth Schedule draws on the excluded areas framework of the Government of India Act, 1935 and the Coupland Report. Ambedkar's Drafting Committee negotiates with Assam representatives in 1949.</div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-period">1950–1972</div>
+      <div class="phase-name">Early Operative Phase</div>
+      <div class="phase-desc">District Councils established in Assam. First elections held. Tension between state government prerogative and Council autonomy. Judicial interpretation begins.</div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-period">1972–2000</div>
+      <div class="phase-name">State Reorganisation & Expansion</div>
+      <div class="phase-desc">Meghalaya, Mizoram created as states. Schedule extended. Tripura Tribal Areas created. Significant judicial elaboration of Para 3, 5, and 12 powers.</div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-period">2003–Present</div>
+      <div class="phase-name">Bodoland Era & Demands for Extension</div>
+      <div class="phase-desc">Bodoland Territorial Council added to Schedule. Extension demands from Ladakh, Darjeeling, Andaman & Nicobar, and other areas. Contemporary debates on Schedule adequacy.</div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-bottom:2rem;">
+    <div class="section-title" style="font-family:'Playfair Display',serif;font-weight:700;font-size:1.5rem;">Full Chronological Timeline</div>
+    <div class="section-meta" style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--text3);">1935 – 2024</div>
+  </div>
+
+  <div class="era-nav">
+    <button class="era-btn active" data-era="all">All</button>
+    <button class="era-btn" data-era="drafting">Drafting (1935–50)</button>
+    <button class="era-btn" data-era="early">Early Phase (1950–72)</button>
+    <button class="era-btn" data-era="expansion">Expansion (1972–2000)</button>
+    <button class="era-btn" data-era="modern">Modern Era (2000+)</button>
+  </div>
+
+  <div class="big-timeline">
+
+    <div class="bt-item visible" data-era="drafting">
+      <div class="bt-left">
+        <div class="bt-card">
+          <div class="bt-year">1935</div>
+          <div class="bt-title">Government of India Act — Excluded Areas</div>
+          <div class="bt-desc">Section 91 and the Fifth Schedule of the Government of India Act, 1935, divide areas into "Excluded Areas" and "Partially Excluded Areas." The northeastern hills are classified as Excluded Areas, placing them entirely outside the legislative competence of the provincial legislatures.</div>
+          <div class="bt-tags"><span class="badge badge-blue">Colonial Precursor</span><span class="badge badge-gold">GoI Act 1935</span></div>
+        </div>
+      </div>
+      <div class="bt-center"><div class="bt-node">1935</div></div>
+      <div class="bt-right spacer"></div>
+    </div>
+
+    <div class="bt-item visible" data-era="drafting">
+      <div class="bt-left spacer"></div>
+      <div class="bt-center"><div class="bt-node milestone">1947</div></div>
+      <div class="bt-right">
+        <div class="bt-card">
+          <div class="bt-year">1947</div>
+          <div class="bt-title">Assam Tribal Areas Sub-Committee Report</div>
+          <div class="bt-desc">The Constituent Assembly's Advisory Committee on Fundamental Rights and Minorities establishes a Sub-Committee on Tribal and Excluded Areas, headed by A.V. Thakkar. The report recommends a distinct constitutional framework for northeastern tribal areas, providing the intellectual foundation for what becomes the Sixth Schedule.</div>
+          <div class="bt-tags"><span class="badge badge-red">Constituent Assembly</span><span class="badge badge-green">Thakkar Committee</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bt-item visible" data-era="drafting">
+      <div class="bt-left">
+        <div class="bt-card">
+          <div class="bt-year">1949</div>
+          <div class="bt-title">Sixth Schedule Adopted — 5–7 September</div>
+          <div class="bt-desc">The Constituent Assembly debates and adopts the Sixth Schedule over three days. Dr. Ambedkar moves two key amendments (Nos. 98 and 99) providing the Governor with flexible powers to define, create, merge, and alter autonomous districts — subject to a Commission's report. The Schedule creates the framework of Autonomous Districts and Regional Councils with legislative, judicial, and fiscal powers.</div>
+          <div class="bt-tags"><span class="badge badge-red">Constitutional Adoption</span><span class="badge badge-gold">Ambedkar</span></div>
+        </div>
+      </div>
+      <div class="bt-center"><div class="bt-node milestone">1949</div></div>
+      <div class="bt-right spacer"></div>
+    </div>
+
+    <div class="bt-item visible" data-era="early">
+      <div class="bt-left spacer"></div>
+      <div class="bt-center"><div class="bt-node">1950</div></div>
+      <div class="bt-right">
+        <div class="bt-card">
+          <div class="bt-year">1950</div>
+          <div class="bt-title">Constitution Comes into Force</div>
+          <div class="bt-desc">The Sixth Schedule becomes operative in Assam on 26 January 1950. The Schedule is listed as applicable to the tribal areas of Assam. Initial Autonomous Districts: United Khasi and Jaintia Hills, Garo Hills, Lushai Hills, North Cachar Hills, Mikir Hills, and Naga Hills.</div>
+          <div class="bt-tags"><span class="badge badge-blue">Operative Date</span><span class="badge badge-green">Assam</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bt-item visible" data-era="early">
+      <div class="bt-left">
+        <div class="bt-card">
+          <div class="bt-year">1952</div>
+          <div class="bt-title">First District Council Elections</div>
+          <div class="bt-desc">Elections to the first Autonomous District Councils in Assam are held. The Khasi and Jaintia Hills District Council, Garo Hills District Council, and others hold inaugural elections, marking the first exercise of constitutional tribal self-governance in independent India.</div>
+          <div class="bt-tags"><span class="badge badge-blue">Democracy</span><span class="badge badge-red">First Elections</span></div>
+        </div>
+      </div>
+      <div class="bt-center"><div class="bt-node">1952</div></div>
+      <div class="bt-right spacer"></div>
+    </div>
+
+    <div class="bt-item visible" data-era="early">
+      <div class="bt-left spacer"></div>
+      <div class="bt-center"><div class="bt-node">1963</div></div>
+      <div class="bt-right">
+        <div class="bt-card">
+          <div class="bt-year">1963</div>
+          <div class="bt-title">Nagaland — 16th State (Art. 371A)</div>
+          <div class="bt-desc">Nagaland is carved out of Assam and established as a full state under Article 371A, which provides special protections for Naga customary law and tradition different from the Sixth Schedule framework. The Naga Hills exit the Schedule's ambit but gain equivalent or stronger protections.</div>
+          <div class="bt-tags"><span class="badge badge-blue">State Reorganisation</span><span class="badge badge-gold">Art. 371A</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bt-item visible" data-era="expansion">
+      <div class="bt-left">
+        <div class="bt-card">
+          <div class="bt-year">1972</div>
+          <div class="bt-title">Meghalaya, Manipur & Tripura — New States</div>
+          <div class="bt-desc">The North-Eastern Areas (Reorganisation) Act, 1971, creates Meghalaya as a full state out of the Khasi, Jaintia, and Garo Hills of Assam. Manipur and Tripura also gain statehood. The Sixth Schedule continues to apply to the autonomous districts of Meghalaya. Tripura Tribal Areas Autonomous District Council established.</div>
+          <div class="bt-tags"><span class="badge badge-red">Major Reorganisation</span><span class="badge badge-blue">Meghalaya</span><span class="badge badge-green">Tripura</span></div>
+        </div>
+      </div>
+      <div class="bt-center"><div class="bt-node milestone">1972</div></div>
+      <div class="bt-right spacer"></div>
+    </div>
+
+    <div class="bt-item visible" data-era="expansion">
+      <div class="bt-left spacer"></div>
+      <div class="bt-center"><div class="bt-node">1986</div></div>
+      <div class="bt-right">
+        <div class="bt-card">
+          <div class="bt-year">1986</div>
+          <div class="bt-title">Mizoram — 23rd State</div>
+          <div class="bt-desc">Following the Mizoram Accord of 1986 (ending the Mizo insurgency), Mizoram becomes India's 23rd state. The Sixth Schedule applies to its autonomous districts. The Chakma Autonomous District Council and Lai Autonomous District Council are established.</div>
+          <div class="bt-tags"><span class="badge badge-blue">Peace Accord</span><span class="badge badge-red">Mizoram Statehood</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bt-item visible" data-era="expansion">
+      <div class="bt-left">
+        <div class="bt-card">
+          <div class="bt-year">1995</div>
+          <div class="bt-title">Constitutional Amendment — Sixth Schedule Modified</div>
+          <div class="bt-desc">The Constitution (44th Amendment) and subsequent amendments refine the Sixth Schedule's provisions on District Council elections, dissolution, and the role of State Election Commissions. The amendment brings District Council elections under the purview of Part IX (Panchayati Raj) uniformly.</div>
+          <div class="bt-tags"><span class="badge badge-gold">Amendment</span></div>
+        </div>
+      </div>
+      <div class="bt-center"><div class="bt-node">1995</div></div>
+      <div class="bt-right spacer"></div>
+    </div>
+
+    <div class="bt-item visible" data-era="modern">
+      <div class="bt-left spacer"></div>
+      <div class="bt-center"><div class="bt-node milestone">2003</div></div>
+      <div class="bt-right">
+        <div class="bt-card">
+          <div class="bt-year">2003</div>
+          <div class="bt-title">Bodoland Territorial Council — Sixth Schedule Extended</div>
+          <div class="bt-desc">The Constitution (44th Amendment) Act creates the Bodoland Territorial Council (BTC) in Assam's Bodoland Territorial Area Districts, adding it to the Sixth Schedule. This is the most significant expansion of the Schedule since its original adoption, covering approximately 27,000 sq. km.</div>
+          <div class="bt-tags"><span class="badge badge-red">Major Expansion</span><span class="badge badge-blue">BTC</span><span class="badge badge-gold">Assam</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bt-item visible" data-era="modern">
+      <div class="bt-left">
+        <div class="bt-card">
+          <div class="bt-year">2019</div>
+          <div class="bt-title">Demands for Extension to Darjeeling & Ladakh</div>
+          <div class="bt-desc">The Gorkha community in Darjeeling renews demands for Sixth Schedule status as an alternative to statehood. Following the reorganisation of Jammu & Kashmir and creation of Ladakh as a Union Territory, Ladakhi leaders demand Sixth Schedule protection for tribal communities.</div>
+          <div class="bt-tags"><span class="badge badge-blue">Expansion Demands</span><span class="badge badge-green">Ladakh</span></div>
+        </div>
+      </div>
+      <div class="bt-center"><div class="bt-node">2019</div></div>
+      <div class="bt-right spacer"></div>
+    </div>
+
+    <div class="bt-item visible" data-era="modern">
+      <div class="bt-left spacer"></div>
+      <div class="bt-center"><div class="bt-node">2023</div></div>
+      <div class="bt-right">
+        <div class="bt-card">
+          <div class="bt-year">2023</div>
+          <div class="bt-title">Manipur Violence & Schedule Adequacy Debate</div>
+          <div class="bt-desc">Ethnic violence in Manipur between Meitei and Kuki-Zo communities raises fundamental questions about the adequacy of the Sixth Schedule (applicable to hill districts) and the absence of similar protection for valley areas. Parliamentary committees examine the constitutional framework for Manipur's tribal areas.</div>
+          <div class="bt-tags"><span class="badge badge-red">Crisis</span><span class="badge badge-gold">Review Demanded</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bt-item visible" data-era="modern">
+      <div class="bt-left">
+        <div class="bt-card">
+          <div class="bt-year">2024</div>
+          <div class="bt-title">Ongoing: Ladakh Extension Negotiations</div>
+          <div class="bt-desc">The Central Government enters into extended consultations with Ladakhi political representatives regarding extension of Sixth Schedule protections or equivalent constitutional safeguards. The discussions represent the most active expansion debate since the BTC in 2003.</div>
+          <div class="bt-tags"><span class="badge badge-blue">Active Negotiation</span><span class="badge badge-green">Contemporary</span></div>
+        </div>
+      </div>
+      <div class="bt-center"><div class="bt-node milestone">2024</div></div>
+      <div class="bt-right spacer"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <span>© 2025 Sixth Schedule Archive · For Educational & Research Use</span>
+      <span><a href="index.html" style="color:var(--accent);text-decoration:none;" data-navigate>← Back to Home</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+// Era filter
+document.querySelectorAll('.era-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.era-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const era = btn.dataset.era;
+    document.querySelectorAll('.bt-item').forEach(item => {
+      if (era === 'all' || item.dataset.era === era) {
+        item.style.display = 'grid';
+        setTimeout(() => item.classList.add('visible'), 30);
+      } else {
+        item.classList.remove('visible');
+        item.style.display = 'none';
+      }
+    });
+  });
+});
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.bt-item').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

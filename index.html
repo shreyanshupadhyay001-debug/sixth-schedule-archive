@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sixth Schedule Archive — Living Constitutional Record</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F7F4EF;
+    --bg2: #EDE9E2;
+    --surface: #FFFFFF;
+    --border: #D8D2C7;
+    --text: #1A1614;
+    --text2: #5C5549;
+    --text3: #8C8479;
+    --accent: #8B1A1A;
+    --accent2: #C45C2A;
+    --accent3: #2A5C8B;
+    --gold: #B8860B;
+    --green: #2A6B4A;
+    --shadow: rgba(26,22,20,0.10);
+    --shadow-lg: rgba(26,22,20,0.18);
+    --transition: 0.35s cubic-bezier(0.4,0,0.2,1);
+  }
+  [data-theme="dark"] {
+    --bg: #111010;
+    --bg2: #1A1917;
+    --surface: #221F1E;
+    --border: #3A3632;
+    --text: #EDE9E2;
+    --text2: #B0A898;
+    --text3: #7A7269;
+    --shadow: rgba(0,0,0,0.4);
+    --shadow-lg: rgba(0,0,0,0.6);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    transition: background var(--transition), color var(--transition);
+    overflow-x: hidden;
+  }
+
+  /* ---- NAV ---- */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    padding: 0 2.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+    transition: background var(--transition);
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none; color: var(--text);
+  }
+  .nav-brand-icon {
+    width: 36px; height: 36px;
+    background: var(--accent);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900; font-size: 18px;
+    color: white; flex-shrink: 0;
+  }
+  .nav-brand-text { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 1rem; letter-spacing: -0.01em; }
+  .nav-brand-sub { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; }
+  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+  .nav-links { display: flex; gap: 0.25rem; }
+  .nav-link {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+    color: var(--text2); text-decoration: none;
+    padding: 6px 12px; border-radius: 4px;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    transition: background var(--transition), color var(--transition);
+  }
+  .nav-link:hover { background: var(--bg2); color: var(--text); }
+  .nav-link.active { background: var(--accent); color: white; }
+
+  /* Toggle */
+  .theme-toggle {
+    display: flex; align-items: center; gap: 8px;
+    cursor: pointer; background: none; border: 1px solid var(--border);
+    border-radius: 20px; padding: 5px 10px;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    color: var(--text2); transition: all var(--transition);
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  .toggle-dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--gold); transition: background var(--transition);
+  }
+  [data-theme="dark"] .toggle-dot { background: var(--text3); }
+
+  /* ---- HERO ---- */
+  .hero {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 5rem 2.5rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: 'VI';
+    position: absolute; right: -2rem; top: -2rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900; font-size: 20rem;
+    color: var(--bg2); line-height: 1;
+    pointer-events: none; user-select: none;
+    transition: color var(--transition);
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; position: relative; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); border: 1px solid var(--accent);
+    padding: 4px 12px; border-radius: 2px; margin-bottom: 1.5rem;
+  }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900; font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1.05; letter-spacing: -0.02em;
+    max-width: 700px; margin-bottom: 1.5rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-desc {
+    font-size: 1.1rem; color: var(--text2); max-width: 560px;
+    font-weight: 300; margin-bottom: 2.5rem; line-height: 1.8;
+  }
+  .hero-stats {
+    display: flex; gap: 3rem; flex-wrap: wrap;
+  }
+  .stat { display: flex; flex-direction: column; gap: 2px; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700; font-size: 2rem; color: var(--accent);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--text3);
+  }
+
+  /* ---- MARQUEE ---- */
+  .marquee-strip {
+    background: var(--accent); color: white;
+    padding: 10px 0; overflow: hidden; white-space: nowrap;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .marquee-inner { display: inline-flex; gap: 3rem; animation: marquee 35s linear infinite; }
+  .marquee-inner span::before { content: '◆ '; opacity: 0.6; }
+  @keyframes marquee { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+
+  /* ---- MAIN GRID ---- */
+  .main { max-width: 1100px; margin: 0 auto; padding: 4rem 2.5rem; }
+  .section-header {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 2rem; padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif; font-weight: 700;
+    font-size: 1.6rem; letter-spacing: -0.01em;
+  }
+  .section-meta {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+    color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase;
+  }
+
+  /* ---- CARDS ---- */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 1.5rem;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none; color: inherit;
+    display: flex; flex-direction: column;
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    opacity: 0; transform: translateY(24px);
+    animation: fadeUp 0.5s forwards;
+  }
+  .card:nth-child(1){animation-delay:0.05s}
+  .card:nth-child(2){animation-delay:0.12s}
+  .card:nth-child(3){animation-delay:0.19s}
+  .card:nth-child(4){animation-delay:0.26s}
+  .card:nth-child(5){animation-delay:0.33s}
+  .card:nth-child(6){animation-delay:0.40s}
+  @keyframes fadeUp { to{opacity:1;transform:translateY(0);} }
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px var(--shadow-lg);
+    border-color: transparent;
+  }
+  .card-color-bar { height: 4px; width: 100%; }
+  .card-body { padding: 1.75rem; flex: 1; display: flex; flex-direction: column; }
+  .card-icon {
+    width: 44px; height: 44px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 1.25rem;
+  }
+  .card-tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text3); margin-bottom: 0.5rem;
+  }
+  .card-title {
+    font-family: 'Playfair Display', serif; font-weight: 700;
+    font-size: 1.25rem; line-height: 1.25; margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+  .card-desc { font-size: 0.9rem; color: var(--text2); line-height: 1.7; flex: 1; }
+  .card-footer {
+    padding: 1rem 1.75rem;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-count {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+    color: var(--text3); letter-spacing: 0.05em;
+  }
+  .card-arrow {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--bg2); display: flex; align-items: center;
+    justify-content: center; font-size: 0.85rem;
+    transition: background var(--transition), transform var(--transition);
+    color: var(--text2);
+  }
+  .card:hover .card-arrow { background: var(--accent); color: white; transform: translateX(3px); }
+
+  /* ---- FEATURED QUOTE ---- */
+  .featured-quote {
+    background: var(--surface); border: 1px solid var(--border);
+    border-left: 4px solid var(--accent); border-radius: 4px;
+    padding: 2.5rem 3rem; margin: 4rem 0;
+    position: relative; overflow: hidden;
+  }
+  .featured-quote::before {
+    content: '"';
+    position: absolute; left: 1.5rem; top: -0.5rem;
+    font-family: 'Playfair Display', serif; font-size: 8rem;
+    color: var(--bg2); line-height: 1; pointer-events: none;
+    transition: color var(--transition);
+  }
+  .quote-text {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    font-size: 1.15rem; line-height: 1.8; color: var(--text);
+    position: relative; z-index: 1; max-width: 700px;
+    margin-bottom: 1.25rem;
+  }
+  .quote-attr {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+    color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .quote-attr span { color: var(--accent); }
+
+  /* ---- TWO-COL ---- */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 4rem; }
+  .info-box {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 2rem;
+  }
+  .info-box-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text3); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .info-box-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .timeline-item {
+    display: flex; gap: 1rem; padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .timeline-item:last-child { border-bottom: none; }
+  .timeline-year {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+    font-weight: 400; color: var(--accent); min-width: 48px;
+    padding-top: 2px;
+  }
+  .timeline-text { font-size: 0.88rem; color: var(--text2); line-height: 1.6; }
+
+  /* ---- FOOTER ---- */
+  footer {
+    background: var(--bg2); border-top: 1px solid var(--border);
+    padding: 3rem 2.5rem 2rem; margin-top: 4rem;
+    transition: background var(--transition);
+  }
+  .footer-inner { max-width: 1100px; margin: 0 auto; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+  .footer-brand p { font-size: 0.9rem; color: var(--text2); margin-top: 1rem; max-width: 280px; line-height: 1.7; }
+  .footer-col-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3);
+    margin-bottom: 1rem;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .footer-links a {
+    color: var(--text2); text-decoration: none; font-size: 0.88rem;
+    transition: color var(--transition);
+  }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 2rem; border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+    color: var(--text3); letter-spacing: 0.04em;
+  }
+
+  /* Page transition overlay */
+  .page-overlay {
+    position: fixed; inset: 0; background: var(--accent);
+    z-index: 9999; transform: scaleY(0); transform-origin: bottom;
+    transition: transform 0.4s cubic-bezier(0.76,0,0.24,1);
+    pointer-events: none;
+  }
+  .page-overlay.leaving { transform: scaleY(1); }
+
+  @media(max-width:768px){
+    .hero{padding:3rem 1.5rem 2.5rem;}
+    .main{padding:2.5rem 1.5rem;}
+    .cards-grid{grid-template-columns:1fr;}
+    .two-col{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .nav-links{display:none;}
+    .hero::before{font-size:10rem; right:-1rem;}
+    .hero-stats{gap:1.5rem;}
+  }
+</style>
+</head>
+<body>
+
+<div class="page-overlay" id="overlay"></div>
+
+<nav>
+  <a href="index.html" class="nav-brand">
+    <div class="nav-brand-icon">VI</div>
+    <div>
+      <div class="nav-brand-text">Sixth Schedule Archive</div>
+      <div class="nav-brand-sub">Living Constitutional Record</div>
+    </div>
+  </a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="index.html" class="nav-link active">Home</a>
+      <a href="cases.html" class="nav-link">Cases</a>
+      <a href="debates.html" class="nav-link">Debates</a>
+      <a href="evolution.html" class="nav-link">Evolution</a>
+      <a href="articles.html" class="nav-link">Articles</a>
+      <a href="news.html" class="nav-link">News</a>
+      <a href="about.html" class="nav-link">About</a>
+    </div>
+    <button class="theme-toggle" id="themeToggle">
+      <div class="toggle-dot"></div>
+      <span id="toggleLabel">Light</span>
+    </button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Constitutional Law Archive</div>
+    <h1>The <em>Sixth Schedule</em><br>Living Archive</h1>
+    <p class="hero-desc">A comprehensive digital repository of the Sixth Schedule of the Indian Constitution — tracking its origins in the Constituent Assembly debates of 1949 through its judicial and administrative evolution in governing tribal areas of Northeast India.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">74+</div><div class="stat-label">Supreme Court Cases</div></div>
+      <div class="stat"><div class="stat-num">5</div><div class="stat-label">Scheduled States</div></div>
+      <div class="stat"><div class="stat-num">1949</div><div class="stat-label">Year of Drafting</div></div>
+      <div class="stat"><div class="stat-num">10</div><div class="stat-label">Autonomous Districts</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Constituent Assembly Debates — 5th September 1949</span>
+    <span>Autonomous District Councils</span>
+    <span>Schedule VI — Articles 244(2) & 275(1)</span>
+    <span>Assam · Meghalaya · Tripura · Mizoram · Nagaland</span>
+    <span>Ambedkar's Framework for Tribal Governance</span>
+    <span>District Council Legislation</span>
+    <span>Constituent Assembly Debates — 5th September 1949</span>
+    <span>Autonomous District Councils</span>
+    <span>Schedule VI — Articles 244(2) & 275(1)</span>
+    <span>Assam · Meghalaya · Tripura · Mizoram · Nagaland</span>
+    <span>Ambedkar's Framework for Tribal Governance</span>
+    <span>District Council Legislation</span>
+  </div>
+</div>
+
+<main class="main">
+
+  <div class="section-header">
+    <div class="section-title">Archive Sections</div>
+    <div class="section-meta">6 sections · Updated 2025</div>
+  </div>
+
+  <div class="cards-grid">
+
+    <a href="cases.html" class="card" data-navigate>
+      <div class="card-color-bar" style="background:linear-gradient(90deg,#8B1A1A,#C45C2A)"></div>
+      <div class="card-body">
+        <div class="card-icon" style="background:#FFF0EE;">⚖️</div>
+        <div class="card-tag">Jurisprudence</div>
+        <div class="card-title">Supreme Court Cases</div>
+        <div class="card-desc">Landmark judicial interpretations of the Sixth Schedule — from the Supreme Court to High Courts. Section-wise analysis, case digests, and holding summaries.</div>
+      </div>
+      <div class="card-footer">
+        <div class="card-count">74 cases indexed</div>
+        <div class="card-arrow">→</div>
+      </div>
+    </a>
+
+    <a href="debates.html" class="card" data-navigate>
+      <div class="card-color-bar" style="background:linear-gradient(90deg,#2A5C8B,#2A8B6B)"></div>
+      <div class="card-body">
+        <div class="card-icon" style="background:#EEF4FF;">📜</div>
+        <div class="card-tag">Primary Sources</div>
+        <div class="card-title">Constituent Assembly Debates</div>
+        <div class="card-desc">Complete transcripts of the Assembly debates on the Fifth and Sixth Schedules. Searchable state-wise pages covering Assam, Meghalaya, Tripura, Mizoram and Nagaland.</div>
+      </div>
+      <div class="card-footer">
+        <div class="card-count">Sept 5–7, 1949 · 5 states</div>
+        <div class="card-arrow">→</div>
+      </div>
+    </a>
+
+    <a href="evolution.html" class="card" data-navigate>
+      <div class="card-color-bar" style="background:linear-gradient(90deg,#B8860B,#8B6914)"></div>
+      <div class="card-body">
+        <div class="card-icon" style="background:#FFFBEE;">🏛️</div>
+        <div class="card-tag">Historical</div>
+        <div class="card-title">Historical Evolution</div>
+        <div class="card-desc">From the original 1949 draft through constitutional amendments and administrative restructuring. An animated timeline of how tribal governance evolved over seven decades.</div>
+      </div>
+      <div class="card-footer">
+        <div class="card-count">1949–2024 · 12 key events</div>
+        <div class="card-arrow">→</div>
+      </div>
+    </a>
+
+    <a href="articles.html" class="card" data-navigate>
+      <div class="card-color-bar" style="background:linear-gradient(90deg,#2A6B4A,#5A8B2A)"></div>
+      <div class="card-body">
+        <div class="card-icon" style="background:#EEFFF6;">📚</div>
+        <div class="card-tag">Scholarship</div>
+        <div class="card-title">Academic Articles</div>
+        <div class="card-desc">Curated scholarly commentary, law review articles, and policy analyses on the Sixth Schedule and autonomous district governance. Filter by topic, author, or year.</div>
+      </div>
+      <div class="card-footer">
+        <div class="card-count">38 articles · 14 journals</div>
+        <div class="card-arrow">→</div>
+      </div>
+    </a>
+
+    <a href="news.html" class="card" data-navigate>
+      <div class="card-color-bar" style="background:linear-gradient(90deg,#6B2A8B,#8B2A6B)"></div>
+      <div class="card-body">
+        <div class="card-icon" style="background:#F8EEFF;">📰</div>
+        <div class="card-tag">Current Affairs</div>
+        <div class="card-title">News & Updates</div>
+        <div class="card-desc">Recent legislative developments, parliamentary debates, court orders, and administrative changes affecting the Sixth Schedule territories. Searchable chronological log.</div>
+      </div>
+      <div class="card-footer">
+        <div class="card-count">Updates from 2018–2025</div>
+        <div class="card-arrow">→</div>
+      </div>
+    </a>
+
+    <a href="about.html" class="card" data-navigate>
+      <div class="card-color-bar" style="background:linear-gradient(90deg,#4A4A4A,#2A2A2A)"></div>
+      <div class="card-body">
+        <div class="card-icon" style="background:#F4F4F4;">ℹ️</div>
+        <div class="card-tag">About This Archive</div>
+        <div class="card-title">About the Archive</div>
+        <div class="card-desc">Purpose, methodology, data sources, and digital accessibility information. Learn how this living archive is built, maintained, and updated.</div>
+      </div>
+      <div class="card-footer">
+        <div class="card-count">Methodology & Sources</div>
+        <div class="card-arrow">→</div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- Featured Quote -->
+  <div class="featured-quote">
+    <div class="quote-text">"The Governor may, by public notification — include any area in Part I of the said Table, create a new autonomous district, increase the area of any autonomous district, diminish the area of any autonomous district, unite two or more autonomous districts or parts thereof so as to form one autonomous district, define the boundaries of any autonomous district."</div>
+    <div class="quote-attr">Dr. B.R. Ambedkar, moving Amendment No. 99 to Paragraph 1 of the Sixth Schedule — <span>5th September 1949</span></div>
+  </div>
+
+  <!-- Two-col info -->
+  <div class="two-col">
+    <div class="info-box">
+      <div class="info-box-title">Schedule Timeline</div>
+      <div class="timeline-item"><div class="timeline-year">1949</div><div class="timeline-text">Original Sixth Schedule adopted in Constituent Assembly on 5–7 September 1949</div></div>
+      <div class="timeline-item"><div class="timeline-year">1950</div><div class="timeline-text">Constitution of India comes into force; Sixth Schedule operative in Assam</div></div>
+      <div class="timeline-item"><div class="timeline-year">1972</div><div class="timeline-text">Meghalaya, Manipur and Tripura gain statehood; Schedule extended</div></div>
+      <div class="timeline-item"><div class="timeline-year">1987</div><div class="timeline-text">Mizoram and Arunachal Pradesh become states; Sixth Schedule applies to Mizoram</div></div>
+      <div class="timeline-item"><div class="timeline-year">2003</div><div class="timeline-text">Bodoland Territorial Council established under Sixth Schedule in Assam</div></div>
+      <div class="timeline-item"><div class="timeline-year">2023</div><div class="timeline-text">Constitutional Amendment Bill proposed to extend Sixth Schedule to new territories</div></div>
+    </div>
+    <div class="info-box">
+      <div class="info-box-title">Key Provisions at a Glance</div>
+      <div class="timeline-item"><div class="timeline-year">Para 1</div><div class="timeline-text">Establishment of Autonomous Districts and Regional Councils</div></div>
+      <div class="timeline-item"><div class="timeline-year">Para 3</div><div class="timeline-text">Powers of District Councils to make laws on specified subjects</div></div>
+      <div class="timeline-item"><div class="timeline-year">Para 5</div><div class="timeline-text">Powers of District Council to establish courts and administer justice</div></div>
+      <div class="timeline-item"><div class="timeline-year">Para 9</div><div class="timeline-text">Powers of District Councils to levy certain taxes</div></div>
+      <div class="timeline-item"><div class="timeline-year">Para 12</div><div class="timeline-text">Application of Acts of Parliament and State Legislatures to scheduled areas</div></div>
+      <div class="timeline-item"><div class="timeline-year">Para 14</div><div class="timeline-text">Appointment of Commission by Governor to inquire into administration</div></div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-brand-text" style="font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700;">Sixth Schedule Archive</div>
+        <p>A living digital repository documenting the constitutional governance of tribal areas in Northeast India. For research, education, and legal reference.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Archive</div>
+        <ul class="footer-links">
+          <li><a href="cases.html">Supreme Court Cases</a></li>
+          <li><a href="debates.html">CA Debates</a></li>
+          <li><a href="evolution.html">Historical Evolution</a></li>
+          <li><a href="articles.html">Academic Articles</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Resources</div>
+        <ul class="footer-links">
+          <li><a href="news.html">News & Updates</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="#">Schedule Text</a></li>
+          <li><a href="#">Download PDFs</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">States</div>
+        <ul class="footer-links">
+          <li><a href="debates.html#assam">Assam</a></li>
+          <li><a href="debates.html#meghalaya">Meghalaya</a></li>
+          <li><a href="debates.html#tripura">Tripura</a></li>
+          <li><a href="debates.html#mizoram">Mizoram</a></li>
+          <li><a href="debates.html#nagaland">Nagaland</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Sixth Schedule Archive · For Educational & Research Use</span>
+      <span>Built with ♦ for Constitutional Scholarship</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Theme toggle
+const root = document.documentElement;
+const toggle = document.getElementById('themeToggle');
+const label = document.getElementById('toggleLabel');
+const saved = localStorage.getItem('theme') || 'light';
+if (saved === 'dark') { root.setAttribute('data-theme','dark'); label.textContent = 'Dark'; }
+toggle.addEventListener('click', () => {
+  const isDark = root.getAttribute('data-theme') === 'dark';
+  root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  label.textContent = isDark ? 'Light' : 'Dark';
+  localStorage.setItem('theme', isDark ? 'light' : 'dark');
+});
+
+// Page transitions
+document.querySelectorAll('[data-navigate]').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const href = link.getAttribute('href');
+    const overlay = document.getElementById('overlay');
+    overlay.classList.add('leaving');
+    setTimeout(() => { window.location.href = href; }, 420);
+  });
+});
+</script>
+</body>
+</html>

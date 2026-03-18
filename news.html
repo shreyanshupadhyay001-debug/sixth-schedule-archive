@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>News & Updates — Sixth Schedule Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .news-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; margin-bottom: 1rem; overflow: hidden;
+    transition: box-shadow var(--transition);
+  }
+  .news-item:hover { box-shadow: 0 4px 20px var(--shadow); }
+  .news-head {
+    padding: 1.1rem 1.5rem; cursor: pointer;
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
+    border-left: 3px solid transparent; transition: border-color var(--transition);
+  }
+  .news-head:hover { border-left-color: var(--accent); }
+  .news-head-left { flex: 1; }
+  .news-date-row { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+  .news-date { font-family: 'JetBrains Mono',monospace; font-size: 0.65rem; color: var(--text3); letter-spacing: 0.05em; }
+  .news-type { font-family: 'JetBrains Mono',monospace; font-size: 0.6rem; padding: 2px 7px; border-radius: 3px; letter-spacing: 0.04em; }
+  .type-legislative { background: rgba(42,92,139,0.1); color: var(--accent3); }
+  .type-judicial { background: rgba(139,26,26,0.1); color: var(--accent); }
+  .type-political { background: rgba(184,134,11,0.1); color: var(--gold); }
+  .type-administrative { background: rgba(42,107,74,0.1); color: var(--green); }
+  .news-title { font-family: 'Playfair Display',serif; font-weight: 600; font-size: 1rem; }
+  .news-toggle { background: var(--bg2); border: none; cursor: pointer; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text3); font-size: 0.75rem; flex-shrink: 0; transition: background var(--transition); }
+  .news-toggle.open { background: var(--accent); color: white; }
+  .news-body { padding: 0 1.5rem 1.25rem; display: none; border-top: 1px solid var(--border); }
+  .news-body.open { display: block; }
+  .news-body p { font-size: 0.9rem; color: var(--text2); line-height: 1.8; margin-top: 1rem; }
+  .news-body p + p { margin-top: 0.75rem; }
+  .news-source { font-family: 'JetBrains Mono',monospace; font-size: 0.65rem; color: var(--text3); margin-top: 0.75rem; }
+
+  .news-year-divider {
+    font-family: 'Playfair Display',serif; font-weight: 900;
+    font-size: 3rem; color: var(--bg2); letter-spacing: -0.03em;
+    margin: 2rem 0 1rem; line-height: 1; position: relative;
+    transition: color var(--transition);
+  }
+  .news-year-divider::after {
+    content: ''; position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+    height: 1px; background: var(--border); left: 5rem;
+  }
+  .pinned-item {
+    background: rgba(139,26,26,0.04); border-color: rgba(139,26,26,0.2);
+  }
+  .pinned-badge {
+    font-family: 'JetBrains Mono',monospace; font-size: 0.6rem;
+    padding: 2px 7px; border-radius: 3px; background: var(--accent); color: white;
+    letter-spacing: 0.04em;
+  }
+</style>
+</head>
+<body>
+<div class="page-overlay" id="overlay"></div>
+
+<nav>
+  <a href="index.html" class="nav-brand" data-navigate>
+    <div class="nav-brand-icon">VI</div>
+    <div>
+      <div class="nav-brand-text">Sixth Schedule Archive</div>
+      <div class="nav-brand-sub">Living Constitutional Record</div>
+    </div>
+  </a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="index.html" class="nav-link" data-navigate>Home</a>
+      <a href="cases.html" class="nav-link" data-navigate>Cases</a>
+      <a href="debates.html" class="nav-link" data-navigate>Debates</a>
+      <a href="evolution.html" class="nav-link" data-navigate>Evolution</a>
+      <a href="articles.html" class="nav-link" data-navigate>Articles</a>
+      <a href="news.html" class="nav-link active">News</a>
+      <a href="about.html" class="nav-link" data-navigate>About</a>
+    </div>
+    <button class="theme-toggle" id="themeToggle"><div class="toggle-dot"></div><span id="toggleLabel">Light</span></button>
+  </div>
+</nav>
+
+<div class="breadcrumb"><a href="index.html">Home</a> › News & Updates</div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-tag">📰 Current Affairs</div>
+    <h1 class="page-h1">News & Updates</h1>
+    <p class="page-desc">Recent legislative developments, court orders, and administrative changes affecting the Sixth Schedule territories and District Councils.</p>
+  </div>
+</div>
+
+<div class="page-layout">
+  <aside class="sidebar">
+    <div class="sidebar-title">Filter by Type</div>
+    <ul class="sidebar-nav">
+      <li><a href="#" class="active" data-newsfilter="all">All Updates</a></li>
+      <li><a href="#" data-newsfilter="legislative">Legislative</a></li>
+      <li><a href="#" data-newsfilter="judicial">Judicial</a></li>
+      <li><a href="#" data-newsfilter="political">Political</a></li>
+      <li><a href="#" data-newsfilter="administrative">Administrative</a></li>
+    </ul>
+    <div class="sidebar-section">
+      <div class="sidebar-title">By State</div>
+      <ul class="sidebar-nav">
+        <li><a href="#" data-newsfilter="assam">Assam</a></li>
+        <li><a href="#" data-newsfilter="meghalaya">Meghalaya</a></li>
+        <li><a href="#" data-newsfilter="tripura">Tripura</a></li>
+        <li><a href="#" data-newsfilter="mizoram">Mizoram</a></li>
+        <li><a href="#" data-newsfilter="nagaland">Nagaland</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">By Year</div>
+      <ul class="sidebar-nav">
+        <li><a href="#" data-newsfilter="2024">2024–25</a></li>
+        <li><a href="#" data-newsfilter="2023">2023</a></li>
+        <li><a href="#" data-newsfilter="2022">2022</a></li>
+        <li><a href="#" data-newsfilter="2021">2021</a></li>
+        <li><a href="#" data-newsfilter="older">2018–2020</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main>
+    <div class="search-bar">
+      <input type="text" id="searchInput" class="search-input" placeholder="Search news...">
+      <button class="search-btn" id="searchBtn">Search</button>
+    </div>
+
+    <!-- 2025 -->
+    <div class="news-year-divider">2025</div>
+
+    <div class="news-item pinned-item" data-searchable data-newstags="legislative assam 2024">
+      <div class="news-head" onclick="toggleNews(this)">
+        <div class="news-head-left">
+          <div class="news-date-row">
+            <span class="news-date">March 2025</span>
+            <span class="news-type type-legislative">Legislative</span>
+            <span class="pinned-badge">Pinned</span>
+          </div>
+          <div class="news-title">Ladakh Sixth Schedule Demand: Parliamentary Committee Submits Report</div>
+        </div>
+        <button class="news-toggle">▼</button>
+      </div>
+      <div class="news-body">
+        <p>The Parliamentary Standing Committee on Home Affairs submitted its report on the demand for extension of Sixth Schedule protections to Ladakh. The report acknowledges the constitutional legitimacy of the demand, noting that the tribal composition of Ladakh's population and its geographic and cultural distinctiveness would qualify it for Schedule consideration.</p>
+        <p>The report recommends that the Government engage in substantive consultations with elected representatives of both Leh and Kargil district councils before proceeding with any constitutional amendment. It also flags that any extension must address the distinctive demands of Buddhist and Muslim tribal communities in the region.</p>
+        <div class="news-source">Source: Rajya Sabha Secretariat · Committee on Home Affairs · Report No. 247</div>
+      </div>
+    </div>
+
+    <div class="news-item" data-searchable data-newstags="judicial meghalaya 2024">
+      <div class="news-head" onclick="toggleNews(this)">
+        <div class="news-head-left">
+          <div class="news-date-row">
+            <span class="news-date">January 2025</span>
+            <span class="news-type type-judicial">Judicial</span>
+          </div>
+          <div class="news-title">Meghalaya HC: District Council Cannot Override State Environmental Law</div>
+        </div>
+        <button class="news-toggle">▼</button>
+      </div>
+      <div class="news-body">
+        <p>The Meghalaya High Court held that the Khasi Hills Autonomous District Council lacks legislative competence to exempt mining operations from the requirements of the Environment (Protection) Act, 1986. The Court ruled that environmental protection is a matter covered by concurrent List III and the central legislation prevails over any conflicting Council regulation.</p>
+        <p>The judgment is significant for the ongoing debate about rat-hole coal mining in the Khasi Hills, which has been banned by the National Green Tribunal but continues in practice. The District Council had argued that mineral regulation in the autonomous districts fell within its Para 3 powers — a position the Court rejected.</p>
+        <div class="news-source">Source: Meghalaya High Court · WP(C) No. 412 of 2024</div>
+      </div>
+    </div>
+
+    <!-- 2024 -->
+    <div class="news-year-divider">2024</div>
+
+    <div class="news-item" data-searchable data-newstags="political assam 2024">
+      <div class="news-head" onclick="toggleNews(this)">
+        <div class="news-head-left">
+          <div class="news-date-row">
+            <span class="news-date">December 2024</span>
+            <span class="news-type type-political">Political</span>
+          </div>
+          <div class="news-title">Bodoland Territorial Council Elections — December 2024</div>
+        </div>
+        <button class="news-toggle">▼</button>
+      </div>
+      <div class="news-body">
+        <p>Elections to the Bodoland Territorial Council were held in December 2024. The BTC, established under the Sixth Schedule in 2003 following the Bodo Peace Accord, has 46 seats of which 40 are elected. The elections were conducted under the supervision of the Assam State Election Commission following the constitutional mandate for regular elections to Sixth Schedule councils.</p>
+        <p>Political analysts noted increasing competition among Bodo political parties for the council, with the incumbent BPPF contesting against UPPL and Congress-backed candidates. The results will shape the administration of the Bodoland Territorial Area Districts covering approximately 27,000 sq km in western Assam.</p>
+        <div class="news-source">Source: Election Commission of India · Assam State Election Commission</div>
+      </div>
+    </div>
+
+    <div class="news-item" data-searchable data-newstags="legislative political 2024">
+      <div class="news-head" onclick="toggleNews(this)">
+        <div class="news-head-left">
+          <div class="news-date-row">
+            <span class="news-date">September 2024</span>
+            <span class="news-type type-political">Political</span>
+          </div>
+          <div class="news-title">Manipur Hill Councils: Central Government Suspends Sixth Schedule Councils</div>
+        </div>
+        <button class="news-toggle">▼</button>
+      </div>
+      <div class="news-body">
+        <p>In the context of the ongoing ethnic violence in Manipur, the Central Government suspended two Autonomous District Councils in the hill districts under Para 16 of the Sixth Schedule. The suspension, which allows the Governor to assume the functions of the District Council, was the first exercise of this power in Manipur in over two decades.</p>
+        <p>Civil society organisations and tribal bodies protested the suspension, arguing it further marginalised tribal self-governance at a time when Council-administered areas needed stronger, not weaker, tribal institutions. The suspension remains in force pending review.</p>
+        <div class="news-source">Source: Ministry of Home Affairs · Notification dated 14 September 2024</div>
+      </div>
+    </div>
+
+    <div class="news-item" data-searchable data-newstags="judicial assam 2024">
+      <div class="news-head" onclick="toggleNews(this)">
+        <div class="news-head-left">
+          <div class="news-date-row">
+            <span class="news-date">July 2024</span>
+            <span class="news-type type-judicial">Judicial</span>
+          </div>
+          <div class="news-title">Supreme Court: Forest Rights Act Applies in Autonomous Districts</div>
+        </div>
+        <button class="news-toggle">▼</button>
+      </div>
+      <div class="news-body">
+        <p>The Supreme Court held that the Scheduled Tribes and Other Traditional Forest Dwellers (Recognition of Forest Rights) Act, 2006, applies to communities living in Sixth Schedule autonomous districts. The ruling resolves a long-standing ambiguity about whether District Council forest regulations under Para 3 displaced the central Forest Rights Act.</p>
+        <p>The Court applied Para 12 analysis to hold that in the absence of an exclusionary notification, the Forest Rights Act operates in autonomous districts concurrently with Council regulations, and that community forest rights under the FRA must be recognized by both state governments and District Councils.</p>
+        <div class="news-source">Source: Supreme Court of India · SLP (C) No. 8934/2023</div>
+      </div>
+    </div>
+
+    <!-- 2023 -->
+    <div class="news-year-divider">2023</div>
+
+    <div class="news-item" data-searchable data-newstags="political legislative 2023">
+      <div class="news-head" onclick="toggleNews(this)">
+        <div class="news-head-left">
+          <div class="news-date-row">
+            <span class="news-date">May 2023</span>
+            <span class="news-type type-political">Political</span>
+          </div>
+          <div class="news-title">Manipur Ethnic Violence and the Sixth Schedule — Constitutional Failure or Gap?</div>
+        </div>
+        <button class="news-toggle">▼</button>
+      </div>
+      <div class="news-body">
+        <p>The outbreak of ethnic violence between Meitei and Kuki-Zo communities in Manipur in May 2023 prompted intense debate about the constitutional framework governing the state. Kuki-Zo leaders pointed to the Sixth Schedule's protection of the hill districts as constitutionally inadequate in the absence of enforcement mechanisms, while Meitei leaders opposed any ST status for their community.</p>
+        <p>The violence raised broader questions about the gap between the Sixth Schedule's formal protections and its implementation, and renewed calls for a constitutional commission to review the Schedule's adequacy.</p>
+        <div class="news-source">Source: Multiple news sources · Parliamentary debates · Ministry of Home Affairs</div>
+      </div>
+    </div>
+
+    <div class="news-item" data-searchable data-newstags="administrative meghalaya 2023">
+      <div class="news-head" onclick="toggleNews(this)">
+        <div class="news-head-left">
+          <div class="news-date-row">
+            <span class="news-date">February 2023</span>
+            <span class="news-type type-administrative">Administrative</span>
+          </div>
+          <div class="news-title">Garo Hills District Council — Para 9 Tax Revision Approved</div>
+        </div>
+        <button class="news-toggle">▼</button>
+      </div>
+      <div class="news-body">
+        <p>The Governor of Meghalaya, acting on Cabinet advice, approved revisions to the Garo Hills Autonomous District Council's tax schedule under Para 9 of the Sixth Schedule. The revision, the first comprehensive update in 18 years, increases levies on commercial establishments and introduces a new cess on timber export.</p>
+        <p>The tax revision is expected to increase the Council's own revenue by approximately 40%, reducing its dependence on state grants and providing resources for development programmes in the Garo Hills area.</p>
+        <div class="news-source">Source: Meghalaya Gazette · Finance Department Notification</div>
+      </div>
+    </div>
+
+    <!-- 2022 -->
+    <div class="news-year-divider">2022</div>
+
+    <div class="news-item" data-searchable data-newstags="legislative 2022">
+      <div class="news-head" onclick="toggleNews(this)">
+        <div class="news-head-left">
+          <div class="news-date-row">
+            <span class="news-date">December 2022</span>
+            <span class="news-type type-legislative">Legislative</span>
+          </div>
+          <div class="news-title">Sixth Schedule Amendment Bill — Darjeeling Inclusion Proposed</div>
+        </div>
+        <button class="news-toggle">▼</button>
+      </div>
+      <div class="news-body">
+        <p>A Private Member's Bill was introduced in the Lok Sabha proposing the extension of the Sixth Schedule to the Gorkhaland Territorial Administration area in Darjeeling. The bill was introduced by the MP from Darjeeling and has been referred to the Standing Committee on Home Affairs.</p>
+        <p>The proposal follows decades of demand from Gorkha political organisations for either statehood, a Union Territory, or Sixth Schedule status as a constitutional accommodation for the hill region. The GTA, created by a 2011 tripartite agreement, has repeatedly demanded greater constitutional protection.</p>
+        <div class="news-source">Source: Lok Sabha Secretariat · PMB No. 128 of 2022</div>
+      </div>
+    </div>
+
+    <div class="news-item" data-searchable data-newstags="judicial tripura 2022">
+      <div class="news-head" onclick="toggleNews(this)">
+        <div class="news-head-left">
+          <div class="news-date-row">
+            <span class="news-date">August 2022</span>
+            <span class="news-type type-judicial">Judicial</span>
+          </div>
+          <div class="news-title">Tripura HC: TTAADC Election Rules Must Comply with Part IX-A</div>
+        </div>
+        <button class="news-toggle">▼</button>
+      </div>
+      <div class="news-body">
+        <p>The Tripura High Court held that election rules made by the Tripura Tribal Areas Autonomous District Council must comply with the constitutional requirements of Part IX-A relating to free and fair elections, overriding any inconsistent provisions of the Council's own election regulations.</p>
+        <p>The judgment reinforces the subordination of District Council autonomy to broader constitutional standards on democratic governance, consistent with the Supreme Court's approach in earlier decisions on the relationship between the Sixth Schedule and other constitutional provisions.</p>
+        <div class="news-source">Source: Tripura High Court · WP(C) No. 892 of 2021</div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <span>© 2025 Sixth Schedule Archive · For Educational & Research Use</span>
+      <span><a href="index.html" style="color:var(--accent);text-decoration:none;" data-navigate>← Back to Home</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+function toggleNews(head) {
+  const body = head.nextElementSibling;
+  const btn = head.querySelector('.news-toggle');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  if (btn) { btn.classList.toggle('open', !isOpen); btn.textContent = isOpen ? '▼' : '▲'; }
+}
+
+// Sidebar filter
+document.querySelectorAll('[data-newsfilter]').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelectorAll('[data-newsfilter]').forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+    const filter = link.dataset.newsfilter;
+    document.querySelectorAll('.news-item').forEach(item => {
+      const tags = item.dataset.newstags || '';
+      item.style.display = (filter === 'all' || tags.includes(filter)) ? '' : 'none';
+    });
+    // Hide year dividers with no visible items
+    document.querySelectorAll('.news-year-divider').forEach(div => {
+      let next = div.nextElementSibling;
+      let hasVisible = false;
+      while (next && !next.classList.contains('news-year-divider')) {
+        if (next.style.display !== 'none') hasVisible = true;
+        next = next.nextElementSibling;
+      }
+      div.style.display = hasVisible ? '' : 'none';
+    });
+  });
+});
+</script>
+</body>
+</html>

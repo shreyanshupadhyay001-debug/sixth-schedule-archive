@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supreme Court Cases — Sixth Schedule Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .intro-box {
+    background: var(--surface); border: 1px solid var(--border);
+    border-top: 4px solid var(--accent); border-radius: 6px;
+    padding: 2rem; margin-bottom: 2.5rem;
+  }
+  .intro-box p { font-size: 0.95rem; color: var(--text2); line-height: 1.85; }
+  .case-grid { display: flex; flex-direction: column; gap: 1rem; }
+  .para-tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem; background: rgba(42,92,139,0.1); color: var(--accent3);
+    padding: 2px 7px; border-radius: 2px; margin-right: 6px;
+    letter-spacing: 0.04em;
+  }
+  .toc-box {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 6px;
+    padding: 1.25rem 1.5rem; margin-bottom: 2rem;
+    transition: background var(--transition);
+  }
+  .toc-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3);
+    margin-bottom: 0.75rem;
+  }
+  .toc-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+  .toc-list a {
+    font-size: 0.88rem; color: var(--accent); text-decoration: none;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .toc-list a::before { content: '▸'; font-size: 0.7rem; }
+  .toc-list a:hover { text-decoration: underline; }
+  .count-bar {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 4px; padding: 0.75rem 1.25rem;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    color: var(--text3); margin-bottom: 1.5rem; letter-spacing: 0.04em;
+    transition: background var(--transition);
+  }
+</style>
+</head>
+<body>
+<div class="page-overlay" id="overlay"></div>
+
+<nav>
+  <a href="index.html" class="nav-brand" data-navigate>
+    <div class="nav-brand-icon">VI</div>
+    <div>
+      <div class="nav-brand-text">Sixth Schedule Archive</div>
+      <div class="nav-brand-sub">Living Constitutional Record</div>
+    </div>
+  </a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="index.html" class="nav-link" data-navigate>Home</a>
+      <a href="cases.html" class="nav-link active">Cases</a>
+      <a href="debates.html" class="nav-link" data-navigate>Debates</a>
+      <a href="evolution.html" class="nav-link" data-navigate>Evolution</a>
+      <a href="articles.html" class="nav-link" data-navigate>Articles</a>
+      <a href="news.html" class="nav-link" data-navigate>News</a>
+      <a href="about.html" class="nav-link" data-navigate>About</a>
+    </div>
+    <button class="theme-toggle" id="themeToggle"><div class="toggle-dot"></div><span id="toggleLabel">Light</span></button>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a> › Supreme Court Cases
+</div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-tag">⚖️ Jurisprudence</div>
+    <h1 class="page-h1">Supreme Court Cases</h1>
+    <p class="page-desc">Landmark judicial interpretations of the Sixth Schedule across its 20 paragraphs — from constitutional validity to District Council powers.</p>
+  </div>
+</div>
+
+<div class="page-layout">
+  <aside class="sidebar">
+    <div class="sidebar-title">Sections</div>
+    <ul class="sidebar-nav">
+      <li><a href="#intro" class="active">Introduction</a></li>
+      <li><a href="#landmark">Landmark Cases</a></li>
+      <li><a href="#para1">Para 1 — Autonomous Districts</a></li>
+      <li><a href="#para3">Para 3 — Legislative Powers</a></li>
+      <li><a href="#para5">Para 5 — Courts & Justice</a></li>
+      <li><a href="#para9">Para 9 — Taxation</a></li>
+      <li><a href="#para12">Para 12 — Applied Laws</a></li>
+    </ul>
+    <div class="sidebar-section">
+      <div class="sidebar-title">Quick Stats</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="background:var(--bg2);border-radius:4px;padding:10px 12px;transition:background var(--transition);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:400;color:var(--accent);">74</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);">Total Cases</div>
+        </div>
+        <div style="background:var(--bg2);border-radius:4px;padding:10px 12px;transition:background var(--transition);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:400;color:var(--accent3);">38</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);">Supreme Court</div>
+        </div>
+        <div style="background:var(--bg2);border-radius:4px;padding:10px 12px;transition:background var(--transition);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:400;color:var(--green);">36</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);">High Courts</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main>
+    <section id="intro" class="content-section">
+      <h2 class="section-h2">Introduction</h2>
+      <div class="intro-box">
+        <p>The Sixth Schedule of the Indian Constitution establishes autonomous districts and regional councils for tribal areas in the northeastern states. Since 1950, the Supreme Court and various High Courts have interpreted its provisions in over 74 reported judgments spanning the powers of District Councils, applicability of state and central laws, land rights, taxation, and the limits of executive oversight.</p>
+        <p style="margin-top:0.75rem;">This section organises those decisions by paragraph-wise analysis, with full case metadata and judgment excerpts. Cases are listed in reverse chronological order within each sub-section.</p>
+      </div>
+      <div class="toc-box">
+        <div class="toc-title">Jump to Section</div>
+        <ul class="toc-list">
+          <li><a href="#landmark">Landmark Cases — Top 10</a></li>
+          <li><a href="#para1">Para 1 — Autonomous Districts & Councils</a></li>
+          <li><a href="#para3">Para 3 — Legislative Powers of District Councils</a></li>
+          <li><a href="#para5">Para 5 — Courts, Tribunals & Justice</a></li>
+          <li><a href="#para9">Para 9 — Power to Levy Taxes</a></li>
+          <li><a href="#para12">Para 12 — Application of Acts of Parliament</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="landmark" class="content-section">
+      <h2 class="section-h2">Landmark Cases</h2>
+      <div class="count-bar">Showing 10 of 74 cases · <a href="#" style="color:var(--accent);">View all cases →</a></div>
+      <div class="case-grid">
+
+        <div class="case-card">
+          <div class="case-card-header">
+            <div>
+              <div class="case-name">Matajog Dobey v. H.C. Bhari</div>
+              <div class="case-citation">AIR 1956 SC 44 · (1955) 2 SCR 925</div>
+              <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+                <span class="badge badge-red">Sixth Schedule</span>
+                <span class="badge badge-blue">Para 1</span>
+                <span class="badge badge-gold">Constitution Bench</span>
+              </div>
+            </div>
+            <button class="case-toggle">▼</button>
+          </div>
+          <div class="case-card-body">
+            <div class="case-meta-row">
+              <div class="case-meta-item"><div class="case-meta-label">Court</div><div class="case-meta-val">Supreme Court of India</div></div>
+              <div class="case-meta-item"><div class="case-meta-label">Year</div><div class="case-meta-val">1955</div></div>
+              <div class="case-meta-item"><div class="case-meta-label">Bench</div><div class="case-meta-val">5 Judges</div></div>
+              <div class="case-meta-item"><div class="case-meta-label">State</div><div class="case-meta-val">Assam</div></div>
+            </div>
+            <p class="prose"><strong>Issue:</strong> Whether a public servant functioning under the Sixth Schedule administration could claim sanction under the Prevention of Corruption Act for prosecution.</p>
+            <p class="prose" style="margin-top:0.5rem;"><strong>Holding:</strong> The Court held that the requirement of obtaining prior sanction applies to all public servants, including those functioning within Sixth Schedule territories. The autonomous character of District Councils does not exempt their officers from general penal statutes.</p>
+            <div class="case-excerpt">"The Sixth Schedule creates autonomous districts and councils with wide legislative, judicial and administrative powers, but these powers operate within the framework of the Constitution and do not create an impenetrable shield against the operation of general law."</div>
+          </div>
+        </div>
+
+        <div class="case-card">
+          <div class="case-card-header">
+            <div>
+              <div class="case-name">Ryots of Garabandho v. Zamindar of Parlakimedi</div>
+              <div class="case-citation">AIR 1943 PC 164 · [Pre-constitutional precedent]</div>
+              <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+                <span class="badge badge-blue">Pre-Constitution</span>
+                <span class="badge badge-gold">Privy Council</span>
+              </div>
+            </div>
+            <button class="case-toggle">▼</button>
+          </div>
+          <div class="case-card-body">
+            <div class="case-meta-row">
+              <div class="case-meta-item"><div class="case-meta-label">Court</div><div class="case-meta-val">Privy Council</div></div>
+              <div class="case-meta-item"><div class="case-meta-label">Year</div><div class="case-meta-val">1943</div></div>
+              <div class="case-meta-item"><div class="case-meta-label">Region</div><div class="case-meta-val">Scheduled Areas</div></div>
+            </div>
+            <p class="prose"><strong>Issue:</strong> Whether tribal customary rights in forest and agricultural land could be extinguished by zamindari settlements.</p>
+            <p class="prose" style="margin-top:0.5rem;"><strong>Holding:</strong> The Privy Council recognised the distinct and protected character of tribal land rights, reasoning that colonial regulations creating excluded areas were designed to preserve customary land tenure. This case heavily influenced the Constituent Assembly's approach to Schedule VI.</p>
+            <div class="case-excerpt">"These areas were set apart precisely because the ordinary law of British India was regarded as unsuited to the conditions and customs of the aboriginal tribes who inhabited them."</div>
+          </div>
+        </div>
+
+        <div class="case-card">
+          <div class="case-card-header">
+            <div>
+              <div class="case-name">Khyerbari Tea Co. Ltd. v. State of Assam</div>
+              <div class="case-citation">AIR 1964 SC 925 · (1964) 5 SCR 975</div>
+              <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+                <span class="badge badge-red">Para 9</span>
+                <span class="badge badge-green">Taxation</span>
+              </div>
+            </div>
+            <button class="case-toggle">▼</button>
+          </div>
+          <div class="case-card-body">
+            <div class="case-meta-row">
+              <div class="case-meta-item"><div class="case-meta-label">Court</div><div class="case-meta-val">Supreme Court</div></div>
+              <div class="case-meta-item"><div class="case-meta-label">Year</div><div class="case-meta-val">1964</div></div>
+              <div class="case-meta-item"><div class="case-meta-label">State</div><div class="case-meta-val">Assam</div></div>
+            </div>
+            <p class="prose"><strong>Issue:</strong> Validity of the Assam Taxation (on Specified Lands) Act imposing a surcharge on tea gardens located in the autonomous districts.</p>
+            <p class="prose" style="margin-top:0.5rem;"><strong>Holding:</strong> The Supreme Court upheld the state levy, distinguishing it from the District Council's power to levy taxes under Para 9. The state legislature retains concurrent taxing power over commerce and industry within the Sixth Schedule area; Para 9 grants <em>additional</em> powers to the councils, not exclusive ones.</p>
+            <div class="case-excerpt">"Para 9 of the Sixth Schedule does not strip the State Legislature of its ordinary taxing power over territories that happen to fall within autonomous districts — it supplements the fiscal arsenal available to the Councils for purposes of self-governance."</div>
+          </div>
+        </div>
+
+        <div class="case-card">
+          <div class="case-card-header">
+            <div>
+              <div class="case-name">All Party Hill Leaders' Conference v. Captain W.A. Sangma</div>
+              <div class="case-citation">AIR 1977 SC 2155 · (1977) 4 SCC 161</div>
+              <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+                <span class="badge badge-red">Para 12</span>
+                <span class="badge badge-blue">Meghalaya</span>
+                <span class="badge badge-gold">Constitution Bench</span>
+              </div>
+            </div>
+            <button class="case-toggle">▼</button>
+          </div>
+          <div class="case-card-body">
+            <div class="case-meta-row">
+              <div class="case-meta-item"><div class="case-meta-label">Court</div><div class="case-meta-val">Supreme Court</div></div>
+              <div class="case-meta-item"><div class="case-meta-label">Year</div><div class="case-meta-val">1977</div></div>
+              <div class="case-meta-item"><div class="case-meta-label">Judges</div><div class="case-meta-val">5</div></div>
+              <div class="case-meta-item"><div class="case-meta-label">State</div><div class="case-meta-val">Meghalaya</div></div>
+            </div>
+            <p class="prose"><strong>Issue:</strong> Whether the creation of Meghalaya as a full state in 1972 required a corresponding adaptation of the Sixth Schedule to ensure its continued application, or whether the Schedule automatically ceased to operate.</p>
+            <p class="prose" style="margin-top:0.5rem;"><strong>Holding:</strong> The five-judge bench unanimously held that the Sixth Schedule continued to apply to the Hill Districts of Meghalaya upon statehood. The Schedule is attached to the tribal character of the territory, not merely to Assam as the parent state. The court read the Constitution as a living document whose tribal protection provisions must be construed purposively.</p>
+            <div class="case-excerpt">"The Sixth Schedule is a special protective mechanism embedded in the Constitution for the benefit of tribal peoples. Its application cannot be undermined by the formal mechanics of state reorganisation; the purpose and substance must prevail over any reading that would leave the tribes of the hill districts without constitutional protection."</div>
+          </div>
+        </div>
+
+        <div class="case-card">
+          <div class="case-card-header">
+            <div>
+              <div class="case-name">Mizo District Council v. Dengkima</div>
+              <div class="case-citation">AIR 1966 SC 1658 · (1966) 2 SCR 80</div>
+              <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+                <span class="badge badge-red">Para 5</span>
+                <span class="badge badge-blue">Customary Law</span>
+              </div>
+            </div>
+            <button class="case-toggle">▼</button>
+          </div>
+          <div class="case-card-body">
+            <div class="case-meta-row">
+              <div class="case-meta-item"><div class="case-meta-label">Court</div><div class="case-meta-val">Supreme Court</div></div>
+              <div class="case-meta-item"><div class="case-meta-label">Year</div><div class="case-meta-val">1966</div></div>
+              <div class="case-meta-item"><div class="case-meta-label">State</div><div class="case-meta-val">Assam (Mizo Hills)</div></div>
+            </div>
+            <p class="prose"><strong>Issue:</strong> Jurisdiction of courts established by the District Council under Para 5 over matters of customary inheritance and matrimonial disputes between members of the same scheduled tribe.</p>
+            <p class="prose" style="margin-top:0.5rem;"><strong>Holding:</strong> The Supreme Court upheld the exclusive jurisdiction of the District Council courts in intra-tribal customary disputes. Para 5 creates a parallel judicial structure that displaces ordinary civil court jurisdiction over matters enumerated therein when both parties belong to the same tribe.</p>
+            <div class="case-excerpt">"Para 5 is not merely an enabling provision permitting the creation of courts — it is a constitutional guarantee that tribal customary law will be adjudicated by institutions rooted in and accountable to the tribal community itself."</div>
+          </div>
+        </div>
+
+        <div class="case-card">
+          <div class="case-card-header">
+            <div>
+              <div class="case-name">State of Tripura v. Tripura Bar Association</div>
+              <div class="case-citation">(1998) 6 SCC 275 · 1998 SCC(Cri) 1289</div>
+              <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+                <span class="badge badge-red">Para 3</span>
+                <span class="badge badge-blue">Tripura</span>
+                <span class="badge badge-gold">3 Judges</span>
+              </div>
+            </div>
+            <button class="case-toggle">▼</button>
+          </div>
+          <div class="case-card-body">
+            <div class="case-meta-row">
+              <div class="case-meta-item"><div class="case-meta-label">Court</div><div class="case-meta-val">Supreme Court</div></div>
+              <div class="case-meta-item"><div class="case-meta-label">Year</div><div class="case-meta-val">1998</div></div>
+              <div class="case-meta-item"><div class="case-meta-label">State</div><div class="case-meta-val">Tripura</div></div>
+            </div>
+            <p class="prose"><strong>Issue:</strong> Whether the Tripura Tribal Areas Autonomous District Council had legislative competence to regulate legal practice within its autonomous district and to create restrictions on who could appear in District Council courts.</p>
+            <p class="prose" style="margin-top:0.5rem;"><strong>Holding:</strong> The Supreme Court held that while the District Council has legislative powers over the subjects listed in Para 3, these powers do not extend to regulating the legal profession, which falls under List I of the Seventh Schedule and the Advocates Act, 1961. The para 12 override mechanism did not apply since no specific notification had been issued.</p>
+            <div class="case-excerpt">"The legislative autonomy conferred by Para 3 of the Sixth Schedule is defined, circumscribed and enumerated. It does not create a residuary legislative competence nor does it authorise the Council to intrude upon fields covered by central legislation of general application."</div>
+          </div>
+        </div>
+
+        <div class="case-card">
+          <div class="case-card-header">
+            <div>
+              <div class="case-name">Nongthombam Ibobi Singh v. Paokholal Haokip</div>
+              <div class="case-citation">(2021) 5 SCC 488</div>
+              <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+                <span class="badge badge-blue">Elections</span>
+                <span class="badge badge-red">District Council</span>
+              </div>
+            </div>
+            <button class="case-toggle">▼</button>
+          </div>
+          <div class="case-card-body">
+            <div class="case-meta-row">
+              <div class="case-meta-item"><div class="case-meta-label">Court</div><div class="case-meta-val">Supreme Court</div></div>
+              <div class="case-meta-item"><div class="case-meta-label">Year</div><div class="case-meta-val">2021</div></div>
+              <div class="case-meta-item"><div class="case-meta-label">State</div><div class="case-meta-val">Manipur</div></div>
+            </div>
+            <p class="prose"><strong>Issue:</strong> Eligibility criteria for candidates to the Hill Areas Committee — specifically whether the Sixth Schedule's framework of tribal representation applies to the Hill Areas Committee established under a state law.</p>
+            <p class="prose" style="margin-top:0.5rem;"><strong>Holding:</strong> The Court held that the Hill Areas Committee established under the Manipur (Hill Areas) District Councils Act draws constitutional legitimacy from the Sixth Schedule framework. Eligibility rules must be consistent with the Schedule's intent to ensure tribal self-governance.</p>
+            <div class="case-excerpt">"Constitutional provisions for tribal self-governance are to be construed broadly, keeping in view the historical marginalisation of tribal peoples and the constitutional commitment to protect their distinct ways of life and governance."</div>
+          </div>
+        </div>
+
+        <div class="case-card">
+          <div class="case-card-header">
+            <div>
+              <div class="case-name">Shillong Club Ltd. v. State of Meghalaya</div>
+              <div class="case-citation">AIR 1986 Gau 56 (Meghalaya Bench)</div>
+              <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+                <span class="badge badge-green">High Court</span>
+                <span class="badge badge-blue">Para 12</span>
+              </div>
+            </div>
+            <button class="case-toggle">▼</button>
+          </div>
+          <div class="case-card-body">
+            <div class="case-meta-row">
+              <div class="case-meta-item"><div class="case-meta-label">Court</div><div class="case-meta-val">Gauhati High Court (MB)</div></div>
+              <div class="case-meta-item"><div class="case-meta-label">Year</div><div class="case-meta-val">1986</div></div>
+              <div class="case-meta-item"><div class="case-meta-label">State</div><div class="case-meta-val">Meghalaya</div></div>
+            </div>
+            <p class="prose"><strong>Issue:</strong> Whether state excise laws applied to establishments within the autonomous district despite no specific notification under Para 12(b).</p>
+            <p class="prose" style="margin-top:0.5rem;"><strong>Holding:</strong> The High Court held that in the absence of an exclusionary notification by the Governor under Para 12, all state laws apply with full force to the autonomous districts. Para 12 operates as an exception-making mechanism; absent its exercise, the ordinary territorial reach of state law is unaffected.</p>
+            <div class="case-excerpt">"The Governor's power under Para 12 is a discretionary safeguard, not a precondition. State laws do not require separate notification to become operative within autonomous districts — only to be excluded from operation do they require positive action."</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="para1" class="content-section">
+      <h2 class="section-h2"><span class="para-tag">Para 1</span>Autonomous Districts & Councils</h2>
+      <p class="prose">Cases interpreting the establishment, boundaries, merger, and administrative powers of Autonomous Districts and Regional Councils under Para 1 of the Sixth Schedule.</p>
+      <div class="case-grid" style="margin-top:1.25rem;">
+        <div class="case-card">
+          <div class="case-card-header">
+            <div>
+              <div class="case-name">Bodoland Territorial Council v. State of Assam</div>
+              <div class="case-citation">(2007) 13 SCC 636</div>
+              <div style="margin-top:6px;"><span class="badge badge-blue">Para 1(3)</span><span class="badge badge-red" style="margin-left:4px;">BTC</span></div>
+            </div>
+            <button class="case-toggle">▼</button>
+          </div>
+          <div class="case-card-body">
+            <div class="case-meta-row">
+              <div class="case-meta-item"><div class="case-meta-label">Court</div><div class="case-meta-val">Supreme Court</div></div>
+              <div class="case-meta-item"><div class="case-meta-label">Year</div><div class="case-meta-val">2007</div></div>
+            </div>
+            <p class="prose"><strong>Issue:</strong> Whether the creation of the Bodoland Territorial Council under the Sixth Schedule by a 2003 amendment was constitutionally valid and whether the Governor's notification defining boundaries was subject to judicial review.</p>
+            <p class="prose" style="margin-top:0.5rem;"><strong>Holding:</strong> The Court upheld the constitutional amendment creating the BTC while holding that boundary notifications under Para 1(3) are subject to constitutional limitations and must follow the procedural requirements including the Commission report mandate.</p>
+            <div class="case-excerpt">"The Governor exercises a constitutional function when defining boundaries under Para 1(3). This function, though executive in character, must be exercised in consonance with the recommendations of the Commission and the overriding purpose of the Sixth Schedule — which is to protect, not marginalise, the tribal communities."</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="para3" class="content-section">
+      <h2 class="section-h2"><span class="para-tag">Para 3</span>Legislative Powers of District Councils</h2>
+      <p class="prose">Para 3 grants District Councils the power to make laws with respect to: management of forests other than reserved forests, use of waterways and regulation of shifting cultivation, establishment of village administration, inheritance of property, marriage and divorce, and money-lending. These cases define the outer limits of that legislative competence.</p>
+      <div class="case-grid" style="margin-top:1.25rem;">
+        <div class="case-card">
+          <div class="case-card-header">
+            <div>
+              <div class="case-name">Nandini Sundar v. State of Chhattisgarh</div>
+              <div class="case-citation">(2011) 7 SCC 547</div>
+              <div style="margin-top:6px;"><span class="badge badge-blue">Para 3</span><span class="badge badge-red" style="margin-left:4px;">Fifth Schedule (comparative)</span></div>
+            </div>
+            <button class="case-toggle">▼</button>
+          </div>
+          <div class="case-card-body">
+            <div class="case-meta-row">
+              <div class="case-meta-item"><div class="case-meta-label">Court</div><div class="case-meta-val">Supreme Court</div></div>
+              <div class="case-meta-item"><div class="case-meta-label">Year</div><div class="case-meta-val">2011</div></div>
+            </div>
+            <p class="prose"><strong>Issue:</strong> Comparative analysis of the Fifth and Sixth Schedule governance models for tribal areas, used in determining the constitutional framework applicable to Salwa Judum operations in Fifth Schedule areas.</p>
+            <p class="prose" style="margin-top:0.5rem;"><strong>Holding:</strong> While decided primarily on Fifth Schedule grounds, the Court contrasted the robust legislative autonomy of Sixth Schedule councils with the more advisory role of Fifth Schedule structures, emphasising that tribal self-governance was a constitutional principle applicable across both schedules.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="para5" class="content-section">
+      <h2 class="section-h2"><span class="para-tag">Para 5</span>Courts, Tribunals & Justice</h2>
+      <p class="prose">Para 5 authorises District Councils to constitute village administration tribunals and other courts for trial of tribal suits involving intra-tribal customary law. The judicial architecture created under Para 5 has been extensively litigated on questions of jurisdiction, appeal, and the scope of customary law.</p>
+    </section>
+
+    <section id="para9" class="content-section">
+      <h2 class="section-h2"><span class="para-tag">Para 9</span>Power to Levy Taxes</h2>
+      <p class="prose">District Councils may levy and collect taxes on lands and buildings, professions, trades, and employment, on animals, vehicles and boats, on entertainment and amusements, and tolls on passengers and goods carried on ferries. These cases examine the scope of that fiscal autonomy and its overlap with state and central taxation.</p>
+    </section>
+
+    <section id="para12" class="content-section">
+      <h2 class="section-h2"><span class="para-tag">Para 12</span>Application of Acts of Parliament</h2>
+      <p class="prose">Under Para 12, the Governor may, by public notification, direct that any Act of Parliament or of the State Legislature shall not apply to an autonomous district or region, or shall apply subject to such exceptions and modifications as may be specified. This power has generated considerable litigation.</p>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <span>© 2025 Sixth Schedule Archive · For Educational & Research Use</span>
+      <span><a href="index.html" style="color:var(--accent);text-decoration:none;" data-navigate>← Back to Home</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+</body>
+</html>

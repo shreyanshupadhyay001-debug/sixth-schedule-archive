@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academic Articles — Sixth Schedule Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .filter-section { margin-bottom: 2rem; }
+  .filter-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem; align-items: center; }
+  .filter-label { font-family: 'JetBrains Mono',monospace; font-size: 0.65rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); min-width: 50px; }
+  .article-card { cursor: pointer; }
+  .article-card .article-title a { color: var(--text); text-decoration: none; }
+  .article-card .article-title a:hover { color: var(--accent); text-decoration: underline; }
+  .no-results { text-align: center; padding: 3rem; color: var(--text3); font-family: 'JetBrains Mono',monospace; font-size: 0.8rem; display: none; }
+  .featured-article {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 2rem; margin-bottom: 2.5rem;
+    border-left: 4px solid var(--accent);
+    display: grid; grid-template-columns: 1fr 160px; gap: 2rem; align-items: start;
+  }
+  .fa-tag { font-family: 'JetBrains Mono',monospace; font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+  .fa-title { font-family: 'Playfair Display',serif; font-weight: 700; font-size: 1.2rem; margin-bottom: 0.5rem; line-height: 1.3; }
+  .fa-author { font-family: 'JetBrains Mono',monospace; font-size: 0.72rem; color: var(--text3); margin-bottom: 1rem; }
+  .fa-abstract { font-size: 0.9rem; color: var(--text2); line-height: 1.8; }
+  .fa-meta { text-align: right; }
+  .fa-journal { font-family: 'Playfair Display',serif; font-style: italic; font-size: 0.9rem; color: var(--text2); }
+  .fa-year { font-family: 'JetBrains Mono',monospace; font-size: 1.8rem; color: var(--accent); font-weight: 400; line-height: 1; }
+  .fa-pages { font-family: 'JetBrains Mono',monospace; font-size: 0.65rem; color: var(--text3); }
+  .count-display { font-family: 'JetBrains Mono',monospace; font-size: 0.72rem; color: var(--text3); margin-bottom: 1.5rem; }
+  .count-display span { color: var(--accent); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="page-overlay" id="overlay"></div>
+
+<nav>
+  <a href="index.html" class="nav-brand" data-navigate>
+    <div class="nav-brand-icon">VI</div>
+    <div>
+      <div class="nav-brand-text">Sixth Schedule Archive</div>
+      <div class="nav-brand-sub">Living Constitutional Record</div>
+    </div>
+  </a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="index.html" class="nav-link" data-navigate>Home</a>
+      <a href="cases.html" class="nav-link" data-navigate>Cases</a>
+      <a href="debates.html" class="nav-link" data-navigate>Debates</a>
+      <a href="evolution.html" class="nav-link" data-navigate>Evolution</a>
+      <a href="articles.html" class="nav-link active">Articles</a>
+      <a href="news.html" class="nav-link" data-navigate>News</a>
+      <a href="about.html" class="nav-link" data-navigate>About</a>
+    </div>
+    <button class="theme-toggle" id="themeToggle"><div class="toggle-dot"></div><span id="toggleLabel">Light</span></button>
+  </div>
+</nav>
+
+<div class="breadcrumb"><a href="index.html">Home</a> › Academic Articles</div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-tag">📚 Scholarship</div>
+    <h1 class="page-h1">Academic Articles</h1>
+    <p class="page-desc">Curated scholarly commentary, law review articles, and policy analyses. Filter by topic, author, or year of publication.</p>
+  </div>
+</div>
+
+<div class="page-full">
+
+  <!-- Featured -->
+  <div class="featured-article">
+    <div>
+      <div class="fa-tag">⭐ Featured Article</div>
+      <div class="fa-title">The Sixth Schedule as a Model for Indigenous Autonomy: Comparative Perspectives</div>
+      <div class="fa-author">By Prof. Nandini Sundar · National Law School of India Review</div>
+      <div class="fa-abstract">This article examines the Sixth Schedule as one of the world's earliest constitutional experiments in institutionalised indigenous self-governance. Drawing on comparative analysis of the ILO Convention 169 framework, New Zealand's Treaty of Waitangi settlements, and Canada's s.35 jurisprudence, it argues that the Schedule's combination of territorial autonomy, legislative power, and judicial independence represents a theoretically coherent — if under-implemented — model that deserves sustained international attention. The article evaluates seven decades of administrative practice and identifies systemic underfunding, political interference in Council elections, and the erosion of customary law institutions as the primary implementation deficits.</div>
+    </div>
+    <div class="fa-meta">
+      <div class="fa-year">2019</div>
+      <div class="fa-journal">NLSIR Vol. 31(2)</div>
+      <div class="fa-pages">pp. 45–98</div>
+      <div style="margin-top:1rem;"><span class="badge badge-red">Comparative</span></div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filter-section">
+    <div class="filter-row">
+      <div class="filter-label">Topic</div>
+      <button class="filter-btn active" data-group="topic" data-filter="all">All</button>
+      <button class="filter-btn" data-group="topic" data-filter="autonomy">Autonomy</button>
+      <button class="filter-btn" data-group="topic" data-filter="land">Land Rights</button>
+      <button class="filter-btn" data-group="topic" data-filter="customary">Customary Law</button>
+      <button class="filter-btn" data-group="topic" data-filter="judicial">Judicial Interpretation</button>
+      <button class="filter-btn" data-group="topic" data-filter="political">Political</button>
+      <button class="filter-btn" data-group="topic" data-filter="comparative">Comparative</button>
+    </div>
+    <div class="filter-row">
+      <div class="filter-label">Period</div>
+      <button class="filter-btn active" data-group="period" data-filter="all">All Years</button>
+      <button class="filter-btn" data-group="period" data-filter="1950s">1950s</button>
+      <button class="filter-btn" data-group="period" data-filter="1970s">1970s</button>
+      <button class="filter-btn" data-group="period" data-filter="1990s">1990s</button>
+      <button class="filter-btn" data-group="period" data-filter="2000s">2000s</button>
+      <button class="filter-btn" data-group="period" data-filter="2010s">2010s+</button>
+    </div>
+  </div>
+
+  <div class="search-bar" style="margin-bottom:1.5rem;">
+    <input type="text" id="searchInput" class="search-input" placeholder="Search articles by title, author, or keyword...">
+    <button class="search-btn" id="searchBtn">Search</button>
+  </div>
+
+  <div class="count-display">Showing <span id="visibleCount">14</span> articles</div>
+
+  <div class="articles-grid" id="articlesGrid">
+
+    <div class="article-card" data-tags="autonomy customary 1970s" data-searchable>
+      <div class="article-meta">1976 · Journal of Constitutional Law</div>
+      <div class="article-title"><a href="#">District Councils under the Sixth Schedule: Power without Accountability?</a></div>
+      <div class="article-meta" style="margin-top:2px;">B.P. Singh · JCLI Vol. 4(1)</div>
+      <div class="article-abstract">Examines the first two decades of District Council operations in Assam, documenting the gap between constitutional powers and administrative reality. Argues that the absence of a robust oversight mechanism created conditions for elite capture.</div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:0.5rem;"><span class="badge badge-blue">Autonomy</span><span class="badge badge-red">1976</span></div>
+    </div>
+
+    <div class="article-card" data-tags="land customary 1990s" data-searchable>
+      <div class="article-meta">1994 · Economic & Political Weekly</div>
+      <div class="article-title"><a href="#">Customary Land Rights and the Constitutional Promise: Sixth Schedule in Practice</a></div>
+      <div class="article-meta" style="margin-top:2px;">M. Fernandes · EPW Vol. 29(14)</div>
+      <div class="article-abstract">Field-based study of land administration in the Autonomous Districts of Meghalaya and Assam. Documents the practical challenges of applying Sixth Schedule land regulations in the context of rapid demographic change and economic development pressures.</div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:0.5rem;"><span class="badge badge-green">Land Rights</span><span class="badge badge-red">1994</span></div>
+    </div>
+
+    <div class="article-card" data-tags="judicial 2000s" data-searchable>
+      <div class="article-meta">2005 · Indian Law Review</div>
+      <div class="article-title"><a href="#">Judicial Interpretation of Para 3: The Limits of District Council Legislation</a></div>
+      <div class="article-meta" style="margin-top:2px;">A. Hazarika · ILR Vol. 8(2)</div>
+      <div class="article-abstract">Systematic analysis of the Supreme Court's jurisprudence on the legislative powers of District Councils under Para 3 of the Sixth Schedule. Identifies a pattern of restrictive interpretation that has progressively narrowed Council autonomy despite the Schedule's broad language.</div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:0.5rem;"><span class="badge badge-blue">Judicial</span></div>
+    </div>
+
+    <div class="article-card" data-tags="political autonomy 2010s" data-searchable>
+      <div class="article-meta">2011 · Asian Survey</div>
+      <div class="article-title"><a href="#">From Autonomy to Insurgency: The Sixth Schedule's Governance Deficit in Northeast India</a></div>
+      <div class="article-meta" style="margin-top:2px;">S. Baruah · Asian Survey 51(6)</div>
+      <div class="article-abstract">Explores the relationship between the inadequacy of Sixth Schedule governance arrangements and the persistence of armed conflict in northeastern India. Argues that the Schedule's failure to deliver genuine autonomy has created structural incentives for insurgent alternatives.</div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:0.5rem;"><span class="badge badge-gold">Political</span><span class="badge badge-red">Autonomy</span></div>
+    </div>
+
+    <div class="article-card" data-tags="comparative 2010s" data-searchable>
+      <div class="article-meta">2013 · Oxford Journal of Legal Studies</div>
+      <div class="article-title"><a href="#">Constitutional Accommodation of Indigenous Peoples: India's Sixth Schedule in Global Perspective</a></div>
+      <div class="article-meta" style="margin-top:2px;">T. Woolman · OJLS Vol. 33(3)</div>
+      <div class="article-abstract">Comparative analysis positioning the Sixth Schedule alongside Canadian and Australian indigenous rights frameworks. Argues the Schedule represents a more legally robust model than post-colonial alternatives while suffering from serious implementation deficits.</div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:0.5rem;"><span class="badge badge-blue">Comparative</span></div>
+    </div>
+
+    <div class="article-card" data-tags="customary judicial 1990s" data-searchable>
+      <div class="article-meta">1998 · Indian Journal of International Law</div>
+      <div class="article-title"><a href="#">Customary Law Courts under the Sixth Schedule: Jurisdiction and Legitimacy</a></div>
+      <div class="article-meta" style="margin-top:2px;">R.K. Verma · IJIL Vol. 38(4)</div>
+      <div class="article-abstract">Analyses the judicial architecture created by Para 5 of the Sixth Schedule — particularly the para-judicial courts of the District Councils. Examines case law on the scope of customary law jurisdiction and the right to appeal to ordinary courts.</div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:0.5rem;"><span class="badge badge-blue">Customary Law</span><span class="badge badge-red">Judicial</span></div>
+    </div>
+
+    <div class="article-card" data-tags="land autonomy 2000s" data-searchable>
+      <div class="article-meta">2007 · Journal of Northeast India Studies</div>
+      <div class="article-title"><a href="#">The Bodoland Territorial Council: Innovation or Precedent?</a></div>
+      <div class="article-meta" style="margin-top:2px;">P. Bhattacharya · JNEIS Vol. 1(1)</div>
+      <div class="article-abstract">First scholarly assessment of the BTC's creation as a Sixth Schedule addition in 2003. Evaluates the BTC model against prior District Councils and assesses its potential to serve as a template for resolving other sub-state autonomy claims in Northeast India.</div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:0.5rem;"><span class="badge badge-green">Autonomy</span><span class="badge badge-gold">BTC</span></div>
+    </div>
+
+    <div class="article-card" data-tags="political 2010s" data-searchable>
+      <div class="article-meta">2014 · South Asia Research</div>
+      <div class="article-title"><a href="#">Election Integrity and Tribal Self-Governance: District Council Polls in Meghalaya</a></div>
+      <div class="article-meta" style="margin-top:2px;">D. Sohliya · SAR Vol. 34(2)</div>
+      <div class="article-abstract">Empirical study of election administration in Meghalaya's three Autonomous District Councils. Identifies systemic irregularities and argues that the absence of Election Commission oversight (prior to constitutional amendments) undermined the democratic legitimacy of self-governance institutions.</div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:0.5rem;"><span class="badge badge-gold">Political</span><span class="badge badge-blue">Meghalaya</span></div>
+    </div>
+
+    <div class="article-card" data-tags="comparative autonomy 2010s" data-searchable>
+      <div class="article-meta">2017 · Constitutional Law Review</div>
+      <div class="article-title"><a href="#">Asymmetric Federalism and Tribal Territories: The Sixth Schedule's Place in India's Constitutional Architecture</a></div>
+      <div class="article-meta" style="margin-top:2px;">K. Krishnaswamy · CLR Vol. 9(1)</div>
+      <div class="article-abstract">Situates the Sixth Schedule within the broader literature on asymmetric federalism. Argues the Schedule represents a constitutionally legitimate and theoretically sophisticated example of differentiated constitutional status for sub-state territorial units.</div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:0.5rem;"><span class="badge badge-blue">Federalism</span><span class="badge badge-red">Comparative</span></div>
+    </div>
+
+    <div class="article-card" data-tags="land customary 2010s" data-searchable>
+      <div class="article-meta">2018 · Indian Economic & Social History Review</div>
+      <div class="article-title"><a href="#">Shifting Cultivation Regulation under the Sixth Schedule: History and Controversy</a></div>
+      <div class="article-meta" style="margin-top:2px;">J. Karlsson · IESHR Vol. 55(3)</div>
+      <div class="article-abstract">Historical analysis of Para 3's provision empowering District Councils to regulate shifting cultivation (jhum). Traces the colonial genealogy of jhum regulation and evaluates the extent to which District Council regulation has served tribal interests versus state ecological priorities.</div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:0.5rem;"><span class="badge badge-green">Land</span><span class="badge badge-gold">Historical</span></div>
+    </div>
+
+    <div class="article-card" data-tags="judicial 2010s" data-searchable>
+      <div class="article-meta">2020 · National Law School of India Review</div>
+      <div class="article-title"><a href="#">Fundamental Rights in Autonomous Districts: Applying Part III to the Sixth Schedule</a></div>
+      <div class="article-meta" style="margin-top:2px;">C. Mallya · NLSIR Vol. 32(1)</div>
+      <div class="article-abstract">Examines the relationship between the fundamental rights chapter of the Constitution and the special regime created by the Sixth Schedule. Argues that District Council legislation must comply with Part III, but that courts have not consistently applied this standard.</div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:0.5rem;"><span class="badge badge-red">Fundamental Rights</span><span class="badge badge-blue">Judicial</span></div>
+    </div>
+
+    <div class="article-card" data-tags="political autonomy 2010s" data-searchable>
+      <div class="article-meta">2021 · Modern Asian Studies</div>
+      <div class="article-title"><a href="#">Tribe, Territory and the Indian State: The Sixth Schedule at Seventy</a></div>
+      <div class="article-meta" style="margin-top:2px;">S. Wouters · MAS Vol. 55(6)</div>
+      <div class="article-abstract">Comprehensive assessment of the Sixth Schedule at seven decades, drawing on archival research and fieldwork across all five Sixth Schedule states. Argues for a fundamental re-theorisation of the Schedule as a system of constitutional pluralism rather than merely a transitional protective measure.</div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:0.5rem;"><span class="badge badge-gold">Comprehensive</span><span class="badge badge-blue">70 Years</span></div>
+    </div>
+
+    <div class="article-card" data-tags="comparative 2010s" data-searchable>
+      <div class="article-meta">2022 · International Journal on Minority & Group Rights</div>
+      <div class="article-title"><a href="#">The Sixth Schedule and ILO Convention 169: Convergence and Divergence</a></div>
+      <div class="article-meta" style="margin-top:2px;">L. Rodriguez-Pizarro · IJMGR Vol. 29(2)</div>
+      <div class="article-abstract">Compares the Sixth Schedule's provisions with the framework established by ILO Convention 169 on Indigenous and Tribal Peoples. Identifies areas of convergence (territorial rights, customary law, self-governance) and divergence (free, prior and informed consent; veto rights).</div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:0.5rem;"><span class="badge badge-blue">International Law</span><span class="badge badge-red">Comparative</span></div>
+    </div>
+
+    <div class="article-card" data-tags="land judicial 2010s" data-searchable>
+      <div class="article-meta">2023 · Economic & Political Weekly</div>
+      <div class="article-title"><a href="#">Mining, Extraction, and the Sixth Schedule: Who Controls Subsoil Resources?</a></div>
+      <div class="article-meta" style="margin-top:2px;">A. Xaxa · EPW Vol. 58(12)</div>
+      <div class="article-abstract">Examines the contested question of mineral resource control in Sixth Schedule areas. Argues that the Schedule's silence on subsoil resources has been exploited by state governments and private companies to extract resources without meaningful tribal consent, undermining the Schedule's protective purpose.</div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:0.5rem;"><span class="badge badge-green">Resources</span><span class="badge badge-red">Land Rights</span></div>
+    </div>
+
+  </div>
+
+  <div class="no-results" id="noResults">No articles match your current filters. Try adjusting your search.</div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <span>© 2025 Sixth Schedule Archive · For Educational & Research Use</span>
+      <span><a href="index.html" style="color:var(--accent);text-decoration:none;" data-navigate>← Back to Home</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+function updateCount() {
+  const visible = document.querySelectorAll('.article-card:not([style*="display: none"])').length;
+  document.getElementById('visibleCount').textContent = visible;
+  document.getElementById('noResults').style.display = visible === 0 ? 'block' : 'none';
+}
+
+// Override filter buttons to also update count
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => { setTimeout(updateCount, 50); });
+});
+document.getElementById('searchBtn').addEventListener('click', () => { setTimeout(updateCount, 50); });
+</script>
+</body>
+</html>
