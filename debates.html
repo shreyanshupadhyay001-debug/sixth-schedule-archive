@@ -1,96 +1,159 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Constituent Assembly Debates — Sixth Schedule Archive</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shared.css">
 <style>
-  .state-tabs {
-    display: flex; gap: 0; background: var(--surface);
-    border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
-    margin-bottom: 2rem;
-  }
-  .state-tab {
-    flex: 1; text-align: center; padding: 0.9rem 0.5rem;
-    font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
-    letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer;
-    border: none; background: none; color: var(--text2);
-    border-right: 1px solid var(--border);
-    transition: background var(--transition), color var(--transition);
-  }
-  .state-tab:last-child { border-right: none; }
-  .state-tab:hover { background: var(--bg2); color: var(--text); }
-  .state-tab.active { background: var(--accent); color: white; }
-  .state-panel { display: none; }
-  .state-panel.active { display: block; }
-  .speaker-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 6px; margin-bottom: 1rem; overflow: hidden;
-  }
-  .speaker-header {
-    padding: 1rem 1.5rem; background: var(--bg2);
-    display: flex; align-items: center; gap: 1rem; cursor: pointer;
-    transition: background var(--transition);
-  }
-  .speaker-header:hover { background: var(--border); }
-  .speaker-avatar {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: var(--accent); color: white; display: flex;
-    align-items: center; justify-content: center;
-    font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.85rem;
-    flex-shrink: 0;
-  }
-  .speaker-info { flex: 1; }
-  .speaker-name { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 0.95rem; }
-  .speaker-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--text3); letter-spacing: 0.04em; margin-top: 2px; }
-  .speaker-body { padding: 1.25rem 1.5rem; display: none; }
-  .speaker-body.open { display: block; }
-  .debate-text {
-    font-size: 0.92rem; color: var(--text2); line-height: 1.9;
-    padding-left: 1rem; border-left: 2px solid var(--border);
-  }
-  .debate-text + .debate-text { margin-top: 1rem; }
-  .session-banner {
-    background: linear-gradient(135deg, rgba(139,26,26,0.06), rgba(42,92,139,0.06));
-    border: 1px solid var(--border); border-radius: 6px;
-    padding: 1.5rem 2rem; margin-bottom: 2rem;
-    display: flex; align-items: center; justify-content: space-between; gap: 2rem;
-    transition: background var(--transition);
-  }
-  .session-date { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; }
-  .session-details { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--text3); letter-spacing: 0.04em; margin-top: 4px; }
-  .session-page { text-align: right; }
-  .session-page-num { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.8rem; color: var(--accent); line-height: 1; }
-  .session-page-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; }
-  .highlight-box {
-    background: rgba(184,134,11,0.06); border: 1px solid rgba(184,134,11,0.2);
-    border-radius: 4px; padding: 1rem 1.25rem; margin: 1rem 0;
-    font-size: 0.88rem; color: var(--text2); line-height: 1.7;
-  }
-  .amendment-pill {
-    display: inline-flex; align-items: center; gap: 4px;
-    background: rgba(42,92,139,0.08); border: 1px solid rgba(42,92,139,0.2);
-    border-radius: 3px; padding: 3px 9px;
-    font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--accent3);
-    margin: 2px;
-  }
-  .result-adopted { color: var(--green); }
-  .result-negatived { color: var(--accent); }
+.page-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);overflow-x:auto;scrollbar-width:none;background:var(--bg);position:sticky;top:64px;z-index:50;padding:0 2rem;}
+.page-tabs::-webkit-scrollbar{display:none;}
+.page-tab{padding:.9rem 1.4rem;font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;color:var(--text-secondary);border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .2s;cursor:pointer;}
+.page-tab:hover{color:var(--accent);}
+.page-tab.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:500;}
+.subpage{display:none;padding:2.5rem 2rem;}
+.subpage.active{display:block;}
+.debate-layout{display:grid;grid-template-columns:220px 1fr;gap:3rem;max-width:1140px;margin:0 auto;}
+@media(max-width:768px){.debate-layout{grid-template-columns:1fr;}}
+.d-sidebar{position:sticky;top:130px;align-self:start;}
+.d-sidebar-title{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.75rem;margin-top:1.5rem;}
+.d-sidebar-title:first-child{margin-top:0;}
+.d-sidebar-nav{list-style:none;}
+.d-sidebar-nav li a{display:block;padding:.45rem .75rem;font-size:.83rem;color:var(--text-secondary);border-left:2px solid transparent;transition:all .2s;border-radius:0 3px 3px 0;}
+.d-sidebar-nav li a:hover{color:var(--accent);border-left-color:var(--accent-subtle);background:var(--accent-light);}
+.d-sidebar-nav li a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-light);font-weight:600;}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;}
+.section-title{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:800;color:var(--text-primary);line-height:1.2;margin-bottom:1rem;}
+.section-lead{font-size:1rem;line-height:1.85;color:var(--text-secondary);margin-bottom:2rem;max-width:680px;}
+.para-card{background:var(--card-bg);border:1px solid var(--border);border-radius:6px;margin-bottom:1.5rem;overflow:hidden;transition:box-shadow .2s;}
+.para-card:hover{box-shadow:0 4px 18px var(--shadow);}
+.para-card-head{padding:1.1rem 1.5rem;display:flex;align-items:center;gap:1rem;cursor:pointer;background:var(--surface);border-bottom:1px solid var(--border);transition:background .2s;}
+.para-card-head:hover{background:var(--accent-light);}
+.para-num{width:40px;height:40px;flex-shrink:0;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:800;font-size:.85rem;}
+.para-num.adopted{background:#0E6251;}
+.para-num.negatived{background:#922B21;}
+.para-num.discuss{background:#6E2FA0;}
+.para-info{flex:1;}
+.para-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.95rem;color:var(--text-primary);}
+.para-meta{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.06em;color:var(--text-muted);margin-top:3px;}
+.para-result{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.07em;text-transform:uppercase;padding:4px 10px;border-radius:3px;white-space:nowrap;}
+.para-result.adopted{background:#D1F2EB;color:#0E6251;}
+.para-result.negatived{background:#FADBD8;color:#922B21;}
+.para-result.discuss{background:#EAD5F7;color:#6E2FA0;}
+[data-theme="dark"] .para-result.adopted{background:#0A2E25;color:#52C4A0;}
+[data-theme="dark"] .para-result.negatived{background:#2E0A0A;color:#E57373;}
+[data-theme="dark"] .para-result.discuss{background:#200A2E;color:#CE93D8;}
+.para-body{padding:1.5rem;display:none;}
+.para-body.open{display:block;}
+.para-toggle{color:var(--text-muted);font-size:.75rem;transition:transform .2s;}
+.para-toggle.open{transform:rotate(180deg);}
+.q-block{border-left:3px solid var(--accent);padding:.9rem 1.25rem;margin:1rem 0;background:var(--surface);border-radius:0 4px 4px 0;}
+.q-block p{font-size:.9rem;line-height:1.85;color:var(--text-secondary);font-style:italic;}
+.q-speaker{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent);letter-spacing:.06em;margin-top:.5rem;text-transform:uppercase;}
+.amend-table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.84rem;}
+.amend-table th{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);background:var(--surface);padding:.6rem .9rem;text-align:left;border-bottom:2px solid var(--border);}
+.amend-table td{padding:.7rem .9rem;border-bottom:1px solid var(--border);vertical-align:top;color:var(--text-secondary);line-height:1.6;}
+.amend-table tr:last-child td{border-bottom:none;}
+.amend-table tr:hover td{background:var(--surface);}
+.pill{display:inline-block;padding:2px 8px;font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;border-radius:3px;}
+.pill-adopted{background:#D1F2EB;color:#0E6251;}
+.pill-negatived{background:#FADBD8;color:#922B21;}
+.pill-withdrawn{background:#FFF3CD;color:#856404;}
+[data-theme="dark"] .pill-adopted{background:#0A2E25;color:#52C4A0;}
+[data-theme="dark"] .pill-negatived{background:#2E0A0A;color:#E57373;}
+[data-theme="dark"] .pill-withdrawn{background:#332800;color:#FFC107;}
+.pull-quote{margin:2rem 0;padding:2rem 2.5rem;background:linear-gradient(135deg,rgba(43,76,126,.05),rgba(43,76,126,.02));border:1px solid var(--accent-subtle);border-radius:6px;position:relative;}
+.pull-quote::before{content:'\201C';position:absolute;top:-.5rem;left:1.75rem;font-family:'Playfair Display',serif;font-size:4rem;color:var(--accent);opacity:.3;line-height:1;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:1.05rem;line-height:1.8;color:var(--text-primary);}
+.pull-quote cite{display:block;margin-top:.75rem;font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.08em;color:var(--accent);text-transform:uppercase;font-style:normal;}
+.stat-row{display:flex;gap:1rem;flex-wrap:wrap;margin:1.5rem 0;}
+.stat-box{flex:1;min-width:100px;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1rem 1.25rem;text-align:center;}
+.stat-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:800;color:var(--accent);line-height:1;}
+.stat-label{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-top:4px;}
+.session-banner{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1.25rem 1.75rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;margin-bottom:1.75rem;}
+.session-date{font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem;}
+.session-details{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--text-muted);letter-spacing:.04em;margin-top:4px;}
+.session-pageref{text-align:right;flex-shrink:0;}
+.session-pagenum{font-family:'Playfair Display',serif;font-weight:800;font-size:1.75rem;color:var(--accent);line-height:1;}
+.session-pagelabel{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--text-muted);letter-spacing:.07em;text-transform:uppercase;}
+.speaker-card{background:var(--card-bg);border:1px solid var(--border);border-radius:6px;margin-bottom:.85rem;overflow:hidden;}
+.speaker-head{padding:.9rem 1.25rem;display:flex;align-items:center;gap:.85rem;cursor:pointer;background:var(--surface);transition:background .2s;}
+.speaker-head:hover{background:var(--accent-light);}
+.spkr-avatar{width:34px;height:34px;border-radius:50%;flex-shrink:0;background:var(--accent);color:white;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:.75rem;}
+.spkr-name{font-family:'Playfair Display',serif;font-weight:600;font-size:.9rem;color:var(--text-primary);}
+.spkr-meta{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--text-muted);letter-spacing:.04em;margin-top:2px;}
+.speaker-body{padding:1.1rem 1.25rem;display:none;border-top:1px solid var(--border);}
+.speaker-body.open{display:block;}
+.prose{font-size:.9rem;line-height:1.85;color:var(--text-secondary);margin-bottom:.75rem;}
+.prose:last-child{margin-bottom:0;}
+.state-tabs{display:flex;gap:0;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1.5rem;flex-wrap:wrap;}
+.state-tab{flex:1;min-width:80px;text-align:center;padding:.85rem .5rem;font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;border:none;background:var(--surface);color:var(--text-secondary);border-right:1px solid var(--border);transition:background .2s,color .2s;}
+.state-tab:last-child{border-right:none;}
+.state-tab:hover{background:var(--accent-light);color:var(--accent);}
+.state-tab.active{background:var(--accent);color:white;}
+.state-panel{display:none;}
+.state-panel.active{display:block;}
+.hl-box{background:var(--accent-light);border:1px solid var(--accent-subtle);border-radius:4px;padding:1rem 1.25rem;margin:1rem 0;font-size:.88rem;line-height:1.7;color:var(--text-secondary);}
+.hl-box strong{color:var(--accent);}
+.warn-box{background:#FFF9EC;border:1px solid #F0D070;border-radius:4px;padding:1rem 1.25rem;margin:1rem 0;font-size:.88rem;line-height:1.7;color:#6B5000;}
+[data-theme="dark"] .warn-box{background:#2A2200;border-color:#5A4500;color:#D4AA40;}
+.h2{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--text-primary);margin:2rem 0 1rem;padding-bottom:.5rem;border-bottom:2px solid var(--border);}
+.h3{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--text-primary);margin:1.25rem 0 .6rem;}
+.c-timeline{position:relative;padding-left:28px;}
+.c-timeline::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:var(--border);}
+.c-titem{position:relative;margin-bottom:1.25rem;}
+.c-titem::before{content:'';position:absolute;left:-24px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);box-shadow:0 0 0 2px var(--accent);}
+.c-tdate{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.1em;color:var(--accent);text-transform:uppercase;margin-bottom:3px;}
+.c-ttitle{font-family:'Playfair Display',serif;font-weight:700;font-size:.88rem;color:var(--text-primary);margin-bottom:4px;}
+.c-tbody{font-size:.83rem;line-height:1.7;color:var(--text-secondary);}
+.breadcrumb-bar{padding:.75rem 2rem;font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.05em;color:var(--text-muted);border-bottom:1px solid var(--border);}
+.breadcrumb-bar a{color:var(--accent);}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;}
+@media(max-width:640px){.two-col{grid-template-columns:1fr;}}
+
+/* ── NAV BRAND (custom for this page) ── */
+nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 2rem;height:64px;gap:1.5rem;}
+.nav-brand{display:flex;align-items:center;gap:.65rem;text-decoration:none;}
+.nav-brand-icon{width:32px;height:32px;border-radius:4px;background:var(--accent);color:white;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:800;font-size:.85rem;}
+.nav-brand-text{font-family:'Playfair Display',serif;font-weight:700;font-size:.95rem;color:var(--text-primary);}
+.nav-brand-sub{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);}
+.nav-right{display:flex;align-items:center;gap:1rem;margin-left:auto;}
+.nav-links{display:flex;gap:2px;}
+.nav-link{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.06em;text-transform:uppercase;padding:.4rem .75rem;border-radius:3px;color:var(--text-secondary);transition:all .2s;}
+.nav-link:hover,.nav-link.active{color:var(--accent);background:var(--accent-light);}
+.theme-toggle{display:flex;align-items:center;gap:.4rem;padding:.45rem .85rem;border:1px solid var(--border);border-radius:20px;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text-secondary);transition:all .2s;cursor:pointer;background:none;}
+.theme-toggle:hover{border-color:var(--accent);color:var(--accent);}
+.toggle-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);}
+
+/* ── PAGE HEADER ── */
+.page-header{border-bottom:1px solid var(--border);padding:2.5rem 2rem;background:var(--bg);}
+.page-header-inner{max-width:1140px;margin:0 auto;}
+.page-tag{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;}
+.page-h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;color:var(--text-primary);line-height:1.15;margin-bottom:.75rem;}
+.page-desc{font-size:.95rem;line-height:1.8;color:var(--text-secondary);max-width:640px;}
+
+/* ── FOOTER ── */
+footer{background:var(--surface);border-top:1px solid var(--border);margin-top:4rem;padding:3rem 2rem 1.5rem;}
+.footer-inner{max-width:1140px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:3rem;margin-bottom:2rem;}
+@media(max-width:640px){.footer-inner{grid-template-columns:1fr;}}
+.footer-brand-text{font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;color:var(--text-primary);margin-bottom:.5rem;}
+.footer-desc{font-size:.85rem;line-height:1.7;color:var(--text-muted);}
+.footer-col-title{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.75rem;}
+.footer-links{list-style:none;}
+.footer-links li{margin-bottom:.4rem;}
+.footer-links a{font-size:.85rem;color:var(--text-secondary);transition:color .2s;}
+.footer-links a:hover{color:var(--accent);}
+.footer-bottom{max-width:1140px;margin:0 auto;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text-muted);}
 </style>
 </head>
 <body>
-<div class="page-overlay" id="overlay"></div>
-
+<div id="page-transition"></div>
 <nav>
   <a href="index.html" class="nav-brand" data-navigate>
     <div class="nav-brand-icon">VI</div>
-    <div>
-      <div class="nav-brand-text">Sixth Schedule Archive</div>
-      <div class="nav-brand-sub">Living Constitutional Record</div>
-    </div>
+    <div><div class="nav-brand-text">Sixth Schedule Archive</div><div class="nav-brand-sub">Living Constitutional Record</div></div>
   </a>
   <div class="nav-right">
     <div class="nav-links">
@@ -105,414 +168,958 @@
     <button class="theme-toggle" id="themeToggle"><div class="toggle-dot"></div><span id="toggleLabel">Light</span></button>
   </div>
 </nav>
-
-<div class="breadcrumb">
-  <a href="index.html">Home</a> › Constituent Assembly Debates
-</div>
-
+<div class="breadcrumb-bar"><a href="index.html">Home</a> › Constituent Assembly Debates</div>
 <div class="page-header">
   <div class="page-header-inner">
-    <div class="page-tag">📜 Primary Sources</div>
+    <div class="page-tag">📜 Primary Sources · Vol. IX, 5–7 September 1949</div>
     <h1 class="page-h1">Constituent Assembly Debates</h1>
-    <p class="page-desc">Official transcripts of the debates on the Fifth and Sixth Schedules — Volume IX, 5th–7th September 1949. State-wise analysis of tribal governance discussions.</p>
+    <p class="page-desc">Complete annotated transcripts of the Sixth Schedule debates — paragraph by paragraph, amendment by amendment, speaker by speaker. The foundational record of tribal self-governance in India's Constitution.</p>
   </div>
 </div>
-
-<div class="page-layout">
-  <aside class="sidebar">
-    <div class="sidebar-title">Sections</div>
-    <ul class="sidebar-nav">
-      <li><a href="#overview" class="active">Overview</a></li>
-      <li><a href="#sept5">5 Sept 1949</a></li>
-      <li><a href="#sept6">6 Sept 1949</a></li>
-      <li><a href="#sept7">7 Sept 1949</a></li>
-    </ul>
-    <div class="sidebar-section">
-      <div class="sidebar-title">State Pages</div>
-      <ul class="sidebar-nav">
-        <li><a href="#assam">Assam</a></li>
-        <li><a href="#meghalaya">Meghalaya</a></li>
-        <li><a href="#tripura">Tripura</a></li>
-        <li><a href="#mizoram">Mizoram</a></li>
-        <li><a href="#nagaland">Nagaland</a></li>
-      </ul>
-    </div>
-    <div class="sidebar-section">
-      <div class="sidebar-title">Key Speakers</div>
-      <ul class="sidebar-nav">
-        <li><a href="#ambedkar">Dr. B.R. Ambedkar</a></li>
-        <li><a href="#jaipal">Shri Jaipal Singh</a></li>
-        <li><a href="#munshi">Shri K.M. Munshi</a></li>
-        <li><a href="#thakkar">Shri A.V. Thakkar</a></li>
-        <li><a href="#chaliha">Shri K. Chaliha</a></li>
-      </ul>
-    </div>
-  </aside>
-
-  <main>
-    <section id="overview" class="content-section">
-      <h2 class="section-h2">Overview of the Debates</h2>
-      <p class="prose">The Sixth Schedule was debated in the Constituent Assembly primarily over three days — 5th, 6th, and 7th September 1949 — as part of Volume IX of the official record. The debates were preceded by consideration of the Fifth Schedule (Scheduled Areas and Scheduled Tribes) on 5th September, and the discussion of the two instruments was closely interconnected.</p>
-      <p class="prose">The key architect of the Sixth Schedule was Dr. B.R. Ambedkar, who moved Amendment No. 98 (adding the words "Subject to the provisions of this paragraph" before Para 1) and Amendment No. 99 (substituting a new sub-paragraph (3) for Para 1). The most significant revisions concerned the Governor's power to define boundaries, create new autonomous districts, and merge existing ones — changes designed to make the Schedule operationally flexible.</p>
-
-      <div class="session-banner">
-        <div>
-          <div class="session-date">5th September 1949</div>
-          <div class="session-details">Monday · Constitution Hall, New Delhi · Dr. Rajendra Prasad presiding</div>
-          <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
-            <span class="amendment-pill">Amendment No. 98</span>
-            <span class="amendment-pill">Amendment No. 99</span>
-            <span class="amendment-pill">Amendment No. 100</span>
-          </div>
-        </div>
-        <div class="session-page">
-          <div class="session-page-num">1003</div>
-          <div class="session-page-label">Page in Vol. IX</div>
-        </div>
-      </div>
-
-      <div class="highlight-box">
-        <strong>Archival Note:</strong> The debates reproduced here are sourced from the Official Report of the Constituent Assembly Debates, Volume IX (30th July 1949 – 18th September 1949), Sixth Reprint 2014, Lok Sabha Secretariat, New Delhi. The Sixth Schedule consideration begins at page 1003 and continues through page 1099.
-      </div>
-    </section>
-
-    <!-- STATE TABS -->
-    <section id="state-debates" class="content-section">
-      <h2 class="section-h2">State-wise Debate Analysis</h2>
-      <p class="prose" style="margin-bottom:1.5rem;">Explore how the debates addressed the specific concerns of each state that would eventually fall under the Sixth Schedule.</p>
-
-      <div class="state-tabs">
-        <button class="state-tab active" data-tab="assam">Assam</button>
-        <button class="state-tab" data-tab="meghalaya">Meghalaya</button>
-        <button class="state-tab" data-tab="tripura">Tripura</button>
-        <button class="state-tab" data-tab="mizoram">Mizoram</button>
-        <button class="state-tab" data-tab="nagaland">Nagaland</button>
-      </div>
-
-      <!-- ASSAM -->
-      <div id="assam" class="state-panel active">
-        <div style="margin-bottom:1.25rem;">
-          <span class="badge badge-blue" style="margin-right:6px;">Assam</span>
-          <span class="badge badge-gold">Most Debated State</span>
-          <span class="badge badge-green" style="margin-left:6px;">Original Schedule State</span>
-        </div>
-        <p class="prose" style="margin-bottom:1.5rem;">Assam was the primary territory for which the Sixth Schedule was conceived. The 1949 debates contain extensive discussion of the Assam Hills Districts — the Khasi and Jaintia Hills, the Garo Hills, the Lushai Hills (now Mizoram), the Naga Hills, the North Cachar Hills, and the Mikir Hills. The key debates involving Assam centred on the powers of the Governor, the composition of the Commission under Para 14, and the autonomy of the Hill tribes.</p>
-
-        <div class="speaker-card">
-          <div class="speaker-header" onclick="toggleSpeaker(this)">
-            <div class="speaker-avatar">KMC</div>
-            <div class="speaker-info">
-              <div class="speaker-name">Shri Kuladhar Chaliha</div>
-              <div class="speaker-meta">Assam: General · 5th September 1949 · Pages 1004–1006</div>
-            </div>
-            <span style="color:var(--text3);font-size:0.8rem;">▼</span>
-          </div>
-          <div class="speaker-body">
-            <p class="prose" style="margin-bottom:0.75rem;">Shri Chaliha raised the most substantive objection on behalf of the Assam members — questioning the composition and necessity of the Commission under the proviso to Para 1(3). He moved an amendment for deletion of the proviso:</p>
-            <div class="debate-text">
-              <p>"I want both the provisos to be taken out but here one proviso has been taken out but the other remains in the next paragraph. If you look at para 14 you will find this: 'provision of educational and medical facilities and communications in such districts; the need for any new or special legislation in respect of such districts; and the administration of the laws, regulations and rules made by the District and Regional Councils.' But you do not find mention of these subjects in paragraph 3. It mentions something else."</p>
-            </div>
-            <p class="prose" style="margin-top:1rem;">Chaliha's core concern was the potential for delay created by mandatory Commission consultation before boundary changes — particularly in the context of Assam's unstable political situation with pressures from Pakistan, China, and Burma. He preferred direct Governor action guided by Cabinet advice.</p>
-            <div class="debate-text" style="margin-top:0.75rem;">
-              <p>"A Governor means of course the Cabinet. I do not want a Commission. The Governor would have the power in consultation with his Cabinet to discuss these things and if it is left to a Commission there will be obvious delay."</p>
-            </div>
-            <div style="margin-top:1rem; padding-top:1rem; border-top:1px solid var(--border);">
-              <span class="badge badge-red">Amendment moved</span>
-              <span class="result-negatived" style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;margin-left:8px;">▼ Negatived</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="speaker-card">
-          <div class="speaker-header" onclick="toggleSpeaker(this)">
-            <div class="speaker-avatar">BP</div>
-            <div class="speaker-info">
-              <div class="speaker-name">Shri Brajeshwar Prasad</div>
-              <div class="speaker-meta">Bihar: General · 5th September 1949 · Pages 1005–1008</div>
-            </div>
-            <span style="color:var(--text3);font-size:0.8rem;">▼</span>
-          </div>
-          <div class="speaker-body">
-            <p class="prose" style="margin-bottom:0.75rem;">Brajeshwar Prasad proposed the most radical alternative — that the entire tribal areas of Assam be placed under Central administration. He moved three amendments including substituting "President" for "Governor" throughout, and adding a clause making the Governor an agent of the President.</p>
-            <div class="debate-text">
-              <p>"I am opposed to handing over the administration of the tribal areas into the hands of the provincial government, because Assam is on the border of five or six foreign States. I am referring to China, Tibet, Burma and Pakistan. Sir, in Assam, the conflicts between the Ahoms, and the Assamese, the Bengalees and the Muslims and the Mangoloid races have assumed proportions of which probably we the members of the House are not fully aware and so do not realise the gravity of the situation with which the Government of Assam is confronted."</p>
-            </div>
-            <p class="prose" style="margin-top:1rem;">Ambedkar responded that while frontier areas were addressed separately under the Schedule (with the Governor acting under the President in those areas), wholesale centralisation would create an impossible constitutional anomaly of a province with parts administered by the Centre.</p>
-            <div style="margin-top:1rem; padding-top:1rem; border-top:1px solid var(--border);">
-              <span class="badge badge-red">3 Amendments moved</span>
-              <span class="result-negatived" style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;margin-left:8px;">▼ All Negatived</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="speaker-card">
-          <div class="speaker-header" onclick="toggleSpeaker(this)">
-            <div class="speaker-avatar" style="background:var(--accent3);">BRA</div>
-            <div class="speaker-info">
-              <div class="speaker-name" id="ambedkar">Dr. B.R. Ambedkar — Reply on Assam Amendments</div>
-              <div class="speaker-meta">Bombay: General · 5th September 1949 · Pages 1006–1008</div>
-            </div>
-            <span style="color:var(--text3);font-size:0.8rem;">▼</span>
-          </div>
-          <div class="speaker-body">
-            <div class="debate-text">
-              <p>"Sir, there are just two points which have been raised in the course of the remarks made on these amendments which call for reply. The first question is the one, which was raised by Mr. Chaliha. I must say I was somewhat surprised at the amendment tabled by Mr. Chaliha, because like the Fifth Schedule the Sixth Schedule also has arisen, so to say, out of an agreement between the Drafting Committee and the Premier of Assam, my Friend Mr. Nichols Roy and at which conference Mr. Chaliha also was present, and he accepted the new schedule as amended by the Drafting Committee."</p>
-            </div>
-            <p class="prose" style="margin-top:1rem;">Ambedkar further explained that the Commission mechanism in Para 14 was not an obstacle to effective governance — the Commission's composition and terms of reference would be guided by the Cabinet, since the Governor acts on Cabinet advice (not in discretion) in this context.</p>
-            <div class="debate-text" style="margin-top:0.75rem;">
-              <p>"It is quite obvious that in constituting the Commission, and defining its terms of reference, the Governor would be guided by the advice of the local ministers, and I do not think, therefore, there need be any fears such as the one that he has expressed."</p>
-            </div>
-            <div class="debate-text" style="margin-top:0.75rem;">
-              <p>"He has forgotten to take note of the fact that even in constituting the autonomous areas, the Drafting Committee has not forgotten that there are what are called certain 'frontier areas', bordering on the autonomous districts. It has been provided in this Schedule that so far as the administration of these frontier areas of Assam is concerned, the Governor would be acting under the President. Consequently whatever strategic importance, the frontier areas may have, the Centre would certainly have ample jurisdiction to see that none of the disturbing factors to which he has made reference will find any place there."</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="speaker-card">
-          <div class="speaker-header" onclick="toggleSpeaker(this)">
-            <div class="speaker-avatar" style="background:var(--green);">TK</div>
-            <div class="speaker-info">
-              <div class="speaker-name">Shri T.T. Krishnamachari</div>
-              <div class="speaker-meta">Madras: General · 5th September 1949 · Page 1004</div>
-            </div>
-            <span style="color:var(--text3);font-size:0.8rem;">▼</span>
-          </div>
-          <div class="speaker-body">
-            <p class="prose">Krishnamachari intervened briefly to draw the Assembly's attention to Amendment No. 134 tabled by the Drafting Committee, which addressed Chaliha's concern about the scope of the Commission's inquiry under Para 14.</p>
-            <div class="debate-text">
-              <p>"If he reads Amendment 134 tabled by the Drafting Committee, he will find the answer to his query. It covers these."</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- MEGHALAYA -->
-      <div id="meghalaya" class="state-panel">
-        <div style="margin-bottom:1.25rem;">
-          <span class="badge badge-blue">Meghalaya</span>
-          <span class="badge badge-gold" style="margin-left:6px;">Post-1972 Statehood</span>
-        </div>
-        <p class="prose" style="margin-bottom:1.5rem;">In 1949, the territories that now constitute Meghalaya — the Khasi Hills, Jaintia Hills, and Garo Hills — were autonomous districts within Assam. The constituent debates addressed these districts as integral to the Assam framework. Meghalaya gained statehood in 1972, and the Sixth Schedule continued to apply to its three hill districts.</p>
-
-        <div class="speaker-card">
-          <div class="speaker-header" onclick="toggleSpeaker(this)">
-            <div class="speaker-avatar" style="background:var(--gold);color:#1A1614;">JS</div>
-            <div class="speaker-info">
-              <div class="speaker-name" id="jaipal">Shri Jaipal Singh</div>
-              <div class="speaker-meta">Bihar: General (representing tribal interests broadly) · Pages 977–978, 992–996</div>
-            </div>
-            <span style="color:var(--text3);font-size:0.8rem;">▼</span>
-          </div>
-          <div class="speaker-body">
-            <p class="prose" style="margin-bottom:0.75rem;">Jaipal Singh, the only Adivasi member of the Constituent Assembly, was a vocal and often contentious voice in the tribal debates. He moved five amendments to the Fifth Schedule (including extending reports on scheduled tribes, strengthening the Advisory Council, and confining benefits to tribes beyond scheduled areas) — all of which were ultimately negatived or withdrawn. His most significant contribution to the Sixth Schedule debate was his insistence that tribal governance must be effective, not merely formal.</p>
-            <div class="debate-text">
-              <p>"I find that this new proposed Fifth Schedule has, somehow or other, perhaps without meaning it, emasculated the Tribes Advisory Council. The whole pattern of the original draft was to bring the Tribes Advisory Council into action. It could initiate, originate things, but, somehow or other, the tables have now been turned. The initiative is placed in the hands of the Governor or Ruler of the State. I regret that that is a situation I cannot accept."</p>
-            </div>
-            <p class="prose" style="margin-top:1rem;">On the specific question of the Khasi Hills (which would become part of Meghalaya), Jaipal Singh consistently argued that tribal interests required elected, empowered councils — not merely advisory bodies.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- TRIPURA -->
-      <div id="tripura" class="state-panel">
-        <div style="margin-bottom:1.25rem;">
-          <span class="badge badge-blue">Tripura</span>
-          <span class="badge badge-red" style="margin-left:6px;">Part C State → Union Territory → State</span>
-        </div>
-        <p class="prose" style="margin-bottom:1.5rem;">Tripura was a Part C State (formerly a princely state) at the time of the 1949 debates. Its tribal areas were governed under separate instruments during the transition period. The Sixth Schedule was extended to Tripura's tribal areas (now the Tripura Tribal Areas Autonomous District Council) following its merger with India and subsequent reorganisation as a full state in 1972.</p>
-
-        <div class="speaker-card">
-          <div class="speaker-header" onclick="toggleSpeaker(this)">
-            <div class="speaker-avatar" style="background:var(--accent2);">DB</div>
-            <div class="speaker-info">
-              <div class="speaker-name">Shri Biswanath Das</div>
-              <div class="speaker-meta">Orissa: General · Pages 996–999 (general tribal debate)</div>
-            </div>
-            <span style="color:var(--text3);font-size:0.8rem;">▼</span>
-          </div>
-          <div class="speaker-body">
-            <p class="prose" style="margin-bottom:0.75rem;">Biswanath Das offered the most philosophically challenging critique of the tribal schedule framework from a member who claimed shared identity with tribal peoples. He warned that scheduled areas risked perpetuating the colonial "museum" logic of keeping tribes separate from mainstream society.</p>
-            <div class="debate-text">
-              <p>"Though it has been thought wisdom for over a hundred years or more by British Imperialists to keep these tribal people and these Scheduled areas as museums for purposes of demonstration and exhibition before the world to justify their existence in India, what is the purpose today — to perpetuate this evil? There is absolutely no purpose. We are committed to a programme of social regeneration."</p>
-            </div>
-            <p class="prose" style="margin-top:1rem;">Despite his critique, Das ultimately recognised the practical necessity of transitional protections, and expressed particular concern about the powers vested in Rajpramukhs — hereditary rulers who he feared could exploit tribal sentiment for political purposes.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- MIZORAM -->
-      <div id="mizoram" class="state-panel">
-        <div style="margin-bottom:1.25rem;">
-          <span class="badge badge-blue">Mizoram</span>
-          <span class="badge badge-gold" style="margin-left:6px;">Lushai Hills District (1949)</span>
-        </div>
-        <p class="prose" style="margin-bottom:1.5rem;">In 1949, the Lushai Hills (now Mizoram) were a district of Assam and among the areas most clearly contemplated for autonomous district status under the Sixth Schedule. The region had a distinctive history of exclusion under the colonial regime. Mizoram became a Union Territory in 1972 and a full state in 1987, inheriting the Sixth Schedule framework for its districts.</p>
-
-        <div class="speaker-card">
-          <div class="speaker-header" onclick="toggleSpeaker(this)">
-            <div class="speaker-avatar" style="background:var(--accent3);">AVT</div>
-            <div class="speaker-info">
-              <div class="speaker-name" id="thakkar">Shri A.V. Thakkar (Thakkar Bapa)</div>
-              <div class="speaker-meta">Saurashtra · Pages 989–991 (on Lushai Hills specifically)</div>
-            </div>
-            <span style="color:var(--text3);font-size:0.8rem;">▼</span>
-          </div>
-          <div class="speaker-body">
-            <p class="prose" style="margin-bottom:0.75rem;">Thakkar Bapa, widely respected as the leading non-tribal advocate for tribal welfare in the Assembly, provided the most detailed empirical account of conditions in the various tribal areas. He specifically highlighted the Lushai Hills as one of the most isolated and least-known tribal regions.</p>
-            <div class="debate-text">
-              <p>"Not only that, but the Tribal Advisory Committee will consist of three-fourth of tribal members. They can if they like, take the greatest advantage of it in all ameliorative measures as well as in the conduct of everyday affairs of the Scheduled tribes, as well as Scheduled areas, but I am afraid our tribal friends are too shy yet. They have to be brought out not only from the plains of the country but also from the hills and hilltops, from the distant Himachal, from the distant Vindhyachal, from the Hills of Chota Nagpur, from the hills of Travancore and Cochin."</p>
-            </div>
-            <div class="debate-text" style="margin-top:0.75rem;">
-              <p>"I will give you only one instance. When I went with the Assam Tribal Committee to tour in the areas of Assam with the Chairman Mr. Gopinath Bardolai and the prominent Minister Rev. Nichols Roy all the members of the Committee, one and all, went for the first time to the Lushai Hills and Naga Hills in the year 1947. Even the Premier of Assam had never visited the Lushai Hills and Naga Hills, much less a man like me."</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- NAGALAND -->
-      <div id="nagaland" class="state-panel">
-        <div style="margin-bottom:1.25rem;">
-          <span class="badge badge-blue">Nagaland</span>
-          <span class="badge badge-red" style="margin-left:6px;">Naga Hills District (1949)</span>
-          <span class="badge badge-gold" style="margin-left:6px;">Statehood 1963</span>
-        </div>
-        <p class="prose" style="margin-bottom:1.5rem;">The Naga Hills were, in 1949, among the most politically sensitive areas discussed in the Constituent Assembly. The Naga National Council had already articulated demands for sovereignty. The Sixth Schedule framework was partly designed to provide a constitutional accommodation — giving Naga Hills an autonomous district with wide self-governance powers without conceding the right of secession. Nagaland became India's 16th state in 1963 under a separate constitutional arrangement (Article 371A).</p>
-
-        <div class="speaker-card">
-          <div class="speaker-header" onclick="toggleSpeaker(this)">
-            <div class="speaker-avatar" style="background:var(--text);" id="munshi">KM</div>
-            <div class="speaker-info">
-              <div class="speaker-name">Shri K.M. Munshi</div>
-              <div class="speaker-meta">Bombay: General · Pages 999–1001</div>
-            </div>
-            <span style="color:var(--text3);font-size:0.8rem;">▼</span>
-          </div>
-          <div class="speaker-body">
-            <p class="prose" style="margin-bottom:0.75rem;">Munshi offered the most comprehensive defence of the Drafting Committee's approach, directly addressing Jaipal Singh's amendments and explaining the philosophy of managed integration — protecting tribal communities while preventing their permanent separateness.</p>
-            <div class="debate-text">
-              <p>"We want that the Scheduled tribes in the whole country should be protected from the destructive compact of races possessing a higher and more aggressive culture and should be encouraged to develop their own autonomous life; at the same time we want them to take a larger part in the life of the country adopted. They should not be isolated communities or little republics to be perpetuated for ever."</p>
-            </div>
-            <p class="prose" style="margin-top:1rem;">On the Naga Hills specifically, Munshi argued that the Sixth Schedule's autonomous district model — with its wide legislative, judicial, and administrative powers — provided the best available constitutional accommodation for peoples with distinct governance traditions, short of outright sovereignty.</p>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- FULL DEBATE TRANSCRIPT SECTION -->
-    <section id="sept5" class="content-section">
-      <h2 class="section-h2">5 September 1949 — Sixth Schedule Opens</h2>
-      <p class="prose" style="margin-bottom:1.25rem;">After disposing of the Fifth Schedule in the morning session, the Assembly turned to the Sixth Schedule. President Rajendra Prasad took the chair. Dr. Ambedkar moved two amendments on behalf of the Drafting Committee.</p>
-
-      <div class="accordion">
-        <div class="accordion-head">
-          <div class="accordion-title">Dr. Ambedkar — Moving Amendment No. 98 (Para 1, Sub-para 1)</div>
-          <span class="accordion-icon">▼</span>
-        </div>
-        <div class="accordion-body">
-          <p class="prose"><strong>Text of Amendment No. 98:</strong></p>
-          <div class="highlight-box">"That in sub-paragraph (1) of paragraph 1, before the words, 'The tribal areas' the words 'Subject to the provisions of this paragraph' be inserted."</div>
-          <p class="prose" style="margin-top:0.75rem;"><strong>Ambedkar's Explanation:</strong> "Originally, the draft merely said that the Tribal areas were those which were included in the table attached to this Schedule. There was no power given to define the boundaries of those areas included in the Table. It is felt that it is necessary to give the Governor the power to define the boundaries of those areas included in the Table. In order to provide for this power for the Governor, it is necessary to add the words which are contained in this amendment."</p>
-          <div style="margin-top:0.75rem;">
-            <span class="badge badge-green">✓ Adopted</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="accordion">
-        <div class="accordion-head">
-          <div class="accordion-title">Dr. Ambedkar — Moving Amendment No. 99 (Para 1, Sub-para 3)</div>
-          <span class="accordion-icon">▼</span>
-        </div>
-        <div class="accordion-body">
-          <p class="prose"><strong>Text of Amendment No. 99 — New Sub-paragraph (3):</strong></p>
-          <div class="highlight-box">"(3) The Governor may, by public notification—<br>(a) include any area in Part I of the said Table,<br>(b) create a new autonomous district,<br>(c) increase the area of any autonomous district,<br>(d) diminish the area of any autonomous district,<br>(e) unite two or more autonomous districts or parts thereof so as to form one autonomous district,<br>(f) define the boundaries of any autonomous district:<br><br>Provided that no order shall be made by the Governor under clauses (b), (c), (d) and (e) of this sub-paragraph except after consideration of the report of a Commission appointed under sub-paragraph (1) of paragraph 14 of this Schedule."</div>
-          <p class="prose" style="margin-top:0.75rem;"><strong>Ambedkar's Explanation:</strong> "In this amendment, the new things to which attention must be drawn are, included in sub-clauses (e) and (f) of sub-paragraph (3). That is necessary because it may be required, in any particular state of affairs, that two or more autonomous districts may be united together. The power contained in sub-clause (f) is also necessary because it may be desirable to define the boundaries in case there is any particular dispute between the different tribes."</p>
-          <p class="prose" style="margin-top:0.75rem;">"It is better to make it uniform by requiring the Governor to act after consideration of the report of a Commission which is proposed to be appointed under sub-paragraph (1) of paragraph 14 of this Schedule."</p>
-          <div style="margin-top:0.75rem;">
-            <span class="badge badge-green">✓ Adopted</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="accordion">
-        <div class="accordion-head">
-          <div class="accordion-title">Chaliha & Brajeshwar Prasad — Challenging Amendments (Negatived)</div>
-          <span class="accordion-icon">▼</span>
-        </div>
-        <div class="accordion-body">
-          <p class="prose" style="margin-bottom:0.75rem;">Three amendments were moved against the Drafting Committee's proposals:</p>
-          <div class="accordion">
-            <div class="accordion-head" style="padding:0.75rem 1rem;">
-              <div class="accordion-title" style="font-size:0.88rem;">Chaliha — Delete the Proviso to Sub-para (3)</div>
-              <span class="accordion-icon">▼</span>
-            </div>
-            <div class="accordion-body" style="padding:0.75rem 1rem;">
-              <p class="prose">Moved deletion of the entire proviso requiring a Commission report before creating, increasing, diminishing, or merging autonomous districts. Argued that Commission involvement would cause delay and that the Governor acting on Cabinet advice was sufficient safeguard.</p>
-              <span class="badge badge-red">▼ Negatived</span>
-            </div>
-          </div>
-          <div class="accordion" style="margin-top:0.5rem;">
-            <div class="accordion-head" style="padding:0.75rem 1rem;">
-              <div class="accordion-title" style="font-size:0.88rem;">Brajeshwar Prasad — Substitute "President" for "Governor"</div>
-              <span class="accordion-icon">▼</span>
-            </div>
-            <div class="accordion-body" style="padding:0.75rem 1rem;">
-              <p class="prose">Moved that in sub-paras (2) and (3) of Para 1, "Governor" be replaced with "President" — effectively bringing Assam's tribal areas under direct central control. Also moved that the Governor should function as "agent of the President" in exercising Para 1 functions.</p>
-              <span class="badge badge-red">▼ All three amendments negatived</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-  </main>
+<div class="page-tabs" id="pageTabs">
+  <button class="page-tab active" data-page="overview">Overview</button>
+  <button class="page-tab" data-page="para-by-para">Paragraph-by-Paragraph</button>
+  <button class="page-tab" data-page="speakers">Key Speakers</button>
+  <button class="page-tab" data-page="amendments">All Amendments</button>
+  <button class="page-tab" data-page="state-view">State-wise View</button>
+  <button class="page-tab" data-page="judicial">Judicial Reception</button>
 </div>
 
+<!-- SUBPAGE 1: OVERVIEW -->
+<div class="subpage active" id="page-overview">
+<div class="debate-layout">
+<aside class="d-sidebar">
+  <div class="d-sidebar-title">On This Page</div>
+  <ul class="d-sidebar-nav">
+    <li><a href="#ov-context">Context</a></li>
+    <li><a href="#ov-sessions">Three Sessions</a></li>
+    <li><a href="#ov-stats">At a Glance</a></li>
+    <li><a href="#ov-key">Key Outcomes</a></li>
+  </ul>
+  <div class="d-sidebar-title">Quick Nav</div>
+  <ul class="d-sidebar-nav">
+    <li><a href="#" onclick="switchPage('para-by-para');return false;">→ Para-by-Para</a></li>
+    <li><a href="#" onclick="switchPage('speakers');return false;">→ Speakers</a></li>
+    <li><a href="#" onclick="switchPage('amendments');return false;">→ Amendments</a></li>
+    <li><a href="#" onclick="switchPage('state-view');return false;">→ State View</a></li>
+    <li><a href="#" onclick="switchPage('judicial');return false;">→ Judicial</a></li>
+  </ul>
+</aside>
+<main>
+  <section id="ov-context">
+    <div class="section-label">Context &amp; Background</div>
+    <h1 class="section-title">The Making of the Sixth Schedule</h1>
+    <p class="section-lead">Over three days in September 1949, the Constituent Assembly debated and finalised the constitutional framework for tribal self-governance in the hill areas of Assam. The result — the Sixth Schedule — remains one of the most sophisticated instruments of asymmetric federalism in the Indian Constitution.</p>
+    <div class="pull-quote">
+      <p>We want that the Scheduled tribes in the whole country should be protected from the destructive compact of races possessing a higher and more aggressive culture and should be encouraged to develop their own autonomous life; at the same time we want them to take a larger part in the life of the country. They should not be isolated communities or little republics to be perpetuated for ever.</p>
+      <cite>— Shri K.M. Munshi, Bombay · 5 September 1949</cite>
+    </div>
+    <p class="prose">The Sixth Schedule emerged from the work of the Bordoloi Sub-Committee on North-East Frontier (Assam) Tribal and Excluded Areas, chaired by Gopinath Bardoloi, Premier of Assam. Its key architects included Rev. J.J.M. Nichols Roy, representing the Khasi Hills, and Dr. B.R. Ambedkar as the primary drafter and floor manager of the Schedule in the Assembly.</p>
+    <p class="prose">The debates began on 5 September 1949, immediately after the Assembly adopted the Fifth Schedule. They ran through 6 and 7 September, covering all 19 paragraphs of the Schedule in sequence, with Dr. Rajendra Prasad presiding as President of the Assembly.</p>
+  </section>
+  <section id="ov-sessions" style="margin-top:2.5rem;">
+    <div class="h2">Three Days, Three Sessions</div>
+    <div class="session-banner">
+      <div>
+        <div class="session-date">5 September 1949 — Monday</div>
+        <div class="session-details">Constitution Hall, New Delhi · Dr. Rajendra Prasad presiding · Vol. IX, pp. 1003–1008</div>
+        <p class="prose" style="margin-top:.6rem;font-size:.83rem;">Ambedkar moved Amendments 98 and 99 (Para 1). General debate on tribal policy framework: Brajeshwar Prasad's centralisation proposal, Chaliha's objections, Ambedkar's comprehensive reply. Discussion of the Red Indian reservation model vs. the autonomous district model.</p>
+      </div>
+      <div class="session-pageref"><div class="session-pagenum">1003</div><div class="session-pagelabel">Page Vol. IX</div></div>
+    </div>
+    <div class="session-banner">
+      <div>
+        <div class="session-date">6 September 1949 — Tuesday</div>
+        <div class="session-details">Constitution Hall, New Delhi · Vol. IX, pp. 1009–1060</div>
+        <p class="prose" style="margin-top:.6rem;font-size:.83rem;">Paragraphs 2–14 considered. Council composition (Para 2), legislative powers (Para 3), appellate jurisdiction (Para 4), minerals and money-lending safeguards (Paras 9–10). Contentious exchanges on Para 13 (financial provisions) and Para 14 (Commission composition).</p>
+      </div>
+      <div class="session-pageref"><div class="session-pagenum">1009</div><div class="session-pagelabel">Page Vol. IX</div></div>
+    </div>
+    <div class="session-banner">
+      <div>
+        <div class="session-date">7 September 1949 — Wednesday</div>
+        <div class="session-details">Constitution Hall, New Delhi · Vol. IX, pp. 1061–1099</div>
+        <p class="prose" style="margin-top:.6rem;font-size:.83rem;">Paragraphs 15–19 considered. Governor's discretion (Para 15), dissolution (Para 16), frontier areas (Para 17), the Shillong municipality question, Dimapur mouza, and final Table of Tribal Areas (Para 19). Bardoloi's closing defence.</p>
+      </div>
+      <div class="session-pageref"><div class="session-pagenum">1061</div><div class="session-pagelabel">Page Vol. IX</div></div>
+    </div>
+  </section>
+  <section id="ov-stats" style="margin-top:2.5rem;">
+    <div class="h2">At a Glance</div>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">3</div><div class="stat-label">Days of Debate</div></div>
+      <div class="stat-box"><div class="stat-num">19</div><div class="stat-label">Paragraphs</div></div>
+      <div class="stat-box"><div class="stat-num">30+</div><div class="stat-label">Amendments</div></div>
+      <div class="stat-box"><div class="stat-num">12</div><div class="stat-label">Key Speakers</div></div>
+      <div class="stat-box"><div class="stat-num">6</div><div class="stat-label">Hill Districts Named</div></div>
+    </div>
+  </section>
+  <section id="ov-key" style="margin-top:2.5rem;">
+    <div class="h2">Key Constitutional Outcomes</div>
+    <div class="two-col">
+      <div class="hl-box"><strong>Autonomous District Model Adopted</strong><br>The Assembly rejected both the colonial "excluded areas" model and Brajeshwar Prasad's centralisation proposal. Elected District and Regional Councils became the governing form.</div>
+      <div class="hl-box"><strong>Governor Acts on Cabinet Advice</strong><br>Ambedkar clarified throughout that "Governor" in the Schedule means the Governor acting on Cabinet advice — not in personal discretion — except in specified frontier areas (Para 17).</div>
+      <div class="hl-box"><strong>High Court Jurisdiction Established</strong><br>Para 4 was amended to give the High Court of Assam appellate jurisdiction over tribal court decisions — reversing the original finality of District Council decisions.</div>
+      <div class="hl-box"><strong>Minerals Under Central List</strong><br>Para 9(1) was deleted, removing mineral extraction from the Schedule as that subject had been placed under the Union List during final drafting.</div>
+      <div class="hl-box"><strong>Commission Safeguard Retained</strong><br>Despite Chaliha's objection, the requirement for a Commission report before creating, enlarging, or merging autonomous districts (Para 1 proviso) was preserved.</div>
+      <div class="hl-box"><strong>Para 16-A Added</strong><br>A new paragraph was inserted providing for exclusion of areas within autonomous districts from the tribal constituency — protecting non-tribal residents' electoral rights.</div>
+    </div>
+  </section>
+</main>
+</div>
+</div>
+
+<!-- SUBPAGE 2: PARA BY PARA -->
+<div class="subpage" id="page-para-by-para">
+<div class="debate-layout">
+<aside class="d-sidebar">
+  <div class="d-sidebar-title">Paragraphs</div>
+  <ul class="d-sidebar-nav">
+    <li><a href="#p1">Para 1 — Autonomous Districts</a></li>
+    <li><a href="#p2">Para 2 — District Councils</a></li>
+    <li><a href="#p3">Para 3 — Legislative Powers</a></li>
+    <li><a href="#p4">Para 4 — Judicial Powers</a></li>
+    <li><a href="#p5p7">Paras 5–7 — Laws &amp; Services</a></li>
+    <li><a href="#p8">Para 8 — Land Revenue</a></li>
+    <li><a href="#p9">Para 9 — Minerals</a></li>
+    <li><a href="#p10">Para 10 — Money Lending &amp; Trade</a></li>
+    <li><a href="#p11p12">Paras 11–12 — Grants</a></li>
+    <li><a href="#p13">Para 13 — State Legislation</a></li>
+    <li><a href="#p14">Para 14 — Commission</a></li>
+    <li><a href="#p15">Para 15 — Governor's Discretion</a></li>
+    <li><a href="#p16">Para 16 — Dissolution</a></li>
+    <li><a href="#p16a">Para 16-A — Constituencies</a></li>
+    <li><a href="#p17">Para 17 — Frontier Areas</a></li>
+    <li><a href="#p18">Para 18 — Transitional</a></li>
+    <li><a href="#p19">Para 19 — The Table</a></li>
+  </ul>
+</aside>
+<main>
+  <div class="section-label">Annotated Debate Record</div>
+  <h2 class="section-title" style="font-size:1.5rem;">Paragraph-by-Paragraph Analysis</h2>
+  <p class="section-lead">Each paragraph of the Sixth Schedule as debated and adopted on 5–7 September 1949. Amendments, exchanges, and outcomes recorded in full. Click any paragraph to expand.</p>
+
+  <div class="para-card" id="p1">
+    <div class="para-card-head" onclick="togglePara(this)">
+      <div class="para-num adopted">1</div>
+      <div class="para-info"><div class="para-title">Paragraph 1 — Autonomous Districts and Autonomous Regions</div><div class="para-meta">5 September 1949 · Amendments No. 98, 99 moved by Ambedkar · pp. 1003–1008</div></div>
+      <div class="para-result adopted">Adopted</div><div class="para-toggle">▼</div>
+    </div>
+    <div class="para-body">
+      <p class="prose"><strong>Subject Matter:</strong> Para 1 defines "tribal areas" as those in the Table to Para 19, and gives the Governor power to define boundaries, create new autonomous districts, expand, diminish, unite, and define boundaries of existing ones. A Commission report (Para 14) is required before the more significant powers are exercised.</p>
+      <div class="h3">Amendment No. 98 — Ambedkar (Adopted)</div>
+      <div class="q-block"><p>"That in sub-paragraph (1) of paragraph 1, before the words, 'The tribal areas' the words 'Subject to the provisions of this paragraph' be inserted."</p><div class="q-speaker">Dr. B.R. Ambedkar · Bombay: General</div></div>
+      <p class="prose"><strong>Purpose:</strong> To make clear that identification of tribal areas in sub-para (1) was subject to the Governor's powers in sub-para (3) — the original draft gave no power to define boundaries beyond what was in the Table.</p>
+      <div class="h3">Amendment No. 99 — Ambedkar (Adopted)</div>
+      <p class="prose">Substituted a new sub-paragraph (3) giving the Governor power by public notification to: (a) include an area in Part I, (b) create a new autonomous district, (c) increase the area, (d) diminish the area, (e) unite two or more autonomous districts, (f) define boundaries. Commission report required before exercising (b)–(e).</p>
+      <div class="q-block"><p>"In this amendment, the new things to which attention must be drawn are included in sub-clauses (e) and (f) of sub-paragraph (3). That is necessary because it may be required, in any particular state of affairs, that two or more autonomous districts may be united together. The power contained in sub-clause (f) is also necessary because it may be desirable to define the boundaries in case there is any particular dispute between the different tribes."</p><div class="q-speaker">Dr. B.R. Ambedkar</div></div>
+      <div class="h3">Challenging Amendments — All Negatived</div>
+      <table class="amend-table">
+        <thead><tr><th>Mover</th><th>Proposal</th><th>Outcome</th></tr></thead>
+        <tbody>
+          <tr><td>Shri Kuladhar Chaliha<br><small>Assam: General</small></td><td>Delete the Commission proviso — Cabinet advice to Governor was sufficient, Commission would cause delay</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+          <tr><td>Shri Brajeshwar Prasad<br><small>Bihar: General</small></td><td>Substitute "President" for "Governor" throughout Para 1; make Governor "agent of the President"</td><td><span class="pill pill-negatived">All 3 Negatived</span></td></tr>
+        </tbody>
+      </table>
+      <div class="h3">Ambedkar's Key Reply</div>
+      <div class="q-block"><p>"It is quite obvious that in constituting the Commission, and defining its terms of reference, the Governor would be guided by the advice of the local ministers... The Drafting Committee has not forgotten that there are what are called certain 'frontier areas', bordering on the autonomous districts. So far as the administration of these frontier areas of Assam is concerned, the Governor would be acting under the President."</p><div class="q-speaker">Dr. B.R. Ambedkar — Reply on Para 1 amendments</div></div>
+    </div>
+  </div>
+
+  <div class="para-card" id="p2">
+    <div class="para-card-head" onclick="togglePara(this)">
+      <div class="para-num adopted">2</div>
+      <div class="para-info"><div class="para-title">Paragraph 2 — Constitution of District and Regional Councils</div><div class="para-meta">5–6 September 1949 · Amendments No. 100–102 · pp. 1008–1016 · Ambedkar's major speech</div></div>
+      <div class="para-result adopted">Adopted as Amended</div><div class="para-toggle">▼</div>
+    </div>
+    <div class="para-body">
+      <p class="prose"><strong>Subject Matter:</strong> Para 2 establishes the composition of District Councils (not more than 30 members, up to 4 nominated by the Governor) and Regional Councils. Original draft had "not less than 20 and not more than 40 members."</p>
+      <div class="h3">Key Amendments by Ambedkar (All Adopted)</div>
+      <table class="amend-table">
+        <thead><tr><th>Amendment</th><th>Effect</th><th>Outcome</th></tr></thead>
+        <tbody>
+          <tr><td>No. 100 — Sub-para (1)</td><td>Reduced maximum membership from 40 to "not more than twenty-four"</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+          <tr><td>No. 101 — Sub-para (2)</td><td>Deleted sub-paragraph (2) — delimitation of constituencies left to rules, not the Constitution</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+          <tr><td>No. 102 — Sub-para (7)</td><td>Added clause (dd): "the term of office of members of such Councils" — omitted from rule-making power</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+        </tbody>
+      </table>
+      <div class="h3">Ambedkar's Philosophical Defence — The Core Speech</div>
+      <p class="prose">Para 2 prompted Ambedkar's most important speech of the entire three days — comparing three models of tribal governance:</p>
+      <div class="two-col" style="margin:1rem 0;">
+        <div class="hl-box"><strong>American Model (Rejected)</strong><br>Red Indian Reservations — separate territories, full exclusion. This failed: tribes were isolated from mainstream social life and cut off from national solidarity.</div>
+        <div class="hl-box"><strong>British Model (Rejected)</strong><br>"Excluded Areas" under Govt. of India Act 1935 — the "museum approach" treating tribes as anthropological objects rather than citizens with self-governing capacity.</div>
+      </div>
+      <div class="hl-box"><strong>Sixth Schedule Model (Adopted)</strong> — Three binding unifying influences: (1) Assam's executive authority extends to tribal areas; (2) Parliament's and Assam's laws automatically apply unless the District Council otherwise provides; (3) Political authority through elected councils — not an external authority governing the tribes from outside.</div>
+      <div class="q-block"><p>"The thing which is a binding thing, to which honourable Members have paid no attention is this. That, barring such functions as law-making in certain specified fields such as money-lending, land and so on, the administration of the area is entirely in the hands of the District Council and the Regional Council. They are the executive authority."</p><div class="q-speaker">Dr. B.R. Ambedkar — Para 2 general debate</div></div>
+      <div class="warn-box"><strong>The Chaliha Confrontation:</strong> Ambedkar publicly challenged Chaliha for moving amendments to provisions he had previously agreed to in drafting meetings. Chaliha denied this — saying he attended as an "adviser" to Bardoloi, not as a Drafting Committee member. The dispute revealed the gap between informal consensus-building and formal constitutional positions.</div>
+    </div>
+  </div>
+
+  <div class="para-card" id="p3">
+    <div class="para-card-head" onclick="togglePara(this)">
+      <div class="para-num adopted">3</div>
+      <div class="para-info"><div class="para-title">Paragraph 3 — Powers of Councils to Make Laws</div><div class="para-meta">6 September 1949 · Amendments No. 113, 114 · pp. 1017–1022</div></div>
+      <div class="para-result adopted">Adopted as Amended</div><div class="para-toggle">▼</div>
+    </div>
+    <div class="para-body">
+      <p class="prose"><strong>Subject Matter:</strong> Para 3 gives District and Regional Councils power to make laws on: allotment/use of land, management of unreserved forests, use of waterways, shifting cultivation, village/town councils, public health, money-lending to tribals, and trading by non-tribals. Laws require Governor's assent.</p>
+      <div class="h3">Chaliha's Radical Alternative (Negatived)</div>
+      <div class="q-block"><p>"The Governor shall make laws and regulations and entrust the District Council and Regional Councils with such powers as the State Legislature may approve."</p><div class="q-speaker">Shri Kuladhar Chaliha — Amendment No. 113 (proposed substitute for Para 3)</div></div>
+      <p class="prose">Chaliha sought to strip Councils of inherent legislative power, replacing it with a delegated model. Ambedkar rejected this as fundamentally inconsistent with autonomous governance — if Councils had no original power, "autonomy" was illusory.</p>
+      <div class="h3">Amendment No. 114 — Ambedkar (Adopted)</div>
+      <p class="prose">Added sub-paragraph (3): "All laws made under this paragraph shall be submitted forthwith to the Governor and, until assented to by him, shall have no effect." This gave the Governor a review/veto power over Council legislation — balancing autonomy with oversight.</p>
+      <table class="amend-table">
+        <thead><tr><th>Mover</th><th>Proposal</th><th>Outcome</th></tr></thead>
+        <tbody>
+          <tr><td>Chaliha (No. 113)</td><td>Replace Para 3 with Governor-delegated model</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+          <tr><td>Ambedkar (No. 114)</td><td>Add sub-para (3): Governor's assent required</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+          <tr><td>Rohini Kumar Chaudhuri</td><td>Laws to be placed before State Legislature, not just Governor</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+          <tr><td>Brajeshwar Prasad</td><td>"Governor" → "President" throughout Para 3</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="para-card" id="p4">
+    <div class="para-card-head" onclick="togglePara(this)">
+      <div class="para-num adopted">4</div>
+      <div class="para-info"><div class="para-title">Paragraph 4 — Administration of Justice in Autonomous Districts</div><div class="para-meta">6 September 1949 · High Court jurisdiction added · pp. 1022–1028</div></div>
+      <div class="para-result adopted">Adopted as Amended</div><div class="para-toggle">▼</div>
+    </div>
+    <div class="para-body">
+      <p class="prose"><strong>Subject Matter:</strong> Para 4 gives District/Regional Councils (or courts they constitute) jurisdiction over suits and cases between tribal parties. Original draft made Council decisions final in appeal. Ambedkar's amendments opened appeals to the High Court and Supreme Court.</p>
+      <div class="h3">Major Change — High Court Appellate Jurisdiction</div>
+      <div class="q-block"><p>"This amendment makes an important change. Originally under sub-para (2) of para 4 the decision of the District Court was final. Now we have provided that they shall be subject to appellate jurisdiction of the High Court and the Supreme Court which will eliminate any infraction of fundamental rights."</p><div class="q-speaker">Dr. B.R. Ambedkar — Para 4 debate</div></div>
+      <div class="h3">Tribal/Non-Tribal Jurisdiction Issue</div>
+      <p class="prose">Rohini Kumar Chaudhuri pressed: what happens when one party is tribal and the other is non-tribal? Ambedkar's answer: the tribal court's jurisdiction is limited to cases where "all parties belong to scheduled tribes." For mixed cases, ordinary courts apply.</p>
+      <table class="amend-table">
+        <thead><tr><th>Amendment</th><th>Effect</th><th>Outcome</th></tr></thead>
+        <tbody>
+          <tr><td>No. 115 — Ambedkar</td><td>Delete redundant words "arising out of any law made under paragraph 3" from sub-para (1)</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+          <tr><td>No. 119 — Ambedkar</td><td>Add sub-para (3): High Court of Assam given appellate jurisdiction over tribal court decisions</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+          <tr><td>No. 118 — Chaudhuri</td><td>Amendment to an unadopted amendment — ruled out of order</td><td><span class="pill pill-withdrawn">Ruled Out</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="para-card" id="p5p7">
+    <div class="para-card-head" onclick="togglePara(this)">
+      <div class="para-num adopted">5–7</div>
+      <div class="para-info"><div class="para-title">Paragraphs 5, 6 &amp; 7 — Application of Laws, Primary Powers, Taxation</div><div class="para-meta">6 September 1949 · Para 5 adopted unamended; Paras 6–7 adopted without debate</div></div>
+      <div class="para-result adopted">Adopted</div><div class="para-toggle">▼</div>
+    </div>
+    <div class="para-body">
+      <p class="prose"><strong>Para 5 — Application of Acts:</strong> Deals with the application of Acts of Parliament and of the State Legislature to autonomous areas. Such Acts apply unless the District Council otherwise directs. The Governor may extend or restrict their application. Brajeshwar Prasad's "President for Governor" amendment ruled out as repetitive.</p>
+      <div class="hl-box"><strong>Key Principle:</strong> Parliament and State Legislature laws apply automatically to tribal areas but the District Council has power to direct their exclusion or modification. The Governor can extend or restrict application — always on Cabinet advice.</div>
+      <p class="prose"><strong>Para 6 — Primary Establishment Powers:</strong> Empowers District Councils to establish, construct, or manage primary schools, dispensaries, markets, ferries, fisheries, roads, and waterways within the autonomous district. Adopted without debate.</p>
+      <p class="prose"><strong>Para 7 — Taxation Powers:</strong> Gives Councils power to assess and collect land revenue and impose certain taxes (professions, trades, animals, vehicles, boats, entry of goods into markets). Adopted without debate.</p>
+    </div>
+  </div>
+
+  <div class="para-card" id="p8">
+    <div class="para-card-head" onclick="togglePara(this)">
+      <div class="para-num adopted">8</div>
+      <div class="para-info"><div class="para-title">Paragraph 8 — Rules for Assessment and Revenue</div><div class="para-meta">6 September 1949 · Chaliha amendment No. 123 negatived</div></div>
+      <div class="para-result adopted">Adopted Unamended</div><div class="para-toggle">▼</div>
+    </div>
+    <div class="para-body">
+      <p class="prose"><strong>Subject Matter:</strong> Para 8 gives the Governor power to lay down rules by which District/Regional Councils shall assess and collect land revenue and impose taxes.</p>
+      <p class="prose">Chaliha moved to replace Para 8 with a version requiring all such rules to be placed before the State Legislature first (Amendment No. 123). Negatived. Brajeshwar Prasad's amendment was ruled out as repetitive of the settled "Governor/President" principle.</p>
+      <div class="hl-box"><strong>Outcome:</strong> The Governor retains rule-making power over taxation in autonomous areas, acting on Cabinet advice — this is the form of state oversight over Council financial activities.</div>
+    </div>
+  </div>
+
+  <div class="para-card" id="p9">
+    <div class="para-card-head" onclick="togglePara(this)">
+      <div class="para-num adopted">9</div>
+      <div class="para-info"><div class="para-title">Paragraph 9 — Licence or Lease for Minerals</div><div class="para-meta">6 September 1949 · Sub-para (1) deleted by Ambedkar</div></div>
+      <div class="para-result adopted">Adopted as Amended</div><div class="para-toggle">▼</div>
+    </div>
+    <div class="para-body">
+      <p class="prose"><strong>Subject Matter:</strong> Para 9 originally provided that the District Council would share in royalties from mineral extraction licences in autonomous areas.</p>
+      <div class="q-block"><p>"That sub-paragraph (1) of paragraph 9 be deleted. That paragraph refers to licence or lease granted by the Government of Assam for the prospecting for or the extraction of minerals. That matter now is within the exclusive jurisdiction of the Union. Consequently the provision in sub-para (1) is inconsistent with the Union List under which this matter falls."</p><div class="q-speaker">Dr. B.R. Ambedkar — Para 9</div></div>
+      <p class="prose">The mineral extraction subject had been moved to the Union List during final drafting stages, making Para 9(1) constitutionally inconsistent. Its deletion was uncontested.</p>
+    </div>
+  </div>
+
+  <div class="para-card" id="p10">
+    <div class="para-card-head" onclick="togglePara(this)">
+      <div class="para-num adopted">10</div>
+      <div class="para-info"><div class="para-title">Paragraph 10 — Power to Regulate Money-Lending and Trading</div><div class="para-meta">6 September 1949 · Most contentious Para 1–14 debate · pp. 1033–1040</div></div>
+      <div class="para-result adopted">Adopted as Amended</div><div class="para-toggle">▼</div>
+    </div>
+    <div class="para-body">
+      <p class="prose"><strong>Subject Matter:</strong> One of the Schedule's most protective provisions — giving District Councils power to regulate money-lending to tribal members, establishment of trading posts, licensing of traders, and ultimately to exclude non-tribal traders from autonomous areas entirely. Sub-paragraph (2)(d) — the most controversial — permitted the District Council to prescribe that only tribals may carry on trade in defined commodities within the district.</p>
+      <div class="h3">Chaliha's Objection</div>
+      <div class="q-block"><p>"Is it possible for any Assamese, Marwari, Sindhi, Punjabi or Sikh from the plains or from Bombay to carry on business in the Naga Hills if we have a rule like (d)? To say the least, this is an impossible provision."</p><div class="q-speaker">Shri Kuladhar Chaliha — Para 10 objection</div></div>
+      <p class="prose">Chaliha moved to replace Para 10 with a simpler version giving the Governor (not the Council) power to regulate trading. Ambedkar rejected this, noting three safeguards: (1) laws must have the Governor's assent; (2) the Governor can withhold or annul assent; (3) Regulations under Para 10 are submitted to the Governor for review.</p>
+      <div class="q-block"><p>"There are three things provided by way of safeguards which my friend has not taken into consideration... You are like hungry David Copperfield asking for more gruel."</p><div class="q-speaker">Dr. B.R. Ambedkar — Reply on Para 10</div></div>
+      <table class="amend-table">
+        <thead><tr><th>Amendment</th><th>Effect</th><th>Outcome</th></tr></thead>
+        <tbody>
+          <tr><td>Chaliha No. 123</td><td>Replace Para 10 with Governor-only regulation model</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+          <tr><td>Ambedkar No. 124</td><td>Insert "In particular and without prejudice to the generality of the foregoing power" before specific powers in sub-para (2)</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+          <tr><td>Ambedkar No. 125</td><td>Add sub-para (3): all regulations submitted to Governor; no effect until assented</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="para-card" id="p11p12">
+    <div class="para-card-head" onclick="togglePara(this)">
+      <div class="para-num adopted">11–12</div>
+      <div class="para-info"><div class="para-title">Paragraphs 11 &amp; 12 — Grants &amp; Financial Provisions</div><div class="para-meta">6 September 1949 · Adopted with minor technical amendment to Para 12</div></div>
+      <div class="para-result adopted">Adopted</div><div class="para-toggle">▼</div>
+    </div>
+    <div class="para-body">
+      <p class="prose"><strong>Para 11:</strong> Government of Assam shall make grants to District/Regional Councils in each financial year, with amounts determined by the Governor in consultation with the Council. Adopted without discussion.</p>
+      <p class="prose"><strong>Para 12:</strong> Application of financial provisions of the Constitution to autonomous areas. Brajeshwar Prasad's two "President for Governor" amendments ruled out. Technical drafting amendment adopted.</p>
+    </div>
+  </div>
+
+  <div class="para-card" id="p13">
+    <div class="para-card-head" onclick="togglePara(this)">
+      <div class="para-num adopted">13</div>
+      <div class="para-info"><div class="para-title">Paragraph 13 — Legislation Affecting Tribal Areas</div><div class="para-meta">6 September 1949 · Amendment No. 130 adopted · pp. 1041–1043</div></div>
+      <div class="para-result adopted">Adopted as Amended</div><div class="para-toggle">▼</div>
+    </div>
+    <div class="para-body">
+      <p class="prose"><strong>Subject Matter:</strong> Before the Legislature of Assam passes any law affecting an autonomous district or region, the Bill shall be referred to the District Council for discussion. Rohini Kumar Chaudhuri moved Amendment No. 130 — requiring Bills to be "first placed before the District Council for discussion and then after such discussion" before passage. Ambedkar accepted it as a matter of practical expression (though he considered the existing text sufficient).</p>
+      <div class="hl-box"><strong>Result:</strong> Bills affecting tribal areas in Assam must be placed before District Councils for discussion before being passed. This creates a formal consultative role for the Councils in the State legislative process.</div>
+    </div>
+  </div>
+
+  <div class="para-card" id="p14">
+    <div class="para-card-head" onclick="togglePara(this)">
+      <div class="para-num discuss">14</div>
+      <div class="para-info"><div class="para-title">Paragraph 14 — Commission to Inquire into Autonomous Districts</div><div class="para-meta">6 September 1949 · Most complex debate of the three days · pp. 1043–1055</div></div>
+      <div class="para-result discuss">Adopted as Amended</div><div class="para-toggle">▼</div>
+    </div>
+    <div class="para-body">
+      <p class="prose"><strong>Subject Matter:</strong> Authorises the Governor to appoint a Commission to inquire into and report on the administration of autonomous districts. Terms of reference: (a) provision of educational and medical facilities and communications, (b) need for new legislation, (c) administration of laws and rules made by the Councils.</p>
+      <div class="h3">The Scope Dispute</div>
+      <p class="prose">The most procedurally intricate debate of the three days centred on whether Para 14's Commission terms of reference covered the same ground as the Governor's powers in Para 1(3). Krishnamachari resolved this by drawing attention to Amendment No. 134's cross-reference language.</p>
+      <div class="q-block"><p>"If the honourable Member will please look at amendment No. 134, which wants the inclusion of the words 'including matters specified in clauses (b), (c), (d) and (e) of sub-paragraph (3) of paragraph 1 of this Schedule' after the words 'autonomous districts in the State' in sub-paragraph (1) of paragraph 14 then he will find the object that he has in mind has already been served by this amendment."</p><div class="q-speaker">Shri T.T. Krishnamachari — Para 14 debate</div></div>
+      <div class="h3">Kunzru's Constitutional Concern</div>
+      <p class="prose">If the Governor could recommend exclusion of an area from tribal areas (requiring a Parliamentary statute) without a Commission report, Parliament would act without independent evidence. Ambedkar: Parliament was free to appoint its own Commission. Kunzru's concern was acknowledged as valid but resolved in principle.</p>
+      <div class="h3">Chaudhuri — Elected Commission Members</div>
+      <p class="prose">Chaudhuri urged that at least two Commission members be elected by the State Legislature. Ambedkar rejected mandatory election but noted the Governor was "not prevented from doing so." Amendment defeated — but the exchange established political expectation of elected representation on the Commission.</p>
+      <table class="amend-table">
+        <thead><tr><th>Amendment</th><th>Effect</th><th>Outcome</th></tr></thead>
+        <tbody>
+          <tr><td>Ambedkar — No. 134</td><td>Added Para 1(3)(b)–(e) matters to Commission terms; added "autonomous regions" throughout</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+          <tr><td>Brajeshwar Prasad — Full substitute</td><td>Enlarged Commission scope; required High Court judges and academics as members</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+          <tr><td>Chaliha — Add clause (d)</td><td>Resolved by Krishnamachari's reference to Amendment 134</td><td><span class="pill pill-withdrawn">Withdrawn</span></td></tr>
+          <tr><td>Chaudhuri — Elected members</td><td>Two members to be elected by State Legislature</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="para-card" id="p15">
+    <div class="para-card-head" onclick="togglePara(this)">
+      <div class="para-num adopted">15</div>
+      <div class="para-info"><div class="para-title">Paragraph 15 — Removal of Governor's Explicit Discretion</div><div class="para-meta">7 September 1949 · Sub-para (3) deleted · pp. 1055–1057</div></div>
+      <div class="para-result adopted">Adopted as Amended</div><div class="para-toggle">▼</div>
+    </div>
+    <div class="para-body">
+      <p class="prose"><strong>Subject Matter:</strong> Para 15 originally gave the Governor certain explicitly discretionary powers. Ambedkar moved to delete sub-paragraph (3) which contained the most significant of these.</p>
+      <div class="q-block"><p>"As I have said we are taking away the discretion from the Governor which we had originally laid with him and it is therefore necessary to delete this sub-para (3)."</p><div class="q-speaker">Dr. B.R. Ambedkar — Para 15</div></div>
+      <p class="prose">This was part of a broader move in the final stages of Constitution-drafting to reduce explicit Governor's discretion throughout the text, ensuring "Governor" throughout the Schedule means the Governor acting on Cabinet advice.</p>
+      <div class="hl-box"><strong>Consequence:</strong> After this deletion, the only explicit discretionary function left to the Governor under the Sixth Schedule related to frontier areas (Para 17) — where he acts as agent of the President. All other functions are on Cabinet advice.</div>
+    </div>
+  </div>
+
+  <div class="para-card" id="p16">
+    <div class="para-card-head" onclick="togglePara(this)">
+      <div class="para-num adopted">16</div>
+      <div class="para-info"><div class="para-title">Paragraph 16 — Dissolution of District/Regional Councils</div><div class="para-meta">7 September 1949 · Chaliha–Bardoloi compromise · pp. 1057–1060</div></div>
+      <div class="para-result adopted">Adopted as Amended</div><div class="para-toggle">▼</div>
+    </div>
+    <div class="para-body">
+      <p class="prose"><strong>Subject Matter:</strong> Para 16 gives the Governor power to dissolve a District or Regional Council and direct a fresh general election. The second proviso required that no dissolution action be taken without a hearing before the State Legislature.</p>
+      <div class="h3">The Chaliha–Bardoloi Compromise</div>
+      <p class="prose">Chaliha moved to delete the second proviso as procedurally cumbersome. Bardoloi offered a compromise: give the Council an opportunity to be heard by the Legislature. Ambedkar accepted for the Drafting Committee. The proviso was amended to read: "no action shall be taken under clause (b) of this paragraph without giving the District or the Regional Council, as the case may be, an opportunity of being heard by the Legislature of the State."</p>
+      <div class="q-block"><p>"All that I have to say is that in every case where action of this kind is involved, the Government of Assam will certainly give the District Councils an opportunity of explaining their views."</p><div class="q-speaker">Shri Gopinath Bardoloi — Para 16 compromise</div></div>
+    </div>
+  </div>
+
+  <div class="para-card" id="p16a">
+    <div class="para-card-head" onclick="togglePara(this)">
+      <div class="para-num adopted" style="font-size:.7rem;">16-A</div>
+      <div class="para-info"><div class="para-title">New Paragraph 16-A — Exclusion from Constituencies (Elections)</div><div class="para-meta">7 September 1949 · Added entirely new by Ambedkar · p. 1060</div></div>
+      <div class="para-result adopted">Adopted</div><div class="para-toggle">▼</div>
+    </div>
+    <div class="para-body">
+      <p class="prose"><strong>Subject Matter:</strong> An entirely new provision allowing areas within autonomous districts to be excluded from the tribal constituency for legislative assembly elections — allowing non-tribal inhabitants to vote in a general constituency rather than only a tribal one.</p>
+      <div class="hl-box"><strong>Significance:</strong> Para 16-A directly addressed the Shillong and Dimapur debates in Para 19 — ensuring that non-tribal residents of autonomous districts are not compelled to exercise their franchise exclusively in tribal constituencies. It was a middle-ground solution that addressed concerns about non-tribal economic communities without excluding their districts from Schedule protection.</div>
+    </div>
+  </div>
+
+  <div class="para-card" id="p17">
+    <div class="para-card-head" onclick="togglePara(this)">
+      <div class="para-num adopted">17</div>
+      <div class="para-info"><div class="para-title">Paragraph 17 — Frontier Areas (Governor as Agent of President)</div><div class="para-meta">7 September 1949 · Ambedkar adds sub-para (3) · pp. 1060–1063</div></div>
+      <div class="para-result adopted">Adopted as Amended</div><div class="para-toggle">▼</div>
+    </div>
+    <div class="para-body">
+      <p class="prose"><strong>Subject Matter:</strong> Para 17 deals with "tribal areas" in Part II of the Table — the frontier tracts (Balipara, Tirap, Abor Hills, Mishmi Hills, and the Naga Tribal Area). In these areas the Governor acts as agent of the President — directly under Central authority, not on Assam Cabinet advice.</p>
+      <div class="q-block"><p>"That after sub-paragraph (2) of paragraph 17 the following sub-paragraph be added:- (3) In the discharge of his functions under sub-paragraph (2) of this paragraph as the agent of the President, the Governor shall act in accordance with such directions as the President may from time to time give."</p><div class="q-speaker">Dr. B.R. Ambedkar — Para 17 amendment (adopted)</div></div>
+      <div class="hl-box"><strong>Strategic Significance:</strong> Para 17 was Ambedkar's answer to the national security argument. Frontier areas bordering Pakistan, China, Tibet, and Burma were placed under effective Central control. Inner autonomous areas remained under Assam's governance with elected District Councils. This bifurcation resolved the tension between tribal self-governance and strategic oversight of the border.</div>
+    </div>
+  </div>
+
+  <div class="para-card" id="p18">
+    <div class="para-card-head" onclick="togglePara(this)">
+      <div class="para-num adopted">18</div>
+      <div class="para-info"><div class="para-title">Paragraph 18 — Transitional Provisions</div><div class="para-meta">7 September 1949 · "In his discretion" deleted · p. 1063</div></div>
+      <div class="para-result adopted">Adopted as Amended</div><div class="para-toggle">▼</div>
+    </div>
+    <div class="para-body">
+      <p class="prose">Para 18 contains transitional provisions for existing arrangements until new District Councils are constituted. Originally contained the phrase "in his discretion" in line 22, and an entire clause (c). Ambedkar moved two amendments: deleting "in his discretion" (Amendment 146) and deleting clause (c) (Amendment 147). Both were consistent with the overall project of removing explicit Governor's discretion from the Schedule. Both adopted without discussion.</p>
+    </div>
+  </div>
+
+  <div class="para-card" id="p19">
+    <div class="para-card-head" onclick="togglePara(this)">
+      <div class="para-num discuss">19</div>
+      <div class="para-info"><div class="para-title">Paragraph 19 — The Table of Tribal Areas (Most Debated of All)</div><div class="para-meta">7 September 1949 · Shillong · Dimapur · Mylliem · Kunzru's structural objection · pp. 1063–1099</div></div>
+      <div class="para-result discuss">Adopted as Amended · Longest Debate</div><div class="para-toggle">▼</div>
+    </div>
+    <div class="para-body">
+      <p class="prose"><strong>Subject Matter:</strong> Para 19 contains the definitive Table of Tribal Areas. Ambedkar's Amendment No. 331 substituted an entirely new Para 19 and Table with two parts:</p>
+      <div class="two-col" style="margin:1rem 0;">
+        <div class="hl-box"><strong>Part I — Autonomous Districts</strong><br>The United Khasi-Jaintia Hills District · The Garo Hills District · The Lushai Hills District · The Naga Hills District · The North Cachar Hills · The Mikir Hills District</div>
+        <div class="hl-box"><strong>Part II — Frontier Areas</strong><br>North-East Frontier Tract including Balipara Frontier Tract, Tirap Frontier Tract, Abor Hills District, Mishmi Hills District · The Naga Tribal Area</div>
+      </div>
+      <div class="h3">The Shillong Municipality Controversy</div>
+      <p class="prose">The most prolonged exchange of the three days concerned whether any portion of Shillong Municipality — Assam's capital, located within the Khasi Hills district — should fall within the United Khasi-Jaintia Hills autonomous district. Ambedkar's amendment excluded the cantonment and municipality of Shillong but included "so much of the area comprised within such municipality as forms part of the Mylliem State."</p>
+      <p class="prose">Chaudhuri accused Ambedkar of "camouflage." The President ruled there was "no question of camouflage" as the paragraph was clear. Bardoloi gave the authoritative account: over half of Shillong's land area was owned by Khasis — making wholesale exclusion inappropriate.</p>
+      <div class="q-block"><p>"It is very necessary for us to understand the real position of the town of Shillong. It is there that more than half of its area is occupied not by non-tribal people but by tribal people. The bulk of the land belongs to Khasis."</p><div class="q-speaker">Shri Gopinath Bardoloi — Para 19, Shillong question</div></div>
+      <div class="h3">The Dimapur Mouza Question</div>
+      <p class="prose">Chaliha moved to exclude the Mouza of Dimapur from the Naga Hills District — Dimapur was inhabited almost entirely by non-tribal people who had invested heavily in business there. He gave a detailed historical account tracing Dimapur's origins from Kachari Kingdom through Ahom rule, ending up under the Naga Hills DC by administrative accident.</p>
+      <div class="q-block"><p>"Now, Sir, it is a prosperous state where you find Assamese, Bengalees, Sindhis, Punjabees, Sikhs, Marwaris doing business after having invested crores of rupees; but do you know their fate? They can be ejected in 24 hours bag and baggage."</p><div class="q-speaker">Shri Kuladhar Chaliha — Dimapur mouza amendment</div></div>
+      <p class="prose">Bardoloi opposed on practical grounds: the boundary was not precisely defined and any exclusion would create disputed boundary questions. Ambedkar noted the matter could be handled by the Governor under Para 1(3)(d) after a Commission report. Chaliha's amendment was negatived.</p>
+      <div class="h3">Pandit Kunzru's Structural Objection (Negatived)</div>
+      <p class="prose">Kunzru proposed a tripartite table (Parts I, IA, and II) — maintaining the colonial distinction between "fully excluded" and "partially excluded" areas. Bardoloi's decisive response: the Sixth Schedule precisely abandoned this old distinction, and Kunzru's amendment would perpetuate what the Schedule was designed to end.</p>
+      <div class="q-block"><p>"The arrangement made in the Sixth Schedule makes a departure from the old arrangement and practically does away with the distinction between fully excluded and partially excluded areas."</p><div class="q-speaker">Shri Gopinath Bardoloi — Opposing Kunzru's amendment</div></div>
+    </div>
+  </div>
+
+</main>
+</div>
+</div>
+
+<!-- SUBPAGE 3: SPEAKERS -->
+<div class="subpage" id="page-speakers">
+<div class="debate-layout">
+<aside class="d-sidebar">
+  <div class="d-sidebar-title">Key Speakers</div>
+  <ul class="d-sidebar-nav">
+    <li><a href="#spk-ambedkar">Dr. B.R. Ambedkar</a></li>
+    <li><a href="#spk-bardoloi">Gopinath Bardoloi</a></li>
+    <li><a href="#spk-chaliha">Kuladhar Chaliha</a></li>
+    <li><a href="#spk-brajeshwar">Brajeshwar Prasad</a></li>
+    <li><a href="#spk-nichols">Rev. J.J.M. Nichols Roy</a></li>
+    <li><a href="#spk-chaudhuri">Rohini Kumar Chaudhuri</a></li>
+    <li><a href="#spk-kunzru">Pandit H.N. Kunzru</a></li>
+    <li><a href="#spk-jaipal">Shri Jaipal Singh</a></li>
+    <li><a href="#spk-munshi">Shri K.M. Munshi</a></li>
+    <li><a href="#spk-thakkar">Shri A.V. Thakkar</a></li>
+    <li><a href="#spk-ttk">Shri T.T. Krishnamachari</a></li>
+  </ul>
+</aside>
+<main>
+  <div class="section-label">Dramatis Personae</div>
+  <h2 class="section-title" style="font-size:1.5rem;">Key Speakers in the Debates</h2>
+  <p class="section-lead">Twelve members played substantive roles across the three days. Their interventions ranged from technical drafting amendments to fundamental constitutional philosophy.</p>
+
+  <div class="speaker-card" id="spk-ambedkar">
+    <div class="speaker-head" onclick="toggleSpeaker(this)">
+      <div class="spkr-avatar" style="background:#2B4C7E;">BRA</div>
+      <div style="flex:1"><div class="spkr-name">Dr. B.R. Ambedkar — Law Minister, Principal Drafter</div><div class="spkr-meta">Bombay: General · Moved 18+ amendments · All three days · Pages 1003–1099</div></div>
+      <span style="color:var(--text-muted);font-size:.75rem;">▼</span>
+    </div>
+    <div class="speaker-body">
+      <p class="prose">Ambedkar was the architect, defender, and pragmatic adjuster of the Sixth Schedule on the floor of the Assembly. He moved 18+ amendments on behalf of the Drafting Committee, responded to all substantive challenges, and delivered the schedule's most important intellectual justification in the Para 2 debate.</p>
+      <p class="prose"><strong>Central contribution:</strong> The three-model comparison — Red Indian reservations (rejected), British excluded areas (rejected), Sixth Schedule autonomous district model (adopted) — and the articulation of three binding unifying influences that prevented the autonomous districts from becoming separate republics.</p>
+      <div class="q-block"><p>"The first thing that we have done is this: That we have provided that the executive authority of the Government of Assam shall extend not merely to non-tribal areas in Assam but also to the tribal areas. This, as will be seen, is a great improvement over the provisions contained in the Government of India Act, 1935."</p><div class="q-speaker">Dr. B.R. Ambedkar — Para 2 general debate</div></div>
+      <p class="prose"><strong>The Chaliha confrontation:</strong> Ambedkar publicly challenged Chaliha for moving amendments to provisions he had previously agreed to in drafting meetings: "I am not making any insinuations; I was only saying, Sir, that it was a domestic quarrel into which I would not enter." Chaliha denied participation in the Drafting Committee. The dispute was never formally resolved.</p>
+      <p class="prose"><strong>The David Copperfield quip (Para 10):</strong> When members pressed him for more safeguards against non-tribal trading restrictions, Ambedkar responded — "I know you want something more than what I can give. You are like hungry David Copperfield asking for more gruel." — a rare moment of public wit in the Assembly.</p>
+    </div>
+  </div>
+
+  <div class="speaker-card" id="spk-bardoloi">
+    <div class="speaker-head" onclick="toggleSpeaker(this)">
+      <div class="spkr-avatar" style="background:#2E7D32;">GB</div>
+      <div style="flex:1"><div class="spkr-name">Shri Gopinath Bardoloi — Premier of Assam</div><div class="spkr-meta">Assam: General · Chair, Bordoloi Sub-Committee · 5 & 7 September 1949</div></div>
+      <span style="color:var(--text-muted);font-size:.75rem;">▼</span>
+    </div>
+    <div class="speaker-body">
+      <p class="prose">Bardoloi was the political authority whose endorsement underpinned the Sixth Schedule's legitimacy. He had chaired the Sub-Committee on North-East Frontier (Assam) Tribal and Excluded Areas whose report formed the basis of the Schedule. His Assembly interventions were measured but decisive.</p>
+      <p class="prose"><strong>On Kunzru's amendment:</strong> Bardoloi delivered the definitive argument against maintaining the old excluded/partially-excluded distinction: since 1947 both categories had been administered by the provincial government without deterioration. The distinction served no further purpose once the new autonomous district framework was in place.</p>
+      <p class="prose"><strong>On Dimapur:</strong> Bardoloi expressed "the fullest sympathy" for Chaliha's case but opposed excision on practical grounds — undefined boundaries would create disputes. He suggested the mechanisms of Para 1(3) and Para 16-A already provided sufficient remedies. He also confirmed at the Conference stage that Chaliha himself had agreed to this approach.</p>
+      <div class="q-block"><p>"With reference to the amendment that has been tabled by Mr Chaliha, we have the fullest sympathy. The Advisory Sub-committee for the tribal areas had investigated into this affair. It is quite true that for administrative reasons only about 35 years ago this area of Dimapur was brought under Naga Hill administration."</p><div class="q-speaker">Shri Gopinath Bardoloi — Para 19 debate on Dimapur</div></div>
+    </div>
+  </div>
+
+  <div class="speaker-card" id="spk-chaliha">
+    <div class="speaker-head" onclick="toggleSpeaker(this)">
+      <div class="spkr-avatar" style="background:#E65100;">KC</div>
+      <div style="flex:1"><div class="spkr-name">Shri Kuladhar Chaliha — Most Active Challenger</div><div class="spkr-meta">Assam: General · 6 amendments moved · All three days · Pages 1003–1099</div></div>
+      <span style="color:var(--text-muted);font-size:.75rem;">▼</span>
+    </div>
+    <div class="speaker-body">
+      <p class="prose">Chaliha was the Assembly member who most consistently challenged the Drafting Committee's proposals — though from a position different from Brajeshwar Prasad. Where Prasad wanted centralisation under the President, Chaliha wanted a different balance within Assam: less Commission bureaucracy, more direct Governor (Cabinet) action; weaker District Council legislative powers; stronger protection for non-tribal economic interests.</p>
+      <p class="prose"><strong>Amendments moved:</strong> Para 1 (delete Commission proviso — negatived), Para 3 (replace Council legislative power with Governor delegation — negatived), Para 8 (Legislature approval for taxation rules — negatived), Para 10 (replace Council regulation power — negatived), Para 16 (delete second proviso — resulted in compromise with Bardoloi), Para 19 (Dimapur exclusion and Shillong exclusion — both negatived).</p>
+      <div class="q-block"><p>"A Governor means of course the Cabinet. I do not want a Commission. The Governor would have the power in consultation with his Cabinet to discuss these things and if it is left to a Commission there will be obvious delay."</p><div class="q-speaker">Shri Kuladhar Chaliha — Para 1 debate, Commission proviso</div></div>
+      <p class="prose"><strong>Chaliha on Dimapur:</strong> He gave a detailed historical account drawing on Gait's History of Assam, traced Dimapur from the Kachari Kingdom through Ahom rule to its incorporation into Naga Hills by what he described as an administrative accident during British rule. He had himself served as a Magistrate at Golaghat and knew the area personally.</p>
+    </div>
+  </div>
+
+  <div class="speaker-card" id="spk-brajeshwar">
+    <div class="speaker-head" onclick="toggleSpeaker(this)">
+      <div class="spkr-avatar" style="background:#6A1B9A;">BP</div>
+      <div style="flex:1"><div class="spkr-name">Shri Brajeshwar Prasad — Centralisation Advocate</div><div class="spkr-meta">Bihar: General · 15+ amendments moved · 5 & 6 September 1949</div></div>
+      <span style="color:var(--text-muted);font-size:.75rem;">▼</span>
+    </div>
+    <div class="speaker-body">
+      <p class="prose">Brajeshwar Prasad offered the most radical alternative to the Sixth Schedule framework — full Central administration of all tribal areas. His primary argument was geo-strategic: Assam bordered Pakistan, China, Tibet, and Burma, and the tribal hill districts were militarily and politically sensitive. Provincial administration could not be trusted with these frontier responsibilities.</p>
+      <div class="q-block"><p>"I am opposed to handing over the administration of the tribal areas into the hands of the provincial government, because Assam is on the border of five or six foreign States. Sir, in Assam, the conflicts between the Ahoms, and the Assamese, the Bengalees and the Muslims and the Mongoloid races have assumed proportions of which probably we the members of the House are not fully aware."</p><div class="q-speaker">Shri Brajeshwar Prasad — Para 1 debate</div></div>
+      <p class="prose">Ambedkar's response: Para 17 already provided Central control over frontier areas. Wholesale centralisation would create a constitutional anomaly — a province with portions under direct Central rule alongside portions under provincial governance. All of Prasad's amendments ("President" for "Governor" throughout) were consistently negatived. He ultimately chose not to even move his Para 14 amendments after the President indicated they would be ruled out as repetitive.</p>
+    </div>
+  </div>
+
+  <div class="speaker-card" id="spk-nichols">
+    <div class="speaker-head" onclick="toggleSpeaker(this)">
+      <div class="spkr-avatar" style="background:#00838F;">NR</div>
+      <div style="flex:1"><div class="spkr-name">Rev. J.J.M. Nichols Roy — Khasi Hills, Key Background Figure</div><div class="spkr-meta">Assam: General · Co-author of Schedule · Bordoloi Sub-Committee member</div></div>
+      <span style="color:var(--text-muted);font-size:.75rem;">▼</span>
+    </div>
+    <div class="speaker-body">
+      <p class="prose">Nichols Roy was one of the principal co-authors of the Schedule — having participated alongside Bardoloi in the Sub-Committee on Tribal Areas and in the negotiations with the Drafting Committee. His role on the Assembly floor was modest (few direct speeches recorded) but his background authority was considerable.</p>
+      <p class="prose">Ambedkar specifically invoked Nichols Roy's agreement with the Schedule on multiple occasions as evidence of its legitimacy as an agreed instrument — particularly to counter Chaliha's amendments, which Ambedkar presented as inconsistent with the prior consensus. When Kunzru raised the Shillong municipality question, it was Bardoloi who reminded the Assembly that Nichols Roy had signed the Tribal Areas Committee report — meaning the Committee's own position (no change to Shillong Municipality limits) had to be weighed against the Drafting Committee's different proposal.</p>
+      <p class="prose">Shri B. Das (Orissa) controversially suggested that Nichols Roy "wants the tribal areas to be a separate entity so that British influence could permeate these tribal areas" — an allegation Ambedkar did not address directly, merely saying foreign influence could be "eliminated altogether."</p>
+    </div>
+  </div>
+
+  <div class="speaker-card" id="spk-chaudhuri">
+    <div class="speaker-head" onclick="toggleSpeaker(this)">
+      <div class="spkr-avatar" style="background:#37474F;">RC</div>
+      <div style="flex:1"><div class="spkr-name">Shri Rohini Kumar Chaudhuri — Procedural & Judicial Critic</div><div class="spkr-meta">Assam: General · All three days · Persistent questioner on Para 4, 10, 13, 14, 19</div></div>
+      <span style="color:var(--text-muted);font-size:.75rem;">▼</span>
+    </div>
+    <div class="speaker-body">
+      <p class="prose">Chaudhuri was the most legally technical of the Assam members — repeatedly pressing Ambedkar for precision on the interaction between tribal court jurisdiction and ordinary courts, on the electoral consequences of the Shillong proviso, and on the Commission composition. He was often dismissed by Ambedkar but his questions identified genuine ambiguities.</p>
+      <p class="prose"><strong>Most significant contribution:</strong> Amendment No. 130 (Para 13) requiring Bills affecting tribal areas to be "first placed before the District Council for discussion and then after such discussion" before being passed — adopted.</p>
+      <p class="prose"><strong>Para 4 — Tribal/Non-Tribal Jurisdiction:</strong> Chaudhuri pressed for clarity on what happens when one party is tribal and the other non-tribal in a dispute. Ambedkar answered that the tribal court's jurisdiction is ousted in such cases — ordinary courts apply. Chaudhuri found this insufficiently explicit and pressed for a textual provision. Ambedkar considered it unnecessary as it "follows from" the text.</p>
+      <div class="q-block"><p>"I stand corrected. If Dr Ambedkar does not practise camouflage, he would not be a good fighter. But, what I thought was that certain honourable Members may be misled as I was misled by what he had stated in his proviso."</p><div class="q-speaker">Shri Rohini Kumar Chaudhuri — Para 19, Shillong debate (retracting "camouflage" charge)</div></div>
+    </div>
+  </div>
+
+  <div class="speaker-card" id="spk-kunzru">
+    <div class="speaker-head" onclick="toggleSpeaker(this)">
+      <div class="spkr-avatar" style="background:#4E342E;">HK</div>
+      <div style="flex:1"><div class="spkr-name">Pandit Hirday Nath Kunzru — Structural Critic</div><div class="spkr-meta">United Provinces: General · 7 September 1949 · Para 14 and Para 19 debates</div></div>
+      <span style="color:var(--text-muted);font-size:.75rem;">▼</span>
+    </div>
+    <div class="speaker-body">
+      <p class="prose">Kunzru offered the most intellectually substantive structural critique — not opposition to tribal self-governance but a concern that the Schedule created an unnecessary segregation of the more-advanced "partially excluded" areas (Khasi Hills, Garo Hills, Mikir Hills) alongside the genuinely "excluded" ones (Naga Hills, Lushai Hills). His proposed Part IA in the Table would have maintained a distinct, lighter governance regime for areas that already had some democratic contact with plains administration.</p>
+      <p class="prose"><strong>On Para 14 (Commission):</strong> Kunzru raised the sharpest constitutional question: if the Commission's role is advisory to the Governor, and the Governor can recommend Parliamentary action without a Commission report, Parliament might act entirely without independent evidence. Ambedkar's answer (Parliament can appoint its own Commission) was acknowledged as technically correct but politically unsatisfying.</p>
+      <div class="q-block"><p>"However good the provisions of the Sixth Schedule might seem, they segregate people living in different districts and thus make unity much more difficult. I feel the same difficulty in connection with the inclusion of what were partially excluded areas before in the table placed before us by Dr Ambedkar."</p><div class="q-speaker">Pandit H.N. Kunzru — Para 19 debate</div></div>
+    </div>
+  </div>
+
+  <div class="speaker-card" id="spk-jaipal">
+    <div class="speaker-head" onclick="toggleSpeaker(this)">
+      <div class="spkr-avatar" style="background:#B71C1C;">JS</div>
+      <div style="flex:1"><div class="spkr-name">Shri Jaipal Singh — Only Adivasi Member of the CA</div><div class="spkr-meta">Bihar: General · Fifth Schedule primarily · Moral foundation of the debates</div></div>
+      <span style="color:var(--text-muted);font-size:.75rem;">▼</span>
+    </div>
+    <div class="speaker-body">
+      <p class="prose">Jaipal Singh was the sole Adivasi member of the Constituent Assembly — a former captain of India's Olympic field hockey team and leader of the Adivasi party. His primary interventions were on the Fifth Schedule (tribal advisory councils, scheduled areas). He moved five amendments to the Fifth Schedule, all negatived or withdrawn.</p>
+      <div class="q-block"><p>"I find that this new proposed Fifth Schedule has, somehow or other, perhaps without meaning it, emasculated the Tribes Advisory Council. The whole pattern of the original draft was to bring the Tribes Advisory Council into action. It could initiate, originate things, but, somehow or other, the tables have now been turned. The initiative is placed in the hands of the Governor or Ruler of the State. I regret that that is a situation I cannot accept."</p><div class="q-speaker">Shri Jaipal Singh — Fifth Schedule debate</div></div>
+      <p class="prose">His significance was less in the outcomes he achieved than in the moral weight he gave to the demand for effective rather than merely formal tribal governance. He consistently argued that the Advisory Council needed real power of initiative — not merely the power to be consulted when the Governor chose.</p>
+    </div>
+  </div>
+
+  <div class="speaker-card" id="spk-munshi">
+    <div class="speaker-head" onclick="toggleSpeaker(this)">
+      <div class="spkr-avatar" style="background:#1565C0;">KM</div>
+      <div style="flex:1"><div class="spkr-name">Shri K.M. Munshi — Philosophical Defender</div><div class="spkr-meta">Bombay: General · Pages 999–1001 · Nagaland/general tribal governance</div></div>
+      <span style="color:var(--text-muted);font-size:.75rem;">▼</span>
+    </div>
+    <div class="speaker-body">
+      <p class="prose">Munshi delivered the most philosophically comprehensive defence of the framework — situating it within a theory of managed integration that rejected both permanent segregation and forced assimilation. His formulation of the twin goals of tribal protection became the canonical statement of the Schedule's purpose.</p>
+      <div class="q-block"><p>"We want that the Scheduled tribes in the whole country should be protected from the destructive compact of races possessing a higher and more aggressive culture and should be encouraged to develop their own autonomous life; at the same time we want them to take a larger part in the life of the country. They should not be isolated communities or little republics to be perpetuated for ever."</p><div class="q-speaker">Shri K.M. Munshi — General tribal debate</div></div>
+      <p class="prose">On the Naga Hills specifically, Munshi argued that the Sixth Schedule's autonomous district model — with its wide legislative, judicial, and administrative powers — provided the best available constitutional accommodation for peoples with distinct governance traditions, short of outright sovereignty.</p>
+    </div>
+  </div>
+
+  <div class="speaker-card" id="spk-thakkar">
+    <div class="speaker-head" onclick="toggleSpeaker(this)">
+      <div class="spkr-avatar" style="background:#558B2F;">AT</div>
+      <div style="flex:1"><div class="spkr-name">Shri A.V. Thakkar (Thakkar Bapa)</div><div class="spkr-meta">Saurashtra · Gandhi's tribal welfare worker · Pages 989–991</div></div>
+      <span style="color:var(--text-muted);font-size:.75rem;">▼</span>
+    </div>
+    <div class="speaker-body">
+      <p class="prose">Known as "Thakkar Bapa," A.V. Thakkar was the leading non-tribal advocate for tribal welfare in the Assembly. He provided the most vivid empirical account of conditions in the hill areas — including his first-ever visit to the Lushai Hills and Naga Hills in 1947 as part of the Assam Tribal Committee.</p>
+      <div class="q-block"><p>"I will give you only one instance. When I went with the Assam Tribal Committee to tour in the areas of Assam with the Chairman Mr. Gopinath Bardolai and the prominent Minister Rev. Nichols Roy all the members of the Committee, one and all, went for the first time to the Lushai Hills and Naga Hills in the year 1947. Even the Premier of Assam had never visited the Lushai Hills and Naga Hills, much less a man like me."</p><div class="q-speaker">Shri A.V. Thakkar (Thakkar Bapa)</div></div>
+      <p class="prose">His intervention highlighted the profound ignorance among plainspeople about conditions in the hill districts — reinforcing the case for autonomous governance by people with direct knowledge of local conditions. He also corrected Ambedkar's use of "tribals" by interjecting "Hill tribals please" — a terminological point Ambedkar accepted for the purposes of the Assam discussion.</p>
+    </div>
+  </div>
+
+  <div class="speaker-card" id="spk-ttk">
+    <div class="speaker-head" onclick="toggleSpeaker(this)">
+      <div class="spkr-avatar" style="background:#455A64;">TK</div>
+      <div style="flex:1"><div class="spkr-name">Shri T.T. Krishnamachari — Drafting Committee, Procedural Interventions</div><div class="spkr-meta">Madras: General · Brief but decisive interventions · Pages 1004, 1035, 1044</div></div>
+      <span style="color:var(--text-muted);font-size:.75rem;">▼</span>
+    </div>
+    <div class="speaker-body">
+      <p class="prose">Krishnamachari's interventions were brief but often procedurally decisive. In the Para 14 debate, he resolved Chaliha's query about Commission terms of reference by pointing to Amendment No. 134 and its cross-reference to Para 1(3). In the Para 19 Kunzru debate, he interjected "Bar one!" — pointing out that Kunzru's characterisation of the areas as "practically speaking" entirely within the original Table was inaccurate. He consistently defended the drafting precision of the Committee's text against challenges premised on misreading. In the Para 5 debate, he noted that Ambedkar had already addressed the question raised by amendment No. 263 in the previous paragraph — a characteristic shortcut that moved proceedings along efficiently.</p>
+    </div>
+  </div>
+
+</main>
+</div>
+</div>
+
+<!-- SUBPAGE 4: AMENDMENTS -->
+<div class="subpage" id="page-amendments">
+<div class="debate-layout">
+<aside class="d-sidebar">
+  <div class="d-sidebar-title">Filter by Result</div>
+  <ul class="d-sidebar-nav">
+    <li><a href="#" onclick="filterAmend('all');return false;">All Amendments</a></li>
+    <li><a href="#" onclick="filterAmend('adopted');return false;">Adopted Only</a></li>
+    <li><a href="#" onclick="filterAmend('negatived');return false;">Negatived Only</a></li>
+    <li><a href="#" onclick="filterAmend('withdrawn');return false;">Withdrawn / Ruled Out</a></li>
+  </ul>
+  <div class="d-sidebar-title">Filter by Para</div>
+  <ul class="d-sidebar-nav">
+    <li><a href="#" onclick="filterAmend('para1');return false;">Para 1</a></li>
+    <li><a href="#" onclick="filterAmend('para2');return false;">Para 2</a></li>
+    <li><a href="#" onclick="filterAmend('para3');return false;">Para 3</a></li>
+    <li><a href="#" onclick="filterAmend('para4');return false;">Para 4</a></li>
+    <li><a href="#" onclick="filterAmend('para10');return false;">Para 10</a></li>
+    <li><a href="#" onclick="filterAmend('para13');return false;">Para 13</a></li>
+    <li><a href="#" onclick="filterAmend('para14');return false;">Para 14</a></li>
+    <li><a href="#" onclick="filterAmend('para16');return false;">Para 16</a></li>
+    <li><a href="#" onclick="filterAmend('para19');return false;">Para 19</a></li>
+  </ul>
+</aside>
+<main>
+  <div class="section-label">Complete Record</div>
+  <h2 class="section-title" style="font-size:1.5rem;">All Amendments — 5 to 7 September 1949</h2>
+  <p class="section-lead">Every amendment moved during the three-day debate. Searchable by mover, content, or paragraph. Filter by outcome using the left panel.</p>
+
+  <div class="search-bar" style="margin-bottom:1.5rem;">
+    <input type="text" id="amendSearch" placeholder="Search by mover, content, or paragraph…">
+    <button onclick="searchAmend()">Search</button>
+  </div>
+
+  <div style="overflow-x:auto;">
+  <table class="amend-table" id="amendTable">
+    <thead><tr><th>No.</th><th>Para</th><th>Mover</th><th>Substance</th><th>Result</th></tr></thead>
+    <tbody id="amendTbody">
+      <tr data-result="adopted" data-para="para1"><td>98</td><td>1(1)</td><td>Ambedkar</td><td>Add "Subject to the provisions of this paragraph" before "The tribal areas" — enables Governor's boundary power in sub-para (3) to qualify the identification of tribal areas in sub-para (1)</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+      <tr data-result="adopted" data-para="para1"><td>99</td><td>1(3)</td><td>Ambedkar</td><td>Substitute new sub-para (3): Governor's powers by public notification to include, create, increase, diminish, unite districts and define boundaries; Commission report required before (b)–(e)</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+      <tr data-result="negatived" data-para="para1"><td>—</td><td>1(3)</td><td>Chaliha</td><td>Delete the proviso requiring Commission report before creating/merging autonomous districts — Cabinet advice to Governor was sufficient</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+      <tr data-result="negatived" data-para="para1"><td>—</td><td>1</td><td>Brajeshwar Prasad</td><td>Substitute "President" for "Governor" throughout Para 1 — effectively making tribal areas a centrally administered territory</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+      <tr data-result="negatived" data-para="para1"><td>—</td><td>1</td><td>Brajeshwar Prasad</td><td>Make Governor "agent of the President" in Para 1 functions — same objective as above from a different angle</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+      <tr data-result="adopted" data-para="para2"><td>100</td><td>2(1)</td><td>Ambedkar</td><td>Reduce maximum members from 40 to "not more than twenty-four" — original number considered too large for effective administration</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+      <tr data-result="adopted" data-para="para2"><td>101</td><td>2(2)</td><td>Ambedkar</td><td>Delete sub-paragraph (2) — delimitation of constituencies to be left to rules, not the Constitution itself</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+      <tr data-result="adopted" data-para="para2"><td>102</td><td>2(7)</td><td>Ambedkar</td><td>Add clause (dd): "the term of office of members of such Councils" — correction of omission from rule-making powers in sub-para (7)</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+      <tr data-result="negatived" data-para="para2"><td>257</td><td>2(1)</td><td>Unnamed member</td><td>Limit total Council membership to 15 — rejected as unnecessary given Ambedkar's amendment already set maximum at 24</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+      <tr data-result="negatived" data-para="para3"><td>113</td><td>3</td><td>Chaliha</td><td>Replace Para 3's inherent Council legislative power with Governor-delegated model: "Governor shall make laws and entrust Councils with such powers as the State Legislature may approve"</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+      <tr data-result="adopted" data-para="para3"><td>114</td><td>3(3) new</td><td>Ambedkar</td><td>Add sub-para (3): "All laws made under this paragraph shall be submitted forthwith to the Governor and until assented to by him shall have no effect" — Governor's veto over Council legislation</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+      <tr data-result="negatived" data-para="para3"><td>—</td><td>3(3)</td><td>Rohini Kumar Chaudhuri</td><td>Substitute: laws to be placed before State Legislature, not just Governor — Legislature must agree before law takes effect</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+      <tr data-result="negatived" data-para="para3"><td>—</td><td>3</td><td>Brajeshwar Prasad</td><td>"Governor" → "President" in Para 3 — same centralisation argument as throughout</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+      <tr data-result="adopted" data-para="para4"><td>115</td><td>4(1)</td><td>Ambedkar</td><td>Delete "or those arising out of any law made under paragraph 3 of this Schedule" from sub-para (1) — redundant words</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+      <tr data-result="adopted" data-para="para4"><td>119</td><td>4(2)+(3) new</td><td>Ambedkar</td><td>Open appeals to High Court (substituting "except the High Court and the Supreme Court shall have jurisdiction" for "decision shall be final"); add sub-para (3) giving High Court of Assam specified appellate jurisdiction</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+      <tr data-result="withdrawn" data-para="para4"><td>118</td><td>4</td><td>Rohini Kumar Chaudhuri</td><td>Amendment to an unadopted amendment (No. 3496) — ruled out of order by the President as it had no place without the parent amendment</td><td><span class="pill pill-withdrawn">Ruled Out</span></td></tr>
+      <tr data-result="negatived" data-para="para4"><td>263</td><td>5</td><td>Sahu</td><td>Add sub-para (4): tribal/non-tribal trials to follow CPC 1908 and CrPC 1890 — addressed by Ambedkar's Para 4 answer; negatived</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+      <tr data-result="negatived" data-para="para1"><td>201</td><td>8</td><td>Chaliha</td><td>Replace Para 8: "Governor shall lay down rules and place them before the State Legislature" — rejected as requiring Legislature approval for all taxation rules</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+      <tr data-result="adopted" data-para="para1"><td>—</td><td>9(1)</td><td>Ambedkar</td><td>Delete sub-para (1) of Para 9 — mineral extraction now under Union List; provision constitutionally inconsistent</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+      <tr data-result="negatived" data-para="para10"><td>123</td><td>10</td><td>Chaliha</td><td>Replace Para 10 entirely: "Governor shall make regulations to control money-lending and trading in the tribal areas" — removes District Council's power to regulate non-tribal trading</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+      <tr data-result="adopted" data-para="para10"><td>124</td><td>10(2)</td><td>Ambedkar</td><td>Insert "In particular and without prejudice to the generality of the foregoing power, such regulations may" — drafting clarification preserving full generality of regulation power</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+      <tr data-result="adopted" data-para="para10"><td>125</td><td>10(3) new</td><td>Ambedkar</td><td>Add sub-para (3): "All regulations made under this paragraph shall be submitted forthwith to the Governor and, until assented to by him, shall have no effect"</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+      <tr data-result="adopted" data-para="para13"><td>130</td><td>13</td><td>Rohini Kumar Chaudhuri</td><td>Insert "be first placed before the District Council for discussion and then after such discussion" — Bills affecting tribal areas must go to District Council before State Legislature passes them</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+      <tr data-result="adopted" data-para="para14"><td>134</td><td>14(1)</td><td>Ambedkar</td><td>Include Para 1(3)(b)–(e) matters in Commission's terms of reference; add "and autonomous regions" throughout Para 14 — ensures Commission can consider boundary changes</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+      <tr data-result="negatived" data-para="para14"><td>—</td><td>14</td><td>Brajeshwar Prasad</td><td>Substitute Para 14: Governor as agent of President, Commission of 7+ members (3 tribal, rest from academia/judiciary), enlarged scope including cultural and religious facilities</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+      <tr data-result="withdrawn" data-para="para14"><td>—</td><td>14(1)</td><td>Chaliha</td><td>Add clause (d) on inclusion/exclusion of any tribal area from any District or Regional Council — resolved by Krishnamachari pointing to Amendment 134; Chaliha withdrew</td><td><span class="pill pill-withdrawn">Withdrawn</span></td></tr>
+      <tr data-result="negatived" data-para="para14"><td>—</td><td>14(1)</td><td>Rohini Kumar Chaudhuri</td><td>Proviso: State Legislature to be represented by two elected members on the Commission — Ambedkar: Governor not prevented but election cannot be made mandatory</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+      <tr data-result="adopted" data-para="para1"><td>—</td><td>15(3)</td><td>Ambedkar</td><td>Delete sub-para (3) of Para 15 — removes explicit Governor's discretionary powers; consistent with overall project of dropping "in his discretion" throughout Schedule</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+      <tr data-result="adopted" data-para="para16"><td>143</td><td>16 (2nd proviso)</td><td>Chaliha / Bardoloi compromise</td><td>Substitute second proviso: "no action shall be taken under clause (b) without giving the Council an opportunity of placing their views before the legislature of the State" — weaker than original hearing requirement but stronger than Chaliha's deletion proposal</td><td><span class="pill pill-adopted">Compromise Adopted</span></td></tr>
+      <tr data-result="adopted" data-para="para1"><td>16-A new</td><td>After Para 16</td><td>Ambedkar</td><td>Insert entirely new Para 16-A: Governor may declare that any area within an autonomous district shall not form part of the reserved tribal constituency but the general constituency — protects non-tribal residents' electoral rights</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+      <tr data-result="adopted" data-para="para1"><td>—</td><td>17(3) new</td><td>Ambedkar</td><td>Add sub-para (3): "In the discharge of his functions under sub-paragraph (2) as the agent of the President, the Governor shall act in his discretion" — frontier areas under direct Presidential authority</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+      <tr data-result="negatived" data-para="para1"><td>—</td><td>17(2)</td><td>Brajeshwar Prasad</td><td>Extend Presidential-agent model to ALL tribal areas (not just frontier Part II) — final iteration of centralisation argument; negatived</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+      <tr data-result="adopted" data-para="para1"><td>146</td><td>18</td><td>Ambedkar</td><td>Delete "in his discretion" from line 22 of Para 18 — part of systematic removal of Governor's explicit discretion</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+      <tr data-result="adopted" data-para="para1"><td>147</td><td>18(c)</td><td>Ambedkar</td><td>Delete clause (c) of Para 18 — removes Governor's discretionary transitional power</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+      <tr data-result="adopted" data-para="para19"><td>331</td><td>19 + Table</td><td>Ambedkar</td><td>Substitute entirely new Para 19 and Table: Parts I and II, with special provisions for Khasi-Jaintia Hills (Shillong Municipality/Mylliem State proviso), references to para 19(3) and provisional frontier area inclusion</td><td><span class="pill pill-adopted">Adopted</span></td></tr>
+      <tr data-result="negatived" data-para="para19"><td>—</td><td>19 Table / Para 1</td><td>Chaliha</td><td>Add "except the mouza of Dimapur" after "The Naga Hills District" in Part I Table — excise non-tribal commercial town from autonomous district jurisdiction</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+      <tr data-result="negatived" data-para="para19"><td>—</td><td>19(2)</td><td>Chaliha / Chaudhuri</td><td>Delete "but including so much of the area comprised within the municipality of Shillong as formed part of the Khasi State of Mylliem" — exclude entire Shillong Municipality from autonomous district</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+      <tr data-result="negatived" data-para="para19"><td>330/332/333</td><td>19 + Table</td><td>Pandit Kunzru</td><td>Create Part IA for partially-excluded areas (Khasi-Jaintia, Garo, Mikir Hills); insert new Para 16.4 for Part IA with lighter governance regime preserving 1935 Act protections for more-advanced areas</td><td><span class="pill pill-negatived">Negatived</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+</main>
+</div>
+</div>
+
+<!-- SUBPAGE 5: STATE VIEW -->
+<div class="subpage" id="page-state-view">
+<div style="max-width:1140px;margin:0 auto;">
+  <div class="section-label">Regional Analysis</div>
+  <h2 class="section-title" style="font-size:1.5rem;margin-bottom:.5rem;">State-wise Debate Coverage</h2>
+  <p class="section-lead">How the debates addressed the specific hill districts. In 1949 these were all districts of Assam — they subsequently became parts of different states through reorganisation.</p>
+
+  <div class="state-tabs">
+    <button class="state-tab active" data-stab="assam">Assam</button>
+    <button class="state-tab" data-stab="meghalaya">Meghalaya</button>
+    <button class="state-tab" data-stab="tripura">Tripura</button>
+    <button class="state-tab" data-stab="mizoram">Mizoram</button>
+    <button class="state-tab" data-stab="nagaland">Nagaland</button>
+    <button class="state-tab" data-stab="manipur">Manipur</button>
+  </div>
+
+  <div class="state-panel active" id="stab-assam">
+    <div style="margin-bottom:1rem;"><span class="badge badge-accent">Assam</span> <span class="badge badge-warn" style="margin-left:6px;">Most Debated Territory</span> <span class="badge badge-success" style="margin-left:6px;">Original Schedule State</span></div>
+    <div class="two-col" style="margin-bottom:1.5rem;">
+      <div class="hl-box"><strong>1949 Districts in Part I:</strong> United Khasi-Jaintia Hills · Garo Hills · Lushai Hills · Naga Hills · North Cachar Hills · Mikir Hills</div>
+      <div class="hl-box"><strong>Part II (Frontier):</strong> North-East Frontier Tract · Balipara Frontier Tract · Tirap Frontier Tract · Abor Hills · Mishmi Hills · Naga Tribal Area</div>
+    </div>
+    <p class="prose">Assam was the state for which the Sixth Schedule was originally and entirely conceived. The three days of debate were almost entirely about Assam's hill districts. The central tensions: (1) extent of Council power vs. state oversight; (2) role of the Governor (Cabinet-advised or discretionary); (3) status of non-tribal commercial towns like Shillong and Dimapur within tribal districts; (4) frontier areas bordering China, Burma, and Pakistan.</p>
+    <div class="h2">Timeline</div>
+    <div class="c-timeline">
+      <div class="c-titem"><div class="c-tdate">Pre-1947</div><div class="c-ttitle">Excluded & Partially Excluded Areas</div><div class="c-tbody">Under the Government of India Act 1935, hill districts classified as "excluded" (Naga Hills, Lushai Hills — Governor acts in discretion) or "partially excluded" (Khasi Hills, Garo Hills — Governor uses individual judgment). The Assam Legislature had no authority in excluded areas.</div></div>
+      <div class="c-titem"><div class="c-tdate">1947–1949</div><div class="c-ttitle">Bordoloi Sub-Committee</div><div class="c-tbody">Gopinath Bardoloi chairs the Sub-Committee on North-East Frontier (Assam) Tribal and Excluded Areas. Rev. Nichols Roy is a key member. The Report recommends the autonomous district model — foundation of the Sixth Schedule.</div></div>
+      <div class="c-titem"><div class="c-tdate">5–7 Sept 1949</div><div class="c-ttitle">Constituent Assembly Adopts the Schedule</div><div class="c-tbody">All six Assam hill districts named in Part I of the Table. Frontier areas (Naga Tribal Area, North-East Frontier Tract) in Part II under Presidential authority. The excluded/partially-excluded distinction formally abolished.</div></div>
+      <div class="c-titem"><div class="c-tdate">Post-1963</div><div class="c-ttitle">Reorganisation</div><div class="c-tbody">Nagaland (1963), Meghalaya (1972), Mizoram (1987) gain separate statehood. Tripura's tribal areas added to Schedule. The Schedule now covers districts in four states: Assam, Meghalaya, Tripura, Mizoram.</div></div>
+    </div>
+  </div>
+
+  <div class="state-panel" id="stab-meghalaya">
+    <div style="margin-bottom:1rem;"><span class="badge badge-accent">Meghalaya</span> <span class="badge badge-warn" style="margin-left:6px;">Statehood 1972</span></div>
+    <div class="two-col" style="margin-bottom:1.5rem;">
+      <div class="hl-box"><strong>1949 Districts:</strong> United Khasi-Jaintia Hills District · Garo Hills District (Mikir Hills separately handled)</div>
+      <div class="hl-box"><strong>Key Debates:</strong> Shillong Municipality/Mylliem State (Para 19) · Kunzru's Part IA proposal (rejected) · Nichols Roy's co-authorship</div>
+    </div>
+    <p class="prose">In 1949, the territories now constituting Meghalaya were three autonomous districts within Assam — the Khasi Hills, Jaintia Hills, and Garo Hills. Rev. Nichols Roy, representing the Khasi Hills, was a co-architect of the Schedule, ensuring Khasi interests were central to the drafting.</p>
+    <p class="prose">The most contentious Para 19 debate specifically concerned Meghalaya's territory — whether Shillong Municipality (Assam's capital, located within the Khasi Hills district) should be entirely excluded from or partially included in the autonomous district. Bardoloi's intervention established that Khasi people owned the majority of the land within Shillong, making exclusion inappropriate.</p>
+    <p class="prose">The Mylliem Khasi State — a small native state whose territory overlapped with Shillong Municipality — received specific constitutional accommodation in Ambedkar's Para 19 amendment: the "Mylliem State area" would remain part of the United Khasi-Jaintia Hills autonomous district even though the rest of the municipality was excluded. Kunzru's proposed Part IA would have placed the Khasi and Garo Hills in a lighter-touch regime closer to the 1935 Act's "partially excluded" framework — decisively rejected by Bardoloi as unnecessary and retrograde.</p>
+  </div>
+
+  <div class="state-panel" id="stab-tripura">
+    <div style="margin-bottom:1rem;"><span class="badge badge-accent">Tripura</span> <span class="badge badge-warn" style="margin-left:6px;">Added 1984 (effective 1976)</span></div>
+    <div class="hl-box" style="margin-bottom:1.5rem;"><strong>1949 Status:</strong> Part C State (former princely state). Not directly addressed in the debates. The Sixth Schedule was extended to Tripura's tribal areas under the 49th Amendment Act 1984.</div>
+    <p class="prose">Tripura was a Part C State (former princely state) at the time of the 1949 debates — its tribal areas were governed under separate transition arrangements. The concerns most relevant to Tripura in the debates were those expressed by Biswanath Das (Orissa) on the "museum logic" of tribal separation, and by Jaipal Singh on the need for effective Advisory Councils.</p>
+    <p class="prose">The Tripura Tribal Areas Autonomous District Council (TTAADC) was established after the Sixth Schedule was extended following Tripura's full state reorganisation. The TTAADC covers approximately two-thirds of Tripura's land area and is one of the largest autonomous district councils under the Schedule. The challenge of a majority-tribal area existing alongside an ethnically mixed plains population has created persistent tensions — partly reflected in the 2023 violence — that the 1949 debates did not directly anticipate.</p>
+    <div class="warn-box"><strong>Debate Connection:</strong> Shri Biswanath Das (Orissa) offered the most philosophically challenging critique of the tribal schedule framework — warning that scheduled areas risked perpetuating the colonial "museum" logic of keeping tribes separate. His concern about Rajpramukhs (hereditary rulers) in princely state areas was directly relevant to Tripura's situation.</div>
+  </div>
+
+  <div class="state-panel" id="stab-mizoram">
+    <div style="margin-bottom:1rem;"><span class="badge badge-accent">Mizoram</span> <span class="badge badge-warn" style="margin-left:6px;">Lushai Hills 1949</span> <span class="badge badge-success" style="margin-left:6px;">Statehood 1987</span></div>
+    <div class="two-col" style="margin-bottom:1.5rem;">
+      <div class="hl-box"><strong>1949 Status:</strong> Lushai Hills District of Assam — among the most isolated of all hill districts. Fully excluded under 1935 Act.</div>
+      <div class="hl-box"><strong>Path to Statehood:</strong> Union Territory 1972 → Full State 1987. Sixth Schedule applies throughout as basis of governance.</div>
+    </div>
+    <p class="prose">The Lushai Hills were in 1949 among the most remote areas discussed in the Assembly — literally unknown to many members. Thakkar Bapa's account of visiting for the first time in 1947 alongside Bardoloi and Nichols Roy captured the profound ignorance among plains politicians about conditions there.</p>
+    <p class="prose">The Lushai Hills were "fully excluded" under the 1935 Act — the Assam Legislature had no authority there at all. The Sixth Schedule represented a dramatic constitutional shift: instead of exclusion, the Mizo people would have elected District Councils with substantive legislative, judicial, and administrative powers.</p>
+    <p class="prose">The Mizo National Front insurgency (1966–1986) and its eventual resolution through the Mizoram Peace Accord reflected both the success and limitations of the Sixth Schedule framework. The MADC (Mara Autonomous District Council) dispute in <em>Pu Myllai Hlychho v State of Mizoram</em> (2005) produced the Supreme Court's leading judgment on the Governor's role under the Schedule — directly vindicating Ambedkar's 1949 explanation that "Governor" means Governor on Cabinet advice.</p>
+  </div>
+
+  <div class="state-panel" id="stab-nagaland">
+    <div style="margin-bottom:1rem;"><span class="badge badge-accent">Nagaland</span> <span class="badge badge-warn" style="margin-left:6px;">Naga Hills 1949</span> <span class="badge badge-success" style="margin-left:6px;">Statehood 1963</span></div>
+    <div class="two-col" style="margin-bottom:1.5rem;">
+      <div class="hl-box"><strong>1949 Status:</strong> Naga Hills District in Part I; Naga Tribal Area in Part II (frontier area under Presidential authority)</div>
+      <div class="hl-box"><strong>Current Framework:</strong> Governed under Article 371A (not Sixth Schedule) after 1963 statehood — a separate, stronger constitutional provision</div>
+    </div>
+    <p class="prose">The Naga Hills were the most politically sensitive area in the entire three-day debate. The Naga National Council had already articulated sovereignty claims by 1949. The Sixth Schedule's autonomous district framework was partly designed as a constitutional accommodation — providing the widest self-governance powers available within the Indian constitutional order, short of sovereignty.</p>
+    <p class="prose"><strong>Dimapur Mouza — The Sharpest Debate:</strong> Chaliha's detailed historical case for excluding Dimapur from the Naga Hills District was the most vivid illustration of the tension between tribal self-governance and non-tribal economic communities within autonomous districts. Bardoloi's pragmatic response (undefined boundaries; existing Schedule mechanisms sufficient) and Ambedkar's constitutional response (Para 16-A and Para 1(3)(d) provide adequate remedies) left the question unresolved in practice. Dimapur is today a major commercial hub, still within Nagaland, with a predominantly non-Naga population.</p>
+    <p class="prose">Nagaland achieved statehood in 1963 under Article 371A — giving even greater autonomy over customary law, land, and Naga practices. The Sixth Schedule technically ceased to apply, though the autonomous district model it established provided the conceptual template for 371A.</p>
+  </div>
+
+  <div class="state-panel" id="stab-manipur">
+    <div style="margin-bottom:1rem;"><span class="badge badge-accent">Manipur</span> <span class="badge badge-warn" style="margin-left:6px;">Not in 1949 Schedule</span> <span class="badge badge-neutral" style="margin-left:6px;">Extended Post-1971</span></div>
+    <div class="hl-box" style="margin-bottom:1.5rem;"><strong>1949 Status:</strong> Part C State (former princely state). Hill areas not included in original Sixth Schedule Table. Three Autonomous District Councils created in hill areas after extension.</div>
+    <p class="prose">Manipur's hill areas were not part of the original Sixth Schedule and were not discussed in the 1949 debates. Manipur was a Part C State undergoing separate transition. The Sixth Schedule was later extended to Manipur's hill districts, creating the Sadar Hills District Council, Hill District Councils, and related institutions.</p>
+    <p class="prose">Manipur's situation illustrates the limits of the 1949 framework — the debates assumed a clear Assam context, with a single provincial government and hill districts that were geographically and culturally distinct from the plains. Manipur's geography (a valley-hills dyad with deeply integrated but distinct communities) creates tensions the Schedule was not designed to address. The 2023 Manipur violence was partly a consequence of this unresolved constitutional and demographic tension.</p>
+  </div>
+</div>
+</div>
+
+<!-- SUBPAGE 6: JUDICIAL RECEPTION -->
+<div class="subpage" id="page-judicial">
+<div class="debate-layout">
+<aside class="d-sidebar">
+  <div class="d-sidebar-title">Key Topics</div>
+  <ul class="d-sidebar-nav">
+    <li><a href="#jud-status">Constitutional Status</a></li>
+    <li><a href="#jud-governor">Governor's Discretion</a></li>
+    <li><a href="#jud-myllai">Myllai Hlychho 2005</a></li>
+    <li><a href="#jud-163">Article 163 Interface</a></li>
+    <li><a href="#jud-20bb">Para 20BB (1988)</a></li>
+  </ul>
+</aside>
+<main>
+  <div class="section-label">From Debates to Courtroom</div>
+  <h2 class="section-title" style="font-size:1.5rem;">Judicial Reception of the Debates</h2>
+  <p class="section-lead">How the Supreme Court and High Courts have interpreted the Sixth Schedule — and how the 1949 debates have been used to resolve constitutional ambiguities, especially on the Governor's role.</p>
+
+  <div class="stat-row">
+    <div class="stat-box"><div class="stat-num">74+</div><div class="stat-label">Cases Citing Schedule</div></div>
+    <div class="stat-box"><div class="stat-num">12</div><div class="stat-label">Constitution Bench Decisions</div></div>
+    <div class="stat-box"><div class="stat-num">1955</div><div class="stat-label">First SC Ruling</div></div>
+    <div class="stat-box"><div class="stat-num">5</div><div class="stat-label">SC Judgments (2020–24)</div></div>
+  </div>
+
+  <section id="jud-status" style="margin-top:2rem;">
+    <div class="h2">The Schedule is Not a "Constitution Within the Constitution"</div>
+    <div class="hl-box"><strong>Legal Proposition:</strong> "Sixth Schedule being a part of the Constitution, it has to be interpreted like the other provisions of the Constitution. The Governor is not independent of the rest of the Constitution and he has to act on the advice of the Council of Ministers of the State."</div>
+    <p class="prose">This proposition — directly derived from Ambedkar's repeated clarifications in 1949 that "wherever the word Governor occurs, it means Governor acting on the advice of the Ministry" — was affirmed judicially and settled the question of whether the Schedule created a self-contained constitutional order. It does not. The Schedule operates within the larger constitutional framework, including Article 163 (Council of Ministers to aid and advise Governor) and Article 154 (executive power of State vested in Governor on ministerial advice).</p>
+  </section>
+
+  <section id="jud-governor" style="margin-top:2rem;">
+    <div class="h2">Governor's Discretion — The 1949 Position Confirmed</div>
+    <p class="prose">One of the sharpest debates in September 1949 was over whether "Governor" in the Schedule meant the Governor acting in personal discretion or on Cabinet advice. Ambedkar was unequivocal: except for the explicitly designated frontier areas (Para 17), the Governor acts on Cabinet advice throughout the Schedule. He specifically noted: "we are dropping the words 'in his discretion'. Wherever the word Governor occurs, it means Governor acting on the advice of the Ministry."</p>
+    <p class="prose">Courts have confirmed this. In cases involving nominations to District Councils, the exercise of powers to reconstitute or dissolve Councils, and the assent function under Para 3, courts have held that the Governor acts as the constitutional head — meaning the relevant decision is the state government's decision, made through him.</p>
+    <div class="hl-box"><strong>The Textual Record of Removal:</strong> Ambedkar moved amendments in Para 15 (delete sub-para (3) giving explicit discretion), Para 17 (add sub-para (3) specifying frontier area discretion as a specific exception), Para 18 (delete "in his discretion" from line 22 and delete clause (c)). Courts have used these deletions as affirmative evidence of the framers' intent.</div>
+  </section>
+
+  <section id="jud-myllai" style="margin-top:2rem;">
+    <div class="h2">Pu Myllai Hlychho v State of Mizoram (2005)</div>
+    <p class="prose"><strong>Citation:</strong> AIR 2005 SC 1537 : (2005) 2 SCC 92 — Five-Judge Constitution Bench, K.G. Balakrishnan J. writing for the Court.</p>
+    <p class="prose"><strong>Facts:</strong> Certain nominated members of the Mara Autonomous District Council (MADC) in Mizoram were terminated by the Governor on the advice of the Council of Ministers. The terminated members challenged this: they argued the Governor's nomination power was discretionary and their removal required more than Cabinet advice — at minimum natural justice protections akin to Article 311.</p>
+    <p class="prose"><strong>Held:</strong> The challenge failed. The Court held that: (1) members held office at the pleasure of the Governor, and that pleasure was exercised on Cabinet advice; (2) Article 311 protections do not apply to nominated Council members — they do not hold a "civil post" under the Union or States; (3) Para 20BB did not include sub-para (6A) of Para 2 (termination of nominated members) in its list of discretionary functions, meaning termination must follow Cabinet-advised procedures.</p>
+    <div class="q-block"><p>"The Constitutional protection and privileges available under Art 311 to a person who holds a civil post under the Union or States are not applicable to a member of a Council who is nominated by the Governor."</p><div class="q-speaker">Pu Myllai Hlychho v State of Mizoram, (2005) 2 SCC 92</div></div>
+    <p class="prose">The judgment extensively reproduced the Sixth Schedule text and analysed Para 20BB alongside Article 163. It is the leading Supreme Court authority on the Governor's role under the Schedule and directly vindicates Ambedkar's 1949 position.</p>
+  </section>
+
+  <section id="jud-163" style="margin-top:2rem;">
+    <div class="h2">Article 163 Interface — The General Rule Confirmed</div>
+    <p class="prose">The Court in Myllai Hlychho established the general rule for all Sixth Schedule functions: where the Governor exercises a function that is not expressly stated to be discretionary under Para 20BB, Article 163 applies and the function is Cabinet-aided.</p>
+    <div class="q-block"><p>"There are several powers and duties for the Governor and some of these powers are to be exercised in his discretion and some other powers are to be exercised by him with the aid and advice of the Council of Ministers. The executive powers of the State are vested in the Governor under Art 154(1)... Under the Cabinet system of Government as embodied in our Constitution, the Governor is the constitutional or formal head of the State and he exercises all his powers and functions conferred on him by or under the Constitution on the aid and advice of the Council of Ministers save in spheres where the Governor is required by or under the Constitution to exercise his functions in his discretion."</p><div class="q-speaker">Pu Myllai Hlychho v State of Mizoram, (2005) 2 SCC 92</div></div>
+    <p class="prose">This is the constitutional structure Ambedkar articulated in September 1949: the Governor everywhere in the Schedule is the Governor on Cabinet advice, except where Para 17 (and later Para 20BB) expressly provides for personal discretion.</p>
+  </section>
+
+  <section id="jud-20bb" style="margin-top:2rem;">
+    <div class="h2">Para 20BB — Codifying Discretion (67th Amendment Act, 1988)</div>
+    <p class="prose">The Constitution (67th Amendment) Act 1988 added a new Para 20BB, specifically enumerating which Governor's functions under the Schedule are to be exercised in personal discretion. This was a legislative response to the ambiguity that had persisted despite Ambedkar's 1949 clarifications — and, some would argue, a partial reversal of the 1949 framework by re-introducing explicit discretion for some functions.</p>
+    <div class="hl-box"><strong>Para 20BB provides:</strong> The Governor, in the discharge of his functions under sub-paragraphs (2) and (3) of paragraph 1, sub-paragraphs (1) and (7) of paragraph 2, sub-paragraph (3) of paragraph 3, sub-paragraph (4) of paragraph 4, paragraph 5, sub-paragraph (1) of paragraph 6, sub-paragraph (2) of paragraph 7, sub-paragraph (3) of paragraph 9, sub-paragraph (1) of paragraph 14, sub-paragraph (1) of paragraph 15 and sub-paragraphs (1) and (2) of paragraph 16, shall, after consulting the Council of Ministers and if he thinks it necessary, the District Council or the Regional Council concerned, take such action as he considers necessary in his discretion.</div>
+    <p class="prose">Courts have interpreted Para 20BB as creating a specific exception to the Article 163 general principle: outside the listed functions, the Cabinet-advice model applies; within them, the Governor acts in personal discretion (after consulting the Cabinet). The Sixth Schedule now contains a dual structure — Cabinet-aided functions and explicitly discretionary ones — that was not present in the original 1949 text and was in some tension with Ambedkar's stated intention.</p>
+    <div class="warn-box"><strong>Tension with 1949 Intent:</strong> Ambedkar in 1949 moved specifically to delete explicit discretion throughout the Schedule (Paras 15 and 18 amendments). Para 20BB partially reverses this for the listed functions. The 1988 amendment reflects a different political calculus — providing clearer legal authority for Governors to act independently in Schedule-related matters without always depending on Cabinet consensus. Courts have given effect to Para 20BB as written while using the 1949 debates to interpret the non-Para 20BB functions.</div>
+  </section>
+</main>
+</div>
+</div>
+
+<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-bottom">
-      <span>© 2025 Sixth Schedule Archive · For Educational & Research Use</span>
-      <span><a href="index.html" style="color:var(--accent);text-decoration:none;" data-navigate>← Back to Home</a></span>
+    <div>
+      <div class="footer-brand-text">Sixth Schedule Living Archive</div>
+      <p class="footer-desc">A scholarly resource documenting the constitutional, judicial, and administrative history of tribal self-governance in Northeast India.</p>
     </div>
+    <div>
+      <div class="footer-col-title">Archive Sections</div>
+      <ul class="footer-links">
+        <li><a href="cases.html">Supreme Court Cases</a></li>
+        <li><a href="debates.html">Constituent Debates</a></li>
+        <li><a href="evolution.html">Historical Evolution</a></li>
+        <li><a href="articles.html">Academic Articles</a></li>
+        <li><a href="news.html">News &amp; Updates</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Debate Sources</div>
+      <ul class="footer-links">
+        <li><a href="#">CA Debates Vol. IX (1949)</a></li>
+        <li><a href="#">India's Constitution: Origins and Evolution</a></li>
+        <li><a href="#">Lok Sabha Secretariat (2014 Reprint)</a></li>
+        <li><a href="#">Pu Myllai Hlychho v Mizoram 2005</a></li>
+        <li><a href="about.html">Full Source List</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Sixth Schedule Living Archive. Educational use only.</span>
+    <span><a href="index.html" style="color:var(--accent);">← Back to Home</a></span>
   </div>
 </footer>
 
 <script src="shared.js"></script>
 <script>
-// State tabs
-document.querySelectorAll('.state-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.state-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.state-panel').forEach(p => p.classList.remove('active'));
-    tab.classList.add('active');
-    const panel = document.getElementById(tab.dataset.tab);
-    if (panel) panel.classList.add('active');
-  });
+// ── PAGE TAB SWITCHING ──
+function switchPage(pageId) {
+  document.querySelectorAll('.subpage').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
+  const page = document.getElementById('page-' + pageId);
+  const tab = document.querySelector('.page-tab[data-page="' + pageId + '"]');
+  if (page) page.classList.add('active');
+  if (tab) tab.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+document.querySelectorAll('.page-tab').forEach(tab => {
+  tab.addEventListener('click', () => switchPage(tab.dataset.page));
 });
 
-function toggleSpeaker(header) {
-  const body = header.nextElementSibling;
-  const arrow = header.querySelector('span:last-child');
+// ── PARA ACCORDION ──
+function togglePara(head) {
+  const body = head.nextElementSibling;
+  const toggle = head.querySelector('.para-toggle');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  if (toggle) toggle.classList.toggle('open', !isOpen);
+}
+
+// ── SPEAKER ACCORDION ──
+function toggleSpeaker(head) {
+  const body = head.nextElementSibling;
+  const arrow = head.querySelector('span:last-child');
   const isOpen = body.classList.contains('open');
   body.classList.toggle('open', !isOpen);
   if (arrow) arrow.textContent = isOpen ? '▼' : '▲';
 }
 
-// Handle hash navigation to state panels
-window.addEventListener('DOMContentLoaded', () => {
-  const hash = window.location.hash.replace('#','');
-  const states = ['assam','meghalaya','tripura','mizoram','nagaland'];
-  if (states.includes(hash)) {
-    document.querySelectorAll('.state-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.state-panel').forEach(p => p.classList.remove('active'));
-    const tab = document.querySelector(`.state-tab[data-tab="${hash}"]`);
-    const panel = document.getElementById(hash);
-    if (tab) tab.classList.add('active');
+// ── STATE TABS ──
+document.querySelectorAll('.state-tab[data-stab]').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.state-tab[data-stab]').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.state-panel[id^="stab-"]').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    const panel = document.getElementById('stab-' + tab.dataset.stab);
     if (panel) panel.classList.add('active');
-    setTimeout(() => { panel.scrollIntoView({behavior:'smooth', block:'center'}); }, 300);
-  }
+  });
+});
+
+// ── AMENDMENT FILTER ──
+function filterAmend(type) {
+  document.querySelectorAll('#amendTbody tr').forEach(row => {
+    if (type === 'all') { row.style.display = ''; return; }
+    if (['adopted','negatived','withdrawn'].includes(type)) {
+      row.style.display = row.dataset.result === type ? '' : 'none';
+    } else {
+      row.style.display = row.dataset.para === type ? '' : 'none';
+    }
+  });
+}
+
+// ── AMENDMENT SEARCH ──
+function searchAmend() {
+  const q = document.getElementById('amendSearch').value.toLowerCase();
+  document.querySelectorAll('#amendTbody tr').forEach(row => {
+    row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+document.getElementById('amendSearch').addEventListener('keyup', searchAmend);
+
+// ── HASH ROUTING ──
+window.addEventListener('DOMContentLoaded', () => {
+  const pages = ['overview','para-by-para','speakers','amendments','state-view','judicial'];
+  const hash = window.location.hash.replace('#','');
+  if (pages.includes(hash)) switchPage(hash);
 });
 </script>
 </body>
